@@ -23,6 +23,13 @@ const config: Config = {
           900: "#0c4a6e",
           950: "#082f49",
         },
+        cyber: {
+          midnight: "#0D1117",
+          graphite: "#161B22",
+          cyan: "#00F2FE",
+          green: "#39FF14",
+          border: "#30363D",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -71,6 +78,7 @@ const config: Config = {
         "slide-down": "slideDown 0.3s ease-out forwards",
         "scale-in": "scaleIn 0.3s ease-out forwards",
         "float": "float 6s ease-in-out infinite",
+        "pulse-glow": "pulseGlow 3s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -92,6 +100,10 @@ const config: Config = {
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-20px)" },
+        },
+        pulseGlow: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(0, 242, 254, 0.1)" },
+          "50%": { boxShadow: "0 0 30px rgba(0, 242, 254, 0.3)" },
         },
       },
     },

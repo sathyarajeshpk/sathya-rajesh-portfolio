@@ -8,13 +8,13 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden bg-slate-950"
+      className="relative min-h-screen flex items-center overflow-hidden bg-slate-950 dark:bg-cyber-midnight"
     >
       {/* Background Effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-fabric-600/20 rounded-full blur-[128px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-fabric-400/10 rounded-full blur-[128px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-fabric-700/5 rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-fabric-600/20 dark:bg-cyber-cyan/10 rounded-full blur-[128px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-fabric-400/10 dark:bg-cyber-green/10 rounded-full blur-[128px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-fabric-700/5 dark:bg-cyber-cyan/5 rounded-full blur-[100px]" />
       </div>
 
       {/* Grid Pattern */}
@@ -41,8 +41,8 @@ export default function Hero() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
             >
-              <span className="w-2 h-2 rounded-full bg-fabric-400 animate-pulse" />
-              <span className="text-sm font-medium text-slate-300">
+              <span className="w-2 h-2 rounded-full bg-fabric-400 dark:bg-cyber-cyan animate-pulse" />
+              <span className="text-sm font-medium text-slate-300 dark:text-slate-300">
                 Azure Data Engineering · BI & Analytics · AI
               </span>
             </motion.div>
@@ -61,7 +61,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="text-lg sm:text-xl text-slate-400 leading-relaxed mb-10 max-w-xl"
+              className="text-lg sm:text-xl text-slate-400 dark:text-slate-400 leading-relaxed mb-10 max-w-xl"
             >
               Helping startups and enterprises build Websites, AI Applications,
               Microsoft Fabric Solutions, Azure Data Platforms and Business
@@ -76,7 +76,7 @@ export default function Hero() {
             >
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-fabric text-white font-semibold text-sm shadow-lg shadow-fabric-700/30 hover:shadow-fabric-700/50 hover:scale-[1.02] transition-all duration-300"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-fabric text-white font-semibold text-sm shadow-lg shadow-fabric-700/30 dark:shadow-cyber-cyan/30 hover:shadow-fabric-700/50 dark:hover:shadow-cyber-cyan/50 hover:scale-[1.02] transition-all duration-300"
               >
                 <Calendar size={18} />
                 Book Free Consultation
@@ -91,7 +91,7 @@ export default function Hero() {
               <a
                 href="/resume/SathyaRajesh_Resume.pdf"
                 download
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-slate-700 text-slate-300 font-semibold text-sm hover:border-fabric-500 hover:text-white transition-all duration-300"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-slate-700 dark:border-cyber-border text-slate-300 dark:text-slate-300 font-semibold text-sm hover:border-fabric-500 dark:hover:border-cyber-cyan hover:text-white transition-all duration-300"
               >
                 <Download size={18} />
                 Download Resume
@@ -112,7 +112,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.6 }}
-              className="flex flex-wrap gap-8 mt-12 pt-8 border-t border-white/10"
+              className="flex flex-wrap gap-8 mt-12 pt-8 border-t border-white/10 dark:border-cyber-border"
             >
               {[
                 { value: "12+", label: "Years Experience" },
@@ -124,7 +124,7 @@ export default function Hero() {
                   <div className="text-2xl sm:text-3xl font-bold text-white">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -139,10 +139,10 @@ export default function Hero() {
           >
             <div className="relative">
               {/* Glow */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-fabric-600/30 to-fabric-400/20 rounded-[2.5rem] blur-2xl" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-fabric-600/30 dark:from-cyber-cyan/20 to-fabric-400/20 dark:to-cyber-green/20 rounded-[2.5rem] blur-2xl" />
 
               {/* Photo Container */}
-              <div className="relative w-[300px] h-[380px] sm:w-[360px] sm:h-[460px] lg:w-[420px] lg:h-[540px] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+              <div className="relative w-[300px] h-[380px] sm:w-[360px] sm:h-[460px] lg:w-[420px] lg:h-[540px] rounded-[2rem] overflow-hidden border border-white/10 dark:border-cyber-border shadow-2xl">
                 <Image
                   src="/images/hero-photo.png"
                   alt="Sathya Rajesh PK - Lead Azure Data Engineer"
@@ -159,7 +159,7 @@ export default function Hero() {
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-4 -left-4 sm:-left-8 glass rounded-2xl px-5 py-3 shadow-xl"
+                className="absolute -bottom-4 -left-4 sm:-left-8 glass dark:bg-cyber-graphite/80 dark:border-cyber-border rounded-2xl px-5 py-3 shadow-xl"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-fabric flex items-center justify-center">
@@ -176,7 +176,7 @@ export default function Hero() {
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -top-4 -right-4 sm:-right-8 glass rounded-2xl px-5 py-3 shadow-xl"
+                className="absolute -top-4 -right-4 sm:-right-8 glass dark:bg-cyber-graphite/80 dark:border-cyber-border rounded-2xl px-5 py-3 shadow-xl"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
@@ -203,9 +203,9 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-2"
+          className="w-6 h-10 rounded-full border-2 border-white/20 dark:border-cyber-cyan/30 flex items-start justify-center p-2"
         >
-          <div className="w-1.5 h-1.5 rounded-full bg-fabric-400" />
+          <div className="w-1.5 h-1.5 rounded-full bg-fabric-400 dark:bg-cyber-cyan" />
         </motion.div>
       </motion.div>
     </section>

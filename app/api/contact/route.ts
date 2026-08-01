@@ -4,55 +4,86 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    // Validate required fields
+    if (!body.name || !body.email || !body.service || !body.description) {
+      return NextResponse.json(
+        { success: false, message: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
     // 1. Save to Supabase
     const { createClient } = require("@supabase/supabase-js");
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
-    const { error: dbError } = await supabase.from("contacts").insert([body]);
-    if (dbError) throw dbError;
 
-    // 2. Send email notification via Resend
+    const { data, error } = await supabase
+      .from("contacts")
+      .insert([{
+        name: body.name,
+        company: body.company || null,
+        email: body.email,
+        phone: body.phone || null,
+        country: body.country || null,
+        service: body.service,
+        budget: body.budget || null,
+        timeline: body.timeline || null,
+        description: body.description,
+        attachment_url: null,
+      }])
+      .select();
+
+    if (error) {
+      console.error("Supabase insert error:", error);
+      return NextResponse.json(
+        { success: false, message: error.message },
+        { status: 500 }
+      );
+    }
+
+    // 2. Send email via Resend (optional)
     const resendApiKey = process.env.RESEND_API_KEY;
     if (resendApiKey) {
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "Portfolio Contact <onboarding@resend.dev>", // Change after domain verification
-          to: "sathyarajeshpk@gmail.com",
-          subject: `New Enquiry: ${body.service} from ${body.name}`,
-          html: `
-            <h2>New Contact Form Submission</h2>
-            <table style="font-family:sans-serif;border-collapse:collapse;width:100%;max-width:600px;">
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Name</td><td style="padding:8px;border:1px solid #ddd;">${body.name}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Email</td><td style="padding:8px;border:1px solid #ddd;">${body.email}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Company</td><td style="padding:8px;border:1px solid #ddd;">${body.company || "N/A"}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Phone</td><td style="padding:8px;border:1px solid #ddd;">${body.phone || "N/A"}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Country</td><td style="padding:8px;border:1px solid #ddd;">${body.country || "N/A"}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Service</td><td style="padding:8px;border:1px solid #ddd;">${body.service}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Budget</td><td style="padding:8px;border:1px solid #ddd;">${body.budget || "Not specified"}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Timeline</td><td style="padding:8px;border:1px solid #ddd;">${body.timeline || "Not specified"}</td></tr>
-              <tr><td style="padding:8px;border:1px solid #ddd;font-weight:bold;">Description</td><td style="padding:8px;border:1px solid #ddd;">${body.description}</td></tr>
-            </table>
-            <p style="margin-top:20px;color:#666;font-size:12px;">Submitted at ${new Date().toLocaleString()}</p>
-          `,
-        }),
-      });
+      try {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Portfolio <onboarding@resend.dev>",
+            to: "sathyarajeshpk@gmail.com",
+            subject: `New Enquiry: ${body.service} from ${body.name}`,
+            html: `
+              <h2>New Contact Form Submission</h2>
+              <p><strong>Name:</strong> ${body.name}</p>
+              <p><strong>Email:</strong> ${body.email}</p>
+              <p><strong>Company:</strong> ${body.company || "N/A"}</p>
+              <p><strong>Phone:</strong> ${body.phone || "N/A"}</p>
+              <p><strong>Service:</strong> ${body.service}</p>
+              <p><strong>Budget:</strong> ${body.budget || "Not specified"}</p>
+              <p><strong>Timeline:</strong> ${body.timeline || "Not specified"}</p>
+              <p><strong>Description:</strong></p>
+              <p>${body.description.replace(/\n/g, "<br>")}</p>
+            `,
+          }),
+        });
+      } catch (emailError) {
+        console.error("Email failed (non-critical):", emailError);
+      }
     }
 
     return NextResponse.json(
-      { success: true, message: "Message received" },
+      { success: true, message: "Message received", data },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Contact form error:", error);
+  } catch (error: any) {
+    console.error("API error:", error);
     return NextResponse.json(
-      { success: false, message: "Failed to send message" },
+      { success: false, message: error.message || "Server error" },
       { status: 500 }
     );
   }

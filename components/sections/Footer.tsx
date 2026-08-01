@@ -2,10 +2,10 @@ import { Linkedin, Github, MessageCircle, Mail, ExternalLink } from "lucide-reac
 
 const socialLinks = [
   { name: "LinkedIn", href: "https://www.linkedin.com/in/sathyarajeshpk/", icon: Linkedin, color: "hover:bg-[#0077B5]/10 hover:text-[#0077B5]" },
-  { name: "GitHub", href: "https://github.com/sathyarajeshpk", icon: Github, color: "hover:bg-slate-900/10 hover:text-slate-900" },
+  { name: "GitHub", href: "https://github.com/sathyarajeshpk", icon: Github, color: "hover:bg-slate-900/10 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white" },
   { name: "Fiverr", href: "https://www.fiverr.com/sathyarajesh638/build-azure-data-engineering-solutions-using-adf-databricks-and-pyspark", icon: ExternalLink, color: "hover:bg-green-500/10 hover:text-green-600" },
   { name: "WhatsApp", href: "https://wa.me/919597996996", icon: MessageCircle, color: "hover:bg-green-500/10 hover:text-green-600" },
-  { name: "Email", href: "mailto:sathyarajeshpk@gmail.com", icon: Mail, color: "hover:bg-fabric-500/10 hover:text-fabric-700" },
+  { name: "Email", href: "mailto:sathyarajeshpk@gmail.com", icon: Mail, color: "hover:bg-fabric-500/10 dark:hover:bg-cyber-cyan/10 hover:text-fabric-700 dark:hover:text-cyber-cyan" },
 ];
 
 const quickLinks = [
@@ -20,7 +20,7 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 border-t border-white/5">
+    <footer className="bg-slate-950 dark:bg-cyber-midnight border-t border-white/5 dark:border-cyber-border">
       <div className="container-custom py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="lg:col-span-2">
@@ -28,9 +28,9 @@ export default function Footer() {
               <div className="w-10 h-10 rounded-xl bg-gradient-fabric flex items-center justify-center text-white font-bold text-lg">
                 SR
               </div>
-              <span className="font-semibold text-lg text-white">Sathya Rajesh</span>
+              <span className="font-semibold text-lg text-white">Sathya Rajesh PK</span>
             </div>
-            <p className="text-slate-400 leading-relaxed mb-6 max-w-md">
+            <p className="text-slate-400 dark:text-slate-400 leading-relaxed mb-6 max-w-md">
               Lead Data Engineer and Technology Consultant specializing in Azure Data Platforms,
               Business Intelligence, and AI-powered solutions for enterprises and startups.
             </p>
@@ -86,11 +86,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-white/5 dark:border-cyber-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-500 text-sm">
             © {new Date().getFullYear()} Sathya Rajesh PK. All rights reserved.
           </p>
-          <p className="text-slate-600 text-sm">
+          <p className="text-slate-600 dark:text-slate-500 text-sm">
             Built with Next.js, Tailwind CSS & Azure
           </p>
         </div>
