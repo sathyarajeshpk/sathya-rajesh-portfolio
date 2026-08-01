@@ -45,9 +45,9 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-18 py-4">
             {/* Logo */}
             <a href="#" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-fabric flex items-center justify-center text-white shadow-lg shadow-fabric-700/30 group-hover:shadow-fabric-700/50 transition-shadow">
+              {/* <div className="w-10 h-10 rounded-xl bg-gradient-fabric flex items-center justify-center text-white shadow-lg shadow-fabric-700/30 group-hover:shadow-fabric-700/50 transition-shadow">
                 <Database size={22} strokeWidth={2} />
-              </div>
+              </div> */}
               <span
                 className={cn(
                   "font-semibold text-lg transition-colors",
