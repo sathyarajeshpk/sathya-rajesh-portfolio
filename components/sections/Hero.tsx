@@ -100,7 +100,7 @@ export default function Hero() {
                 href="https://wa.me/919597996996"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-green-600/30 text-green-400 font-semibold text-sm hover:bg-green-600/10 hover:border-green-500 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-cyber-cyan/30 text-cyber-cyan font-semibold text-sm hover:bg-cyber-cyan/10 hover:border-cyber-cyan transition-all duration-300"
               >
                 <MessageCircle size={18} />
                 Chat on WhatsApp
@@ -179,8 +179,8 @@ export default function Hero() {
                 className="absolute -top-4 -right-4 sm:-right-8 glass dark:bg-cyber-graphite/80 dark:border-cyber-border rounded-2xl px-5 py-3 shadow-xl"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
-                    <span className="text-green-400 font-bold text-sm">✓</span>
+                  <div className="w-10 h-10 rounded-xl bg-fabric-500/20 flex items-center justify-center">
+                    <span className="text-fabric-400 font-bold text-sm">✓</span>
                   </div>
                   <div>
                     <div className="text-white font-semibold text-sm">Available</div>

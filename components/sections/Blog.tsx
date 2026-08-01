@@ -95,7 +95,7 @@ export default function Blog() {
                   {post.excerpt}
                 </p>
                 <span className="inline-flex items-center gap-2 text-sm font-semibold text-fabric-700 dark:text-cyber-cyan">
-                  Coming Soon
+                  Read Article →
                 </span>
               </div>
             </motion.article>
