@@ -16,8 +16,8 @@
   <circle cx="684" cy="448" r="18" fill="#E0F2FE"/>
   <circle cx="816" cy="328" r="18" fill="#67E8F9"/>
   <circle cx="996" cy="376" r="18" fill="#38BDF8"/>
-  <text x="108" y="290" fill="white" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700">Executive Insight Dashboard</text>
-  <text x="108" y="622" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="34">Power BI  •  Data Modeling  •  Decision Support</text>
+  <text x="108" y="286" fill="white" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700">Executive Insight Dashboard</text>
+  <text x="108" y="604" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="22">Power BI  •  Data Modeling  •  Decision Support</text>
   <defs>
     <linearGradient id="bg" x1="92" y1="64" x2="1090" y2="656" gradientUnits="userSpaceOnUse">
       <stop stop-color="#082F49"/>

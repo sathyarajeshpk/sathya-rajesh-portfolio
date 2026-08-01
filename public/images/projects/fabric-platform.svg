@@ -15,8 +15,8 @@
   <path d="M542 430H640" stroke="#67E8F9" stroke-width="10" stroke-linecap="round"/>
   <path d="M798 286V324" stroke="#67E8F9" stroke-width="8" stroke-linecap="round" stroke-dasharray="8 12"/>
   <path d="M834 408V446" stroke="#2DD4BF" stroke-width="8" stroke-linecap="round" stroke-dasharray="8 12"/>
-  <text x="112" y="164" fill="white" font-family="Inter, Arial, sans-serif" font-size="60" font-weight="700">Microsoft Fabric Platform</text>
-  <text x="112" y="222" fill="#A5F3FC" font-family="Inter, Arial, sans-serif" font-size="32">Unified lakehouse, pipelines, and executive reporting</text>
+  <text x="112" y="138" fill="white" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Microsoft Fabric Platform</text>
+  <text x="112" y="178" fill="#A5F3FC" font-family="Inter, Arial, sans-serif" font-size="18">Unified lakehouse, pipelines, and executive reporting</text>
   <defs>
     <linearGradient id="bg" x1="88" y1="70" x2="1112" y2="658" gradientUnits="userSpaceOnUse">
       <stop stop-color="#083344"/>

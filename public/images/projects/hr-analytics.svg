@@ -12,8 +12,8 @@
   <path d="M614 234H988" stroke="#E9D5FF" stroke-width="14" stroke-linecap="round"/>
   <path d="M614 394H924" stroke="#BFDBFE" stroke-width="14" stroke-linecap="round"/>
   <path d="M614 432H852" stroke="#E9D5FF" stroke-width="14" stroke-linecap="round"/>
-  <text x="112" y="116" fill="white" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700">HR Analytics Dashboard</text>
-  <text x="112" y="590" fill="#DDD6FE" font-family="Inter, Arial, sans-serif" font-size="34">Workforce insights across hiring, attrition, and performance</text>
+  <text x="112" y="92" fill="white" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">HR Analytics Dashboard</text>
+  <text x="112" y="578" fill="#DDD6FE" font-family="Inter, Arial, sans-serif" font-size="20">Workforce insights across hiring, attrition, and performance</text>
   <defs>
     <linearGradient id="bg" x1="90" y1="68" x2="1112" y2="656" gradientUnits="userSpaceOnUse">
       <stop stop-color="#312E81"/>

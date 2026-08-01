@@ -166,9 +166,6 @@ export default function Hero() {
                 className="absolute -right-4 -top-4 rounded-2xl px-5 py-3 shadow-xl glass dark:border-cyber-border dark:bg-cyber-graphite/80 sm:-right-8"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-fabric-500/20">
-                    <span className="text-sm font-bold text-fabric-400">OK</span>
-                  </div>
                   <div>
                     <div className="text-sm font-semibold text-white">Available</div>
                     <div className="text-xs text-slate-400">For Projects</div>

@@ -18,8 +18,8 @@
   <circle cx="922" cy="278" r="16" fill="#34D399"/>
   <path d="M872 532L964 584" stroke="#F8FAFC" stroke-width="12" stroke-linecap="round"/>
   <circle cx="818" cy="498" r="64" stroke="#F8FAFC" stroke-width="14"/>
-  <text x="112" y="114" fill="white" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700">Incident Root Cause Analyzer</text>
-  <text x="112" y="596" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="34">AI-assisted log analysis for faster recovery and fewer escalations</text>
+  <text x="112" y="92" fill="white" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Incident Root Cause Analyzer</text>
+  <text x="112" y="582" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="20">AI-assisted log analysis for faster recovery and fewer escalations</text>
   <defs>
     <linearGradient id="bg" x1="86" y1="70" x2="1118" y2="656" gradientUnits="userSpaceOnUse">
       <stop stop-color="#083344"/>

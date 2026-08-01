@@ -107,6 +107,11 @@ export default function About() {
                 "Microsoft Fabric",
                 "PySpark",
                 "Delta Lake",
+                "LangChain",
+                "Claude",
+                "OpenAI",
+                "Python",
+                "SQL",
               ].map((skill) => (
                 <span
                   key={skill}
