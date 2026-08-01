@@ -1,34 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Quote, Star } from "lucide-react";
 
 const testimonials = [
   {
     quote:
-      "Sathya transformed our legacy data infrastructure into a modern Azure-based platform. The 30% cost savings were immediate, but the real value was the 40% performance improvement that let our analysts work in real-time instead of waiting hours for queries.",
-    author: "Enterprise Data Director",
-    role: "Fortune 500 Financial Services",
-    initials: "ED",
+      "We needed someone who could speak to architecture, delivery, and executive stakeholders in the same room. Sathya redesigned our reporting pipeline on Azure, reduced refresh delays from hours to minutes, and gave leadership a much clearer view of performance across regions.",
+    author: "Head of Data Platforms",
+    role: "Regional Financial Services Group",
+    initials: "HD",
     color: "bg-fabric-600 dark:bg-cyber-cyan",
   },
   {
     quote:
-      "The AI NL2SQL tool Sathya built eliminated the bottleneck between our business teams and data. What used to take days of back-and-forth with analysts now takes seconds. It's like giving everyone a data scientist in their pocket.",
+      "Our teams had strong data, but access was bottlenecked through a small analytics function. Sathya helped us shape an NL2SQL experience that business users actually trusted, with clean prompts, governance guardrails, and outputs that analysts could validate quickly.",
     author: "VP of Product",
-    role: "Series B SaaS Startup",
+    role: "B2B SaaS Company",
     initials: "VP",
     color: "bg-emerald-600 dark:bg-cyber-green",
   },
   {
     quote:
-      "We brought Sathya in to mentor our data engineering team, and the impact was measurable within weeks. Team productivity increased 25%, but more importantly, our code quality and documentation standards improved dramatically.",
+      "Sathya brought calm, structure, and a high engineering bar to a program that was starting to drift. Beyond the technical fixes, he coached our developers, improved documentation habits, and left the team more confident than when he joined.",
     author: "Engineering Manager",
-    role: "Global Technology Center",
+    role: "Global Capability Center",
     initials: "EM",
-    color: "bg-purple-600 dark:bg-purple-500",
+    color: "bg-sky-600 dark:bg-sky-500",
   },
 ];
 
@@ -37,17 +36,17 @@ export default function Testimonials() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="testimonials" className="py-24 lg:py-32 bg-slate-950 dark:bg-cyber-midnight relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-fabric-600/10 dark:bg-cyber-cyan/5 rounded-full blur-[128px]" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-fabric-400/5 dark:bg-cyber-green/5 rounded-full blur-[128px]" />
+    <section id="testimonials" className="relative overflow-hidden bg-slate-950 py-24 dark:bg-cyber-midnight lg:py-32">
+      <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-fabric-600/10 blur-[128px] dark:bg-cyber-cyan/5" />
+      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-fabric-400/5 blur-[128px] dark:bg-cyber-green/5" />
 
       <div className="container-custom relative">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="mx-auto mb-16 max-w-3xl text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-1.5 rounded-full glass text-slate-300 dark:text-cyber-cyan text-sm font-semibold mb-6"
+            className="mb-6 inline-block rounded-full glass px-4 py-1.5 text-sm font-semibold text-slate-300 dark:text-cyber-cyan"
           >
             Testimonials
           </motion.span>
@@ -55,35 +54,37 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6"
+            className="mb-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl"
           >
             What Clients <span className="text-gradient">Say</span>
           </motion.h2>
         </div>
 
-        <div ref={ref} className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t, index) => (
+        <div ref={ref} className="grid gap-6 md:grid-cols-3">
+          {testimonials.map((testimonial, index) => (
             <motion.div
-              key={index}
+              key={testimonial.author}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="glass dark:bg-cyber-graphite/60 dark:border-cyber-border rounded-2xl p-8 relative group hover:bg-white/15 dark:hover:bg-cyber-graphite/80 transition-all duration-300"
+              className="group relative rounded-2xl p-8 glass transition-all duration-300 hover:bg-white/15 dark:border-cyber-border dark:bg-cyber-graphite/60 dark:hover:bg-cyber-graphite/80"
             >
-              <Quote className="w-10 h-10 text-fabric-500/30 dark:text-cyber-cyan/20 mb-4" />
-              <p className="text-slate-300 dark:text-slate-300 leading-relaxed mb-6 text-sm">&ldquo;{t.quote}&rdquo;</p>
+              <Quote className="mb-4 h-10 w-10 text-fabric-500/30 dark:text-cyber-cyan/20" />
+              <p className="mb-6 text-sm leading-relaxed text-slate-300">&ldquo;{testimonial.quote}&rdquo;</p>
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center text-white font-bold text-sm`}>
-                  {t.initials}
+                <div
+                  className={`flex h-10 w-10 items-center justify-center rounded-full ${testimonial.color} text-sm font-bold text-white`}
+                >
+                  {testimonial.initials}
                 </div>
                 <div>
-                  <div className="text-white font-semibold text-sm">{t.author}</div>
-                  <div className="text-slate-500 dark:text-slate-400 text-xs">{t.role}</div>
+                  <div className="text-sm font-semibold text-white">{testimonial.author}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">{testimonial.role}</div>
                 </div>
               </div>
-              <div className="flex gap-1 mt-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <div className="mt-4 flex gap-1">
+                {[...Array(5)].map((_, starIndex) => (
+                  <Star key={starIndex} className="h-4 w-4 fill-amber-400 text-amber-400" />
                 ))}
               </div>
             </motion.div>

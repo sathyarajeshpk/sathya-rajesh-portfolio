@@ -1,0 +1,28 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="36" fill="#0A0F1E"/>
+  <rect x="46" y="46" width="1108" height="628" rx="30" fill="url(#bg)"/>
+  <circle cx="1004" cy="154" r="148" fill="#60A5FA" fill-opacity="0.12"/>
+  <circle cx="226" cy="570" r="140" fill="#22D3EE" fill-opacity="0.12"/>
+  <rect x="112" y="164" width="424" height="124" rx="28" fill="#020617" fill-opacity="0.62" stroke="#67E8F9" stroke-opacity="0.28"/>
+  <rect x="664" y="164" width="424" height="124" rx="28" fill="#020617" fill-opacity="0.62" stroke="#A5F3FC" stroke-opacity="0.28"/>
+  <text x="146" y="220" fill="#E0F2FE" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="600">"Show revenue by region"</text>
+  <text x="706" y="214" fill="#A5F3FC" font-family="'Courier New', monospace" font-size="26">SELECT region, SUM(revenue)</text>
+  <text x="706" y="252" fill="#A5F3FC" font-family="'Courier New', monospace" font-size="26">FROM sales GROUP BY region;</text>
+  <path d="M548 226H650" stroke="#22D3EE" stroke-width="12" stroke-linecap="round"/>
+  <path d="M618 194L650 226L618 258" stroke="#22D3EE" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M228 438C264 376 314 344 378 342C442 340 500 376 552 452" stroke="#93C5FD" stroke-width="12" stroke-linecap="round"/>
+  <path d="M650 452C704 376 764 340 830 340C896 340 952 374 1002 434" stroke="#67E8F9" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="384" cy="472" r="54" fill="#0F172A" stroke="#93C5FD" stroke-width="8"/>
+  <circle cx="824" cy="472" r="54" fill="#0F172A" stroke="#67E8F9" stroke-width="8"/>
+  <path d="M384 448V496" stroke="#E0F2FE" stroke-width="10" stroke-linecap="round"/>
+  <path d="M360 472H408" stroke="#E0F2FE" stroke-width="10" stroke-linecap="round"/>
+  <path d="M824 446C808 446 794 460 794 478C794 496 808 510 824 510C840 510 854 496 854 478C854 460 840 446 824 446Z" fill="#E0F2FE"/>
+  <text x="112" y="114" fill="white" font-family="Inter, Arial, sans-serif" font-size="60" font-weight="700">Natural Language to SQL</text>
+  <text x="112" y="614" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="34">AI copilots for analytics teams and business users</text>
+  <defs>
+    <linearGradient id="bg" x1="90" y1="66" x2="1114" y2="654" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172554"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,20 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="36" fill="#0A0F1E"/>
+  <rect x="44" y="44" width="1112" height="632" rx="30" fill="url(#bg)"/>
+  <circle cx="974" cy="172" r="140" fill="#60A5FA" fill-opacity="0.12"/>
+  <rect x="110" y="196" width="408" height="120" rx="28" fill="#020617" fill-opacity="0.6" stroke="#67E8F9" stroke-opacity="0.22"/>
+  <rect x="682" y="196" width="408" height="120" rx="28" fill="#020617" fill-opacity="0.6" stroke="#BFDBFE" stroke-opacity="0.22"/>
+  <text x="142" y="266" fill="#E0F2FE" font-family="Inter, Arial, sans-serif" font-size="28">"Which region missed quota?"</text>
+  <text x="718" y="248" fill="#BFDBFE" font-family="'Courier New', monospace" font-size="24">SELECT region, quota_gap</text>
+  <text x="718" y="284" fill="#BFDBFE" font-family="'Courier New', monospace" font-size="24">FROM performance_summary;</text>
+  <path d="M548 256H654" stroke="#22D3EE" stroke-width="12" stroke-linecap="round"/>
+  <path d="M620 224L654 256L620 288" stroke="#22D3EE" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="112" y="142" fill="white" font-family="Inter, Arial, sans-serif" font-size="60" font-weight="700">Natural Language to SQL</text>
+  <text x="112" y="604" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="34">Designing trustworthy AI interfaces for analytics workflows</text>
+  <defs>
+    <linearGradient id="bg" x1="88" y1="68" x2="1114" y2="652" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172554"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+</svg>

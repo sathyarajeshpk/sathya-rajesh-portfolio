@@ -1,0 +1,16 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="36" fill="#071018"/>
+  <rect x="44" y="44" width="1112" height="632" rx="30" fill="url(#bg)"/>
+  <circle cx="954" cy="160" r="132" fill="#22D3EE" fill-opacity="0.14"/>
+  <path d="M254 498L420 286L584 498H254Z" fill="#67E8F9" fill-opacity="0.84"/>
+  <path d="M404 498L548 330L692 498H404Z" fill="#A5F3FC" fill-opacity="0.7"/>
+  <path d="M564 498L736 248L908 498H564Z" fill="#38BDF8" fill-opacity="0.62"/>
+  <text x="112" y="142" fill="white" font-family="Inter, Arial, sans-serif" font-size="60" font-weight="700">Delta Lake on Azure Databricks</text>
+  <text x="112" y="604" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="34">Incremental pipelines, merge patterns, and time travel at scale</text>
+  <defs>
+    <linearGradient id="bg" x1="88" y1="68" x2="1114" y2="652" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#082F49"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+</svg>

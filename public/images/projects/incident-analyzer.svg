@@ -1,0 +1,29 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="36" fill="#0B1220"/>
+  <rect x="44" y="44" width="1112" height="632" rx="30" fill="url(#bg)"/>
+  <circle cx="948" cy="182" r="148" fill="#22D3EE" fill-opacity="0.1"/>
+  <circle cx="252" cy="590" r="172" fill="#34D399" fill-opacity="0.12"/>
+  <rect x="112" y="164" width="484" height="348" rx="30" fill="#020617" fill-opacity="0.48" stroke="#22D3EE" stroke-opacity="0.2"/>
+  <path d="M156 258H552" stroke="#1E293B" stroke-width="16" stroke-linecap="round"/>
+  <path d="M156 322H452" stroke="#1E293B" stroke-width="16" stroke-linecap="round"/>
+  <path d="M156 386H522" stroke="#1E293B" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="196" cy="258" r="12" fill="#38BDF8"/>
+  <circle cx="196" cy="322" r="12" fill="#F97316"/>
+  <circle cx="196" cy="386" r="12" fill="#22C55E"/>
+  <rect x="660" y="194" width="384" height="288" rx="30" fill="#020617" fill-opacity="0.54" stroke="#99F6E4" stroke-opacity="0.26"/>
+  <path d="M726 402L786 340L836 376L922 278" stroke="#99F6E4" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="726" cy="402" r="16" fill="#99F6E4"/>
+  <circle cx="786" cy="340" r="16" fill="#67E8F9"/>
+  <circle cx="836" cy="376" r="16" fill="#38BDF8"/>
+  <circle cx="922" cy="278" r="16" fill="#34D399"/>
+  <path d="M872 532L964 584" stroke="#F8FAFC" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="818" cy="498" r="64" stroke="#F8FAFC" stroke-width="14"/>
+  <text x="112" y="114" fill="white" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="700">Incident Root Cause Analyzer</text>
+  <text x="112" y="596" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="34">AI-assisted log analysis for faster recovery and fewer escalations</text>
+  <defs>
+    <linearGradient id="bg" x1="86" y1="70" x2="1118" y2="656" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#083344"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+</svg>

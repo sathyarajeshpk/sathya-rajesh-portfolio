@@ -4,7 +4,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Validate required fields
     if (!body.name || !body.email || !body.service || !body.description) {
       return NextResponse.json(
         { success: false, message: "Missing required fields" },
@@ -12,38 +11,47 @@ export async function POST(request: Request) {
       );
     }
 
-    // 1. Save to Supabase
-    const { createClient } = require("@supabase/supabase-js");
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    let savedRecord = null;
 
-    const { data, error } = await supabase
-      .from("contacts")
-      .insert([{
-        name: body.name,
-        company: body.company || null,
-        email: body.email,
-        phone: body.phone || null,
-        country: body.country || null,
-        service: body.service,
-        budget: body.budget || null,
-        timeline: body.timeline || null,
-        description: body.description,
-        attachment_url: null,
-      }])
-      .select();
-
-    if (error) {
-      console.error("Supabase insert error:", error);
-      return NextResponse.json(
-        { success: false, message: error.message },
-        { status: 500 }
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      const { createClient } = await import("@supabase/supabase-js");
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY
       );
+
+      const { data, error } = await supabase
+        .from("contacts")
+        .insert([
+          {
+            name: body.name,
+            company: body.company || null,
+            email: body.email,
+            phone: body.phone || null,
+            country: body.country || null,
+            service: body.service,
+            budget: body.budget || null,
+            timeline: body.timeline || null,
+            description: body.description,
+            attachment_url: null,
+          },
+        ])
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Supabase insert error:", error);
+        return NextResponse.json(
+          { success: false, message: error.message },
+          { status: 500 }
+        );
+      }
+
+      savedRecord = data;
+    } else {
+      console.warn("Contact form submitted without Supabase environment variables configured.");
     }
 
-    // 2. Send email via Resend (optional)
     const resendApiKey = process.env.RESEND_API_KEY;
     if (resendApiKey) {
       try {
@@ -77,7 +85,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { success: true, message: "Message received", data },
+      { success: true, message: "Message received", data: savedRecord },
       { status: 200 }
     );
   } catch (error: any) {

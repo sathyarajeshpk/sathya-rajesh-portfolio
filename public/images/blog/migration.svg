@@ -1,0 +1,17 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="36" fill="#09111F"/>
+  <rect x="44" y="44" width="1112" height="632" rx="30" fill="url(#bg)"/>
+  <circle cx="982" cy="162" r="140" fill="#34D399" fill-opacity="0.14"/>
+  <path d="M240 470H468C548 470 614 404 614 324C614 244 680 178 760 178H964" stroke="#A7F3D0" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="300" cy="470" r="54" fill="#0F172A" stroke="#A7F3D0" stroke-width="10"/>
+  <circle cx="924" cy="178" r="54" fill="#0F172A" stroke="#86EFAC" stroke-width="10"/>
+  <path d="M836 140L924 178L836 216" stroke="#86EFAC" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="112" y="142" fill="white" font-family="Inter, Arial, sans-serif" font-size="60" font-weight="700">Migrating 50TB to Azure</text>
+  <text x="112" y="604" fill="#D1FAE5" font-family="Inter, Arial, sans-serif" font-size="34">Cost, throughput, and zero-downtime cutover lessons from the field</text>
+  <defs>
+    <linearGradient id="bg" x1="88" y1="68" x2="1114" y2="652" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#064E3B"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+  </defs>
+</svg>
