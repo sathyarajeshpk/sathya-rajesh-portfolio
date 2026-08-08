@@ -1,4 +1,5 @@
--- Create contacts table for enquiry storage
+-- Contact enquiry storage. Safe to re-run.
+
 CREATE TABLE IF NOT EXISTS contacts (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -15,13 +16,12 @@ CREATE TABLE IF NOT EXISTS contacts (
   status TEXT DEFAULT 'new' CHECK (status IN ('new', 'in_progress', 'responded', 'closed'))
 );
 
--- Enable Row Level Security
+-- RLS on with no permissive policy: the API route writes with the service-role
+-- key, which bypasses RLS. Anonymous clients get no access at all, which is
+-- what we want — nothing in the browser should read or write this table.
 ALTER TABLE contacts ENABLE ROW LEVEL SECURITY;
 
--- Create policy for inserting (public)
-CREATE POLICY "Allow public insert" ON contacts
-  FOR INSERT TO public WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow public insert" ON contacts;
 
--- Create index for faster queries
-CREATE INDEX idx_contacts_status ON contacts(status);
-CREATE INDEX idx_contacts_created_at ON contacts(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_contacts_status ON contacts(status);
+CREATE INDEX IF NOT EXISTS idx_contacts_created_at ON contacts(created_at DESC);

@@ -1,166 +1,198 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Database } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { cn } from "@/lib/utils";
 
 const navLinks = [
   { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Skills", href: "#skills" },
-  { name: "Blog", href: "#blog" },
+  { name: "Practice", href: "#services" },
+  { name: "Work", href: "#projects" },
+  { name: "Track record", href: "#experience" },
+  { name: "Writing", href: "#blog" },
   { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState<string>("");
+  const panelRef = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Scroll spy. Every section is observed, not just the linked ones — otherwise
+  // sections without a nav entry (capabilities, testimonials) leave the previous
+  // link stranded as active. Whichever section holds the upper band of the
+  // viewport resolves back to the nearest nav target at or above it.
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("section[id]"));
+    if (sections.length === 0) return;
+
+    const order = sections.map((el) => el.id);
+    const navTargets = new Set(navLinks.map((l) => l.href.slice(1)));
+
+    const resolve = (id: string) => {
+      for (let i = order.indexOf(id); i >= 0; i--) {
+        if (navTargets.has(order[i])) return `#${order[i]}`;
+      }
+      return "";
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const current = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (current) setActive(resolve(current.target.id));
+      },
+      { rootMargin: "-15% 0px -70% 0px", threshold: 0 }
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // Lock the page behind the mobile panel, and close it on Escape.
+  useEffect(() => {
+    if (!isOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen]);
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          isScrolled
-            ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 shadow-lg shadow-slate-900/5"
-            : "bg-transparent"
-        )}
+      <header
+        className="fixed inset-x-0 top-0 z-50 transition-colors duration-300"
+        style={{
+          // Opaque once scrolled. A translucent bar let headings read straight
+          // through it, which is what made the page look like it was overlapping.
+          backgroundColor: isScrolled || isOpen ? "var(--bg)" : "transparent",
+          borderBottom: `1px solid ${isScrolled && !isOpen ? "var(--rule)" : "transparent"}`,
+        }}
       >
-        <div className="container-custom">
-          <div className="flex items-center justify-between h-18 py-4">
-            {/* Logo */}
-            <a href="#" className="flex items-center gap-3 group">
-              {/* <div className="w-10 h-10 rounded-xl bg-gradient-fabric flex items-center justify-center text-white shadow-lg shadow-fabric-700/30 group-hover:shadow-fabric-700/50 transition-shadow">
-                <Database size={22} strokeWidth={2} />
-              </div> */}
-              <span
-                className={cn(
-                  "font-semibold text-lg transition-colors",
-                  isScrolled ? "text-slate-900 dark:text-white" : "text-white"
-                )}
-              >
-                Sathya Rajesh PK
-              </span>
-            </a>
+        <nav className="shell flex h-[var(--nav-h)] items-center justify-between gap-6">
+          <a
+            href="#hero"
+            className="font-serif text-lg leading-none tracking-tight transition-colors hover:text-accent"
+          >
+            Sathya Rajesh
+            <span className="text-subtle"> PK</span>
+          </a>
 
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
+          <div className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => {
+              const isActive = active === link.href;
+              return (
                 <a
                   key={link.name}
                   href={link.href}
-                  className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                    isScrolled
-                      ? "text-slate-600 dark:text-slate-300 hover:text-fabric-700 dark:hover:text-fabric-400 hover:bg-fabric-50 dark:hover:bg-slate-800"
-                      : "text-slate-300 hover:text-white hover:bg-white/10"
-                  )}
+                  aria-current={isActive ? "true" : undefined}
+                  className="label relative px-3 py-2 transition-colors duration-200"
+                  style={{ color: isActive ? "var(--fg)" : "var(--fg-subtle)" }}
                 >
                   {link.name}
+                  {isActive ? (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-x-3 -bottom-px h-px"
+                      style={{ background: "var(--accent)" }}
+                      transition={{ duration: reduced ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  ) : null}
                 </a>
-              ))}
-              <div className="ml-2">
-                <ThemeToggle />
-              </div>
-            </div>
+              );
+            })}
+          </div>
 
-            {/* CTA */}
-            <div className="hidden lg:block">
-              <a
-                href="#contact"
-                className={cn(
-                  "inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200",
-                  isScrolled
-                    ? "bg-fabric-700 text-white hover:bg-fabric-800 shadow-lg shadow-fabric-700/25"
-                    : "glass text-white hover:bg-white/20"
-                )}
-              >
-                Book Consultation
-              </a>
-            </div>
-
-            {/* Mobile Toggle */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={cn(
-                "lg:hidden p-2 rounded-lg transition-colors",
-                isScrolled
-                  ? "text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
-                  : "text-white hover:bg-white/10"
-              )}
+          <div className="flex items-center gap-3">
+            <ThemeToggle className="hidden sm:flex" />
+            <a
+              href="#contact"
+              className="label hidden h-9 items-center rounded-full px-4 transition-opacity duration-200 hover:opacity-85 sm:inline-flex"
+              style={{ background: "var(--fg)", color: "var(--bg)" }}
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              Start a project
+            </a>
+
+            <button
+              type="button"
+              onClick={() => setIsOpen((v) => !v)}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              className="label flex h-9 items-center gap-2 rounded-full border border-rule px-3 lg:hidden"
+            >
+              {isOpen ? "Close" : "Menu"}
             </button>
           </div>
-        </div>
-      </motion.nav>
+        </nav>
+      </header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {isOpen ? (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
+            id="mobile-nav"
+            ref={panelRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduced ? 0 : 0.25 }}
             className="fixed inset-0 z-40 lg:hidden"
+            style={{ background: "var(--bg)" }}
           >
-            <div
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 h-full w-80 max-w-full bg-white dark:bg-slate-900 shadow-2xl"
-            >
-              <div className="p-6 pt-20">
-                <div className="flex flex-col gap-2">
-                  {navLinks.map((link) => (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="px-4 py-3 rounded-xl text-slate-700 dark:text-slate-300 font-medium hover:bg-fabric-50 dark:hover:bg-slate-800 hover:text-fabric-700 dark:hover:text-fabric-400 transition-colors"
-                    >
-                      {link.name}
-                    </a>
-                  ))}
-                </div>
-                <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
-                  <span className="text-sm text-slate-500 dark:text-slate-400">Theme</span>
-                  <ThemeToggle />
-                </div>
-                <div className="mt-6">
-                  <a
-                    href="#contact"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full text-center px-5 py-3 rounded-xl bg-fabric-700 text-white font-semibold hover:bg-fabric-800 transition-colors"
+            <div className="shell flex h-full flex-col pb-10 pt-[var(--nav-h)]">
+              <ul className="mt-8 flex-1">
+                {navLinks.map((link, i) => (
+                  <motion.li
+                    key={link.name}
+                    initial={reduced ? false : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: reduced ? 0 : 0.04 * i, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="border-b border-rule"
                   >
-                    Book Free Consultation
-                  </a>
-                </div>
+                    <a
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-baseline justify-between py-5"
+                    >
+                      <span className="font-serif text-2xl">{link.name}</span>
+                      <span className="label nums text-subtle">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+
+              <div className="flex items-center justify-between gap-4">
+                <ThemeToggle />
+                <a
+                  href="#contact"
+                  onClick={() => setIsOpen(false)}
+                  className="label inline-flex h-11 flex-1 items-center justify-center rounded-full"
+                  style={{ background: "var(--fg)", color: "var(--bg)" }}
+                >
+                  Start a project
+                </a>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </>
   );

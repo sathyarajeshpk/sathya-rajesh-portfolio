@@ -1,23 +1,66 @@
-<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="720" rx="36" fill="#111827"/>
-  <rect x="42" y="42" width="1116" height="636" rx="30" fill="url(#bg)"/>
-  <circle cx="958" cy="164" r="146" fill="#22D3EE" fill-opacity="0.12"/>
-  <circle cx="264" cy="594" r="176" fill="#A78BFA" fill-opacity="0.12"/>
-  <rect x="118" y="170" width="356" height="296" rx="30" fill="#020617" fill-opacity="0.54" stroke="#C4B5FD" stroke-opacity="0.22"/>
-  <rect x="518" y="170" width="570" height="128" rx="30" fill="#020617" fill-opacity="0.46" stroke="#67E8F9" stroke-opacity="0.22"/>
-  <rect x="518" y="336" width="570" height="130" rx="30" fill="#020617" fill-opacity="0.46" stroke="#A78BFA" stroke-opacity="0.22"/>
-  <circle cx="226" cy="258" r="46" fill="#C4B5FD"/>
-  <circle cx="356" cy="258" r="46" fill="#67E8F9"/>
-  <circle cx="291" cy="340" r="54" fill="#A78BFA"/>
-  <path d="M614 234H988" stroke="#E9D5FF" stroke-width="14" stroke-linecap="round"/>
-  <path d="M614 394H924" stroke="#BFDBFE" stroke-width="14" stroke-linecap="round"/>
-  <path d="M614 432H852" stroke="#E9D5FF" stroke-width="14" stroke-linecap="round"/>
-  <text x="112" y="92" fill="white" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">HR Analytics Dashboard</text>
-  <text x="112" y="578" fill="#DDD6FE" font-family="Inter, Arial, sans-serif" font-size="20">Workforce insights across hiring, attrition, and performance</text>
-  <defs>
-    <linearGradient id="bg" x1="90" y1="68" x2="1112" y2="656" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#312E81"/>
-      <stop offset="1" stop-color="#0F172A"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Attrition by department shown as small multiples with a hiring funnel">
+  <rect width="800" height="450" fill="#EFEDE8"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="1.6" fill="#6B655B">
+    <text x="48" y="46">ATTRITION BY DEPARTMENT — 8 QUARTERS</text>
+  </g>
+  <line x1="48" y1="62" x2="752" y2="62" stroke="#C4BEB2"/>
+
+  <!-- Small multiples: 4 sparkline panels -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.2">
+    <!-- Panel 1 -->
+    <text x="48" y="94" fill="#6B655B">ENGINEERING</text>
+    <line x1="48" y1="160" x2="212" y2="160" stroke="#C4BEB2"/>
+    <polyline points="48,140 71,132 94,144 117,126 140,134 163,118 186,124 209,112" fill="none" stroke="#141416" stroke-width="1.5"/>
+    <text x="48" y="180" fill="#141416" font-family="Georgia, serif" font-size="16">8.2%</text>
+
+    <!-- Panel 2 -->
+    <text x="240" y="94" fill="#6B655B">OPERATIONS</text>
+    <line x1="240" y1="160" x2="404" y2="160" stroke="#C4BEB2"/>
+    <polyline points="240,120 263,126 286,116 309,130 332,138 355,148 378,142 401,152" fill="none" stroke="#141416" stroke-width="1.5"/>
+    <text x="240" y="180" fill="#141416" font-family="Georgia, serif" font-size="16">11.4%</text>
+
+    <!-- Panel 3 — the outlier -->
+    <text x="432" y="94" fill="#B4552B">SUPPORT</text>
+    <line x1="432" y1="160" x2="596" y2="160" stroke="#C4BEB2"/>
+    <polyline points="432,144 455,138 478,128 501,118 524,106 547,98 570,88 593,78" fill="none" stroke="#B4552B" stroke-width="2"/>
+    <text x="432" y="180" fill="#B4552B" font-family="Georgia, serif" font-size="16">19.7%</text>
+
+    <!-- Panel 4 -->
+    <text x="624" y="94" fill="#6B655B">FINANCE</text>
+    <line x1="624" y1="160" x2="752" y2="160" stroke="#C4BEB2"/>
+    <polyline points="624,134 645,138 666,132 687,136 708,130 729,134 750,128" fill="none" stroke="#141416" stroke-width="1.5"/>
+    <text x="624" y="180" fill="#141416" font-family="Georgia, serif" font-size="16">6.1%</text>
+  </g>
+
+  <line x1="48" y1="212" x2="752" y2="212" stroke="#C4BEB2"/>
+
+  <!-- Hiring funnel -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.3" fill="#6B655B">
+    <text x="48" y="240">HIRING FUNNEL</text>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.2">
+    <text x="48" y="272" fill="#6B655B">APPLIED</text>
+    <rect x="150" y="260" width="440" height="16" fill="#141416"/>
+    <text x="604" y="272" fill="#141416">2,410</text>
+
+    <text x="48" y="302" fill="#6B655B">SCREENED</text>
+    <rect x="150" y="290" width="264" height="16" fill="#141416"/>
+    <text x="604" y="302" fill="#141416">1,446</text>
+
+    <text x="48" y="332" fill="#6B655B">INTERVIEWED</text>
+    <rect x="150" y="320" width="128" height="16" fill="#141416"/>
+    <text x="604" y="332" fill="#141416">701</text>
+
+    <text x="48" y="362" fill="#6B655B">OFFERED</text>
+    <rect x="150" y="350" width="52" height="16" fill="#141416"/>
+    <text x="604" y="362" fill="#141416">285</text>
+
+    <text x="48" y="392" fill="#B4552B">ACCEPTED</text>
+    <rect x="150" y="380" width="38" height="16" fill="#B4552B"/>
+    <text x="604" y="392" fill="#B4552B">209</text>
+  </g>
+  <line x1="150" y1="410" x2="752" y2="410" stroke="#C4BEB2"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.2" fill="#6B655B">
+    <text x="150" y="428">APACHE SUPERSET · REFRESHED NIGHTLY</text>
+  </g>
 </svg>

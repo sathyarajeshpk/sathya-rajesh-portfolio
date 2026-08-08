@@ -1,209 +1,191 @@
 "use client";
 
-import { AnimatePresence, motion, useInView } from "framer-motion";
-import Image from "next/image";
-import { useRef, useState } from "react";
-import { Calendar, Clock, Sparkles, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Reveal from "@/components/site/Reveal";
+import SectionHeader from "@/components/site/SectionHeader";
 
 const posts = [
   {
-    title: "Building Production-Grade Delta Lake Architectures on Azure Databricks",
+    title: "Building production-grade Delta Lake architectures on Azure Databricks",
+    date: "15 Jan 2025",
+    readTime: "8 min",
+    category: "Data engineering",
     excerpt:
-      "A deep dive into implementing incremental load strategies, MERGE operations, and time-travel capabilities for enterprise data lakes.",
-    date: "Jan 15, 2025",
-    readTime: "8 min read",
-    category: "Data Engineering",
-    image: "/images/blog/delta-lake.svg",
-    insight:
-      "The article explains how to combine bronze, silver, and gold layers with reliable merge patterns so analytics teams get fresh data without brittle nightly reloads.",
-    bullets: [
-      "Use CDC-friendly merge pipelines to keep large fact tables current.",
-      "Adopt Delta time travel for auditability and safer incident recovery.",
-      "Tune partitioning and file sizes early to avoid long-term performance drift.",
+      "Incremental load strategies, MERGE semantics, and time travel — the parts of a lakehouse that decide whether it survives its second year.",
+    summary:
+      "How to combine bronze, silver, and gold layers with merge patterns that keep analytics fresh without brittle nightly reloads.",
+    points: [
+      "Use CDC-friendly merge pipelines to keep large fact tables current",
+      "Adopt Delta time travel for auditability and safer incident recovery",
+      "Tune partitioning and file sizes early to avoid long-term performance drift",
     ],
   },
   {
-    title: "From Natural Language to SQL: Architecting NL2SQL Systems",
+    title: "From natural language to SQL: architecting NL2SQL systems",
+    date: "22 Dec 2024",
+    readTime: "6 min",
+    category: "Applied AI",
     excerpt:
-      "How to design AI-powered query interfaces that let business users interact with databases using plain English.",
-    date: "Dec 22, 2024",
-    readTime: "6 min read",
-    category: "AI",
-    image: "/images/blog/nl2sql-blog.svg",
-    insight:
-      "This piece focuses on making AI query systems useful in production by grounding prompts in business definitions, approved schemas, and human-readable explanations.",
-    bullets: [
-      "Map user intent to curated semantic layers before generating SQL.",
-      "Return explanations and assumptions alongside every generated query.",
-      "Add guardrails for row limits, access policies, and confidence thresholds.",
+      "Getting a model to emit SQL is the easy half. Making business users trust the answer is the engineering problem worth writing about.",
+    summary:
+      "Making AI query systems useful in production by grounding prompts in business definitions, approved schemas, and human-readable explanations.",
+    points: [
+      "Map user intent to curated semantic layers before generating SQL",
+      "Return explanations and assumptions alongside every generated query",
+      "Add guardrails for row limits, access policies, and confidence thresholds",
     ],
   },
   {
-    title: "Migrating 50TB to Azure: Lessons from the Field",
-    excerpt:
-      "Real-world strategies for large-scale cloud migrations including cost optimization, performance tuning, and zero-downtime cutover.",
-    date: "Nov 10, 2024",
-    readTime: "10 min read",
+    title: "Migrating 50TB to Azure: lessons from the field",
+    date: "10 Nov 2024",
+    readTime: "10 min",
     category: "Cloud",
-    image: "/images/blog/migration.svg",
-    insight:
-      "The migration walkthrough highlights how to phase bulk loads, validate parity, and coordinate cutover windows so operations teams can move fast without breaking reporting.",
-    bullets: [
-      "Benchmark network throughput and compression before the first full load.",
-      "Run dual-write or dual-read validation during the stabilization window.",
-      "Track rollback checkpoints so business teams stay confident during cutover.",
+    excerpt:
+      "Cost, throughput, and the cutover weekend. What the migration plan looked like on paper versus what actually happened.",
+    summary:
+      "Phasing bulk loads, validating parity, and coordinating cutover windows so operations teams can move fast without breaking reporting.",
+    points: [
+      "Benchmark network throughput and compression before the first full load",
+      "Run dual-write or dual-read validation during the stabilisation window",
+      "Track rollback checkpoints so business teams stay confident during cutover",
     ],
   },
 ];
 
+type Post = (typeof posts)[number];
+
 export default function Blog() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [selectedPost, setSelectedPost] = useState<(typeof posts)[number] | null>(null);
+  const [selected, setSelected] = useState<Post | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const lastFocused = useRef<HTMLElement | null>(null);
+  const reduced = useReducedMotion();
+
+  const close = useCallback(() => setSelected(null), []);
+
+  useEffect(() => {
+    if (!selected) {
+      lastFocused.current?.focus();
+      return;
+    }
+    lastFocused.current = document.activeElement as HTMLElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [selected, close]);
 
   return (
-    <section id="blog" className="relative bg-slate-50 py-24 dark:bg-cyber-midnight lg:py-32">
-      <div className="container-custom">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-block rounded-full bg-fabric-100 px-4 py-1.5 text-sm font-semibold text-fabric-700 dark:bg-cyber-cyan/10 dark:text-cyber-cyan"
-          >
-            Blog
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-6 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl lg:text-5xl"
-          >
-            Insights & <span className="text-gradient">Thought Leadership</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-slate-600 dark:text-slate-400"
-          >
-            Deep dives into data engineering, AI implementation, and cloud architecture.
-          </motion.p>
-        </div>
+    <section id="blog" className="py-20 lg:py-28">
+      <div className="shell">
+        <SectionHeader
+          index="07"
+          label="Writing"
+          title="Notes from the work."
+          intro="Summaries of longer pieces on data engineering, applied AI, and cloud migration."
+        />
 
-        <div ref={ref} className="grid gap-6 md:grid-cols-3">
-          {posts.map((post, index) => (
-            <motion.article
-              key={post.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group overflow-hidden rounded-2xl border border-slate-100 bg-white transition-all duration-300 hover:border-cyber-cyan/30 hover:shadow-xl hover:shadow-cyber-cyan/5 dark:border-cyber-border dark:bg-cyber-graphite dark:hover:border-cyber-cyan/40 dark:hover:shadow-cyber-cyan/10"
-            >
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <span className="w-fit rounded-full border border-white/20 bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-md dark:border-cyber-cyan/30 dark:bg-cyber-cyan/20 dark:text-cyber-cyan">
-                    {post.category}
-                  </span>
+        <div className="mt-14 grid gap-x-10 md:grid-cols-3">
+          {posts.map((post, i) => (
+            <Reveal as="article" key={post.title} delay={0.05 * i}>
+              <div className="flex h-full flex-col border-t border-rule pt-6">
+                <div className="mb-5 flex items-baseline justify-between gap-4">
+                  <span className="label text-accent">{post.category}</span>
+                  <span className="label nums text-subtle">{post.date}</span>
                 </div>
-              </div>
-              <div className="p-6">
-                <div className="mb-3 flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5" />
-                    {post.date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3.5 w-3.5" />
-                    {post.readTime}
-                  </span>
-                </div>
-                <h3 className="mb-2 line-clamp-2 text-lg font-bold text-slate-900 transition-colors group-hover:text-fabric-700 dark:text-white dark:group-hover:text-cyber-cyan">
+
+                <h3 className="text-xl font-normal leading-snug sm:text-[1.375rem]">
                   {post.title}
                 </h3>
-                <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  {post.excerpt}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSelectedPost(post)}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-fabric-700 dark:text-cyber-cyan"
-                >
-                  Read Article {"->"}
-                </button>
+                <p className="mt-3 leading-relaxed text-muted">{post.excerpt}</p>
+
+                <div className="flex-1" />
+
+                <div className="mt-7 flex items-center justify-between gap-4 pb-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelected(post)}
+                    className="label link-underline text-muted hover:text-[var(--fg)]"
+                  >
+                    Read the summary
+                    <span aria-hidden="true">&rarr;</span>
+                  </button>
+                  <span className="label nums text-subtle">{post.readTime}</span>
+                </div>
               </div>
-            </motion.article>
+            </Reveal>
           ))}
         </div>
       </div>
 
       <AnimatePresence>
-        {selectedPost ? (
+        {selected ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4 backdrop-blur-sm"
-            onClick={() => setSelectedPost(null)}
+            transition={{ duration: reduced ? 0 : 0.2 }}
+            className="fixed inset-0 z-[60] flex items-end justify-center p-0 sm:items-center sm:p-6"
+            style={{ background: "rgba(10,10,11,0.6)" }}
+            onClick={close}
           >
             <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="relative w-full max-w-2xl overflow-hidden rounded-[28px] border border-white/10 bg-white shadow-2xl dark:bg-slate-900"
-              onClick={(event) => event.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="post-title"
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+              transition={{ duration: reduced ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-[88vh] w-full max-w-2xl overflow-y-auto border border-rule p-7 sm:p-10"
+              style={{ background: "var(--bg)" }}
             >
-              <div className="relative h-48">
-                <Image src={selectedPost.image} alt={selectedPost.title} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+              <div className="mb-6 flex items-start justify-between gap-6">
+                <div>
+                  <span className="label text-accent">{selected.category}</span>
+                  <p className="label nums mt-2 text-subtle">
+                    {selected.date} · {selected.readTime}
+                  </p>
+                </div>
                 <button
+                  ref={closeRef}
                   type="button"
-                  onClick={() => setSelectedPost(null)}
-                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-950/60 text-white backdrop-blur-sm"
+                  onClick={close}
+                  className="label shrink-0 rounded-full border border-rule px-3 py-1.5 text-subtle transition-colors hover:text-[var(--fg)]"
                 >
-                  <X className="h-5 w-5" />
+                  Close
                 </button>
-                <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
-                    <Sparkles className="h-3.5 w-3.5" />
-                    Quick article preview
-                  </div>
-                  <h3 className="max-w-xl text-2xl font-bold">{selectedPost.title}</h3>
-                </div>
               </div>
-              <div className="space-y-5 p-6">
-                <p className="text-sm leading-7 text-slate-600 dark:text-slate-300">{selectedPost.insight}</p>
-                <div className="rounded-2xl bg-slate-50 p-5 dark:bg-slate-800/70">
-                  <div className="mb-3 text-sm font-semibold text-slate-900 dark:text-white">What you will learn</div>
-                  <div className="space-y-3">
-                    {selectedPost.bullets.map((bullet) => (
-                      <div key={bullet} className="flex gap-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                        <span className="mt-2 h-2 w-2 rounded-full bg-fabric-600 dark:bg-cyber-cyan" />
-                        <span>{bullet}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="text-xs text-slate-500 dark:text-slate-400">
-                    {selectedPost.category} | {selectedPost.readTime}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedPost(null)}
-                    className="rounded-xl bg-fabric-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-fabric-800"
-                  >
-                    Nice, thanks
-                  </button>
-                </div>
+
+              <h3 id="post-title" className="text-display-sm font-normal">
+                {selected.title}
+              </h3>
+
+              <p className="mt-6 text-lg leading-relaxed text-muted">{selected.summary}</p>
+
+              <div className="mt-8 border-t border-rule pt-6">
+                <p className="label mb-4 text-subtle">What it covers</p>
+                <ul className="space-y-3">
+                  {selected.points.map((point) => (
+                    <li key={point} className="flex gap-3 leading-relaxed text-muted">
+                      <span
+                        aria-hidden="true"
+                        className="mt-[0.7em] inline-block h-px w-3 shrink-0"
+                        style={{ background: "var(--accent)" }}
+                      />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           </motion.div>

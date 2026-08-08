@@ -1,14 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { Send, CheckCircle, Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+import { useEffect, useId, useState } from "react";
+import Reveal from "@/components/site/Reveal";
+import SectionHeader from "@/components/site/SectionHeader";
+import { Field, Input, Select, Textarea } from "@/components/ui/field";
+import { PREFILL_EVENT, type PrefillDetail } from "@/lib/prefill";
 
 const services = [
+  "Azure Data Engineering",
+  "Azure Data Factory",
+  "Azure Databricks",
+  "Microsoft Fabric",
+  "Data Warehousing",
+  "Power BI Dashboard",
+  "Business Intelligence",
+  "Analytics",
+  "AI Solution",
+  "Automation",
   "Business Website",
   "Corporate Website",
   "Landing Page",
@@ -16,266 +24,280 @@ const services = [
   "Web Application",
   "Android App",
   "iOS App",
-  "AI Solution",
-  "Microsoft Fabric",
-  "Power BI Dashboard",
-  "Azure Data Engineering",
-  "Azure Data Factory",
-  "Azure Databricks",
-  "Data Warehousing",
-  "Business Intelligence",
-  "Analytics",
-  "Automation",
-  "Training",
   "Consulting",
+  "Training",
   "Other",
 ];
 
 const budgets = [
-  "Under INR 5,00,000",
-  "INR 5,00,000 - INR 15,00,000",
-  "INR 15,00,000 - INR 50,00,000",
-  "INR 50,00,000+",
-  "Enterprise (Contact for Quote)",
+  "Under ₹5,00,000",
+  "₹5,00,000 – ₹15,00,000",
+  "₹15,00,000 – ₹50,00,000",
+  "₹50,00,000+",
+  "Enterprise — contact for quote",
 ];
 
 const timelines = [
   "Less than 1 month",
-  "1-2 months",
-  "3-6 months",
+  "1–2 months",
+  "3–6 months",
   "6+ months",
-  "Ongoing / Retainer",
+  "Ongoing / retainer",
 ];
 
+type Status = { state: "idle" } | { state: "sending" } | { state: "sent" } | { state: "error"; message: string };
+
 export default function Contact() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedService, setSelectedService] = useState("");
-  const [descriptionValue, setDescriptionValue] = useState("");
+  const id = useId();
+  const [status, setStatus] = useState<Status>({ state: "idle" });
+  const [service, setService] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
-    const handlePrefill = (event: Event) => {
-      const customEvent = event as CustomEvent<{ service?: string; description?: string }>;
-
-      if (customEvent.detail?.service) {
-        setSelectedService(customEvent.detail.service);
-      }
-
-      if (customEvent.detail?.description) {
-        setDescriptionValue((currentValue) => currentValue || customEvent.detail?.description || "");
-      }
-
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<PrefillDetail>).detail;
+      if (detail?.service) setService(detail.service);
+      if (detail?.description) setDescription((current) => current || detail.description || "");
+      setStatus((current) => (current.state === "sent" ? { state: "idle" } : current));
       document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
     };
-
-    window.addEventListener("portfolio:prefill-service", handlePrefill as EventListener);
-    return () => {
-      window.removeEventListener("portfolio:prefill-service", handlePrefill as EventListener);
-    };
+    window.addEventListener(PREFILL_EVENT, handler);
+    return () => window.removeEventListener(PREFILL_EVENT, handler);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
     const form = e.currentTarget;
     const formData = new FormData(form);
+    const payload = Object.fromEntries(
+      ["name", "company", "email", "phone", "country", "service", "budget", "timeline", "description"].map(
+        (key) => [key, String(formData.get(key) ?? "").trim()]
+      )
+    );
 
-    const data = {
-      name: formData.get("name") as string,
-      company: formData.get("company") as string,
-      email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
-      country: formData.get("country") as string,
-      service: formData.get("service") as string,
-      budget: formData.get("budget") as string,
-      timeline: formData.get("timeline") as string,
-      description: formData.get("description") as string,
-    };
+    setStatus({ state: "sending" });
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
-
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
 
       if (response.ok && result.success) {
-        setIsSubmitted(true);
+        setStatus({ state: "sent" });
         form.reset();
-        setSelectedService("");
-        setDescriptionValue("");
+        setService("");
+        setDescription("");
       } else {
-        alert("Error: " + (result.message || "Something went wrong. Please try again."));
-        console.error("Server error:", result);
+        setStatus({
+          state: "error",
+          message:
+            result.message ||
+            "That didn't go through. Please try again, or email sathyarajeshpk@gmail.com directly.",
+        });
       }
-    } catch (error) {
-      console.error("Network error:", error);
-      alert("Network error. Please check your connection and try again.");
-    } finally {
-      setIsSubmitting(false);
+    } catch {
+      setStatus({
+        state: "error",
+        message:
+          "Couldn't reach the server. Check your connection, or email sathyarajeshpk@gmail.com directly.",
+      });
     }
   };
 
   return (
-    <section id="contact" className="relative bg-white py-24 dark:bg-slate-950 lg:py-32">
-      <div className="container-custom">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-block rounded-full bg-fabric-100 px-4 py-1.5 text-sm font-semibold text-fabric-700 dark:bg-fabric-900/30 dark:text-fabric-400"
-          >
-            Contact
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-6 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl lg:text-5xl"
-          >
-            Start Your <span className="text-gradient">Project</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-slate-600 dark:text-slate-400"
-          >
-            Tell me about your project. I&apos;ll respond within 24 hours.
-          </motion.p>
-        </div>
-
-        <div ref={ref} className="mx-auto max-w-4xl">
-          {isSubmitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="rounded-3xl border border-slate-100 bg-slate-50 p-12 text-center dark:border-slate-800 dark:bg-slate-900"
-            >
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-                <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
+    <section id="contact" className="py-20 lg:py-28">
+      <div className="shell">
+        <SectionHeader
+          index="09"
+          label="Contact"
+          title={
+            <>
+              Tell me what you&rsquo;re building.
+              <br />I reply within a working day.
+            </>
+          }
+          aside={
+            <div className="space-y-4">
+              <div>
+                <p className="label mb-1 text-subtle">Email</p>
+                <a
+                  href="mailto:sathyarajeshpk@gmail.com"
+                  className="link-underline text-[0.9375rem]"
+                >
+                  sathyarajeshpk@gmail.com
+                </a>
               </div>
-              <h3 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">Message Sent!</h3>
-              <p className="mb-6 text-slate-600 dark:text-slate-400">
-                Thank you for reaching out. I&apos;ll review your project details and get back to you within 24 hours.
-              </p>
-              <Button onClick={() => setIsSubmitted(false)} variant="outline">
-                Send Another Message
-              </Button>
-            </motion.div>
-          ) : (
-            <motion.form
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              onSubmit={handleSubmit}
-              className="rounded-3xl border border-slate-100 bg-slate-50 p-8 dark:border-slate-800 dark:bg-slate-900 md:p-12"
-            >
-              <div className="mb-6 grid gap-6 sm:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Full Name *</label>
-                  <Input name="name" required placeholder="John Doe" />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Company</label>
-                  <Input name="company" placeholder="Acme Inc." />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Email *</label>
-                  <Input name="email" type="email" required placeholder="john@company.com" />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Phone</label>
-                  <Input name="phone" type="tel" placeholder="+91 98765 43210" />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Country</label>
-                  <Input name="country" placeholder="India" />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Service Needed *</label>
-                  <Select
-                    name="service"
-                    required
-                    value={selectedService}
-                    onChange={(event) => setSelectedService(event.target.value)}
+              <div>
+                <p className="label mb-1 text-subtle">Phone</p>
+                <a href="tel:+919597996996" className="link-underline nums text-[0.9375rem]">
+                  +91 95979 96996
+                </a>
+              </div>
+            </div>
+          }
+        />
+
+        <div className="mt-14 grid gap-x-10 md:grid-cols-12">
+          <div className="md:col-span-12 lg:col-span-9 lg:col-start-3">
+            {status.state === "sent" ? (
+              <Reveal>
+                <div className="border-t border-rule py-16">
+                  <p className="label text-accent">Received</p>
+                  <h3 className="mt-5 text-display-sm font-normal">
+                    Thank you — that&rsquo;s in my inbox.
+                  </h3>
+                  <p className="mt-5 max-w-measure text-lg leading-relaxed text-muted">
+                    I read every enquiry myself and will come back to you within one working day.
+                    If it&rsquo;s urgent, call or WhatsApp{" "}
+                    <a href="tel:+919597996996" className="link-underline nums text-[var(--fg)]">
+                      +91 95979 96996
+                    </a>
+                    .
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setStatus({ state: "idle" })}
+                    className="label link-underline mt-8 text-muted hover:text-[var(--fg)]"
                   >
-                    <option value="">Select a service...</option>
-                    {services.map((service) => (
-                      <option key={service} value={service}>
-                        {service}
-                      </option>
-                    ))}
-                  </Select>
+                    Send another enquiry <span aria-hidden="true">&rarr;</span>
+                  </button>
                 </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Budget Range</label>
-                  <Select name="budget">
-                    <option value="">Select budget...</option>
-                    {budgets.map((budget) => (
-                      <option key={budget} value={budget}>
-                        {budget}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Timeline</label>
-                  <Select name="timeline">
-                    <option value="">Select timeline...</option>
-                    {timelines.map((timeline) => (
-                      <option key={timeline} value={timeline}>
-                        {timeline}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-              </div>
+              </Reveal>
+            ) : (
+              <Reveal>
+                <form onSubmit={handleSubmit} noValidate={false} className="border-t border-rule pt-10">
+                  <fieldset
+                    disabled={status.state === "sending"}
+                    className="transition-opacity duration-200 disabled:opacity-60"
+                  >
+                    <legend className="sr-only">Project enquiry</legend>
 
-              <div className="mb-6">
-                <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Project Description *</label>
-                <Textarea
-                  name="description"
-                  required
-                  placeholder="Describe your project, goals, and any specific requirements..."
-                  value={descriptionValue}
-                  onChange={(event) => setDescriptionValue(event.target.value)}
-                />
-              </div>
+                    <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+                      <Field label="Full name" htmlFor={`${id}-name`} required>
+                        <Input id={`${id}-name`} name="name" required placeholder="Your name" autoComplete="name" />
+                      </Field>
 
-              <div className="mb-8">
-                <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Attachment</label>
-                <Input
-                  name="attachment"
-                  type="file"
-                  className="file:mr-4 file:rounded-lg file:border-0 file:bg-fabric-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-fabric-700 hover:file:bg-fabric-100"
-                />
-                <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
-                  Upload RFP, architecture diagrams, or reference materials (Max 10MB)
-                </p>
-              </div>
+                      <Field label="Company" htmlFor={`${id}-company`}>
+                        <Input id={`${id}-company`} name="company" placeholder="Optional" autoComplete="organization" />
+                      </Field>
 
-              <Button type="submit" disabled={isSubmitting} className="h-auto w-full px-8 py-3 text-base sm:w-auto">
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2 h-5 w-5" />
-                    Send Enquiry
-                  </>
-                )}
-              </Button>
-            </motion.form>
-          )}
+                      <Field label="Email" htmlFor={`${id}-email`} required>
+                        <Input
+                          id={`${id}-email`}
+                          name="email"
+                          type="email"
+                          required
+                          placeholder="you@company.com"
+                          autoComplete="email"
+                        />
+                      </Field>
+
+                      <Field label="Phone" htmlFor={`${id}-phone`}>
+                        <Input
+                          id={`${id}-phone`}
+                          name="phone"
+                          type="tel"
+                          placeholder="Optional"
+                          autoComplete="tel"
+                        />
+                      </Field>
+
+                      <Field label="Country" htmlFor={`${id}-country`}>
+                        <Input
+                          id={`${id}-country`}
+                          name="country"
+                          placeholder="Optional"
+                          autoComplete="country-name"
+                        />
+                      </Field>
+
+                      <Field label="Service needed" htmlFor={`${id}-service`} required>
+                        <Select
+                          id={`${id}-service`}
+                          name="service"
+                          required
+                          value={service}
+                          onChange={(e) => setService(e.target.value)}
+                        >
+                          <option value="">Select a service</option>
+                          {services.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </Select>
+                      </Field>
+
+                      <Field label="Budget range" htmlFor={`${id}-budget`}>
+                        <Select id={`${id}-budget`} name="budget">
+                          <option value="">Prefer not to say</option>
+                          {budgets.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </Select>
+                      </Field>
+
+                      <Field label="Timeline" htmlFor={`${id}-timeline`}>
+                        <Select id={`${id}-timeline`} name="timeline">
+                          <option value="">Not sure yet</option>
+                          {timelines.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </Select>
+                      </Field>
+
+                      <Field
+                        label="What are you trying to solve?"
+                        htmlFor={`${id}-description`}
+                        required
+                        className="sm:col-span-2"
+                        hint="Have an RFP or architecture diagram? Email it to sathyarajeshpk@gmail.com and I'll match it to your enquiry."
+                      >
+                        <Textarea
+                          id={`${id}-description`}
+                          name="description"
+                          required
+                          maxLength={5000}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          placeholder="The current setup, what's going wrong, and what a good outcome looks like."
+                        />
+                      </Field>
+                    </div>
+
+                    <div className="mt-10 flex flex-wrap items-center gap-6 border-t border-rule pt-8">
+                      <button
+                        type="submit"
+                        className="label inline-flex h-12 items-center rounded-full px-7 transition-opacity duration-200 hover:opacity-85 disabled:cursor-wait"
+                        style={{ background: "var(--fg)", color: "var(--bg)" }}
+                      >
+                        {status.state === "sending" ? "Sending…" : "Send enquiry"}
+                      </button>
+                      <p className="label text-subtle">No newsletter. No CRM sequence.</p>
+                    </div>
+                  </fieldset>
+
+                  <div aria-live="polite" className="mt-6 empty:mt-0">
+                    {status.state === "error" ? (
+                      <p
+                        className="border-l-2 py-2 pl-4 text-[0.9375rem]"
+                        style={{ borderColor: "var(--accent)", color: "var(--fg)" }}
+                      >
+                        {status.message}
+                      </p>
+                    ) : null}
+                  </div>
+                </form>
+              </Reveal>
+            )}
+          </div>
         </div>
       </div>
     </section>
