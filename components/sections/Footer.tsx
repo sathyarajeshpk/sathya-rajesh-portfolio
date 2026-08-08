@@ -91,7 +91,7 @@ export default function Footer() {
 
         <div className="label mt-16 flex flex-col gap-3 border-t border-rule pt-6 text-subtle sm:flex-row sm:items-center sm:justify-between">
           <span className="nums">© {new Date().getFullYear()} Sathya Rajesh PK</span>
-          <span>Next.js · Tailwind · Vercel</span>
+          <span>Designed &amp; built in Chennai</span>
         </div>
       </div>
     </footer>

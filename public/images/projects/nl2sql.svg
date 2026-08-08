@@ -1,53 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Natural language question resolved through a semantic layer into validated SQL and a chart">
-  <rect width="800" height="450" fill="#EFEDE8"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="1.6" fill="#6B655B">
+  <rect width="800" height="450" fill="#E9EBEF"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="1.6" fill="#697080">
     <text x="48" y="46">QUESTION → SEMANTIC LAYER → SQL</text>
   </g>
-  <line x1="48" y1="62" x2="752" y2="62" stroke="#C4BEB2"/>
+  <line x1="48" y1="62" x2="752" y2="62" stroke="#BFC5CF"/>
 
   <!-- The question -->
-  <g font-family="Georgia, serif" font-size="21" fill="#141416">
+  <g font-family="Georgia, serif" font-size="21" fill="#13151A">
     <text x="48" y="112">&#8220;Which regions missed target last quarter?&#8221;</text>
   </g>
-  <line x1="48" y1="132" x2="470" y2="132" stroke="#B4552B" stroke-width="1.5"/>
+  <line x1="48" y1="132" x2="470" y2="132" stroke="#175E68" stroke-width="1.5"/>
 
   <!-- Resolution steps -->
   <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.3">
-    <text x="48" y="176" fill="#6B655B">01</text>
-    <text x="82" y="176" fill="#141416">RESOLVE ENTITIES</text>
-    <text x="300" y="176" fill="#6B655B">region · target · fiscal quarter</text>
+    <text x="48" y="176" fill="#697080">01</text>
+    <text x="82" y="176" fill="#13151A">RESOLVE ENTITIES</text>
+    <text x="300" y="176" fill="#697080">region · target · fiscal quarter</text>
 
-    <text x="48" y="204" fill="#6B655B">02</text>
-    <text x="82" y="204" fill="#141416">BIND TO MODEL</text>
-    <text x="300" y="204" fill="#6B655B">gold.fct_sales · gold.dim_region</text>
+    <text x="48" y="204" fill="#697080">02</text>
+    <text x="82" y="204" fill="#13151A">BIND TO MODEL</text>
+    <text x="300" y="204" fill="#697080">gold.fct_sales · gold.dim_region</text>
 
-    <text x="48" y="232" fill="#6B655B">03</text>
-    <text x="82" y="232" fill="#141416">APPLY GUARDRAILS</text>
-    <text x="300" y="232" fill="#6B655B">row limit · RLS · confidence</text>
+    <text x="48" y="232" fill="#697080">03</text>
+    <text x="82" y="232" fill="#13151A">APPLY GUARDRAILS</text>
+    <text x="300" y="232" fill="#697080">row limit · RLS · confidence</text>
   </g>
-  <line x1="48" y1="150" x2="752" y2="150" stroke="#C4BEB2" stroke-dasharray="3 3"/>
-  <line x1="48" y1="248" x2="752" y2="248" stroke="#C4BEB2" stroke-dasharray="3 3"/>
+  <line x1="48" y1="150" x2="752" y2="150" stroke="#BFC5CF" stroke-dasharray="3 3"/>
+  <line x1="48" y1="248" x2="752" y2="248" stroke="#BFC5CF" stroke-dasharray="3 3"/>
 
   <!-- Generated SQL -->
-  <rect x="48" y="278" width="392" height="136" fill="none" stroke="#141416"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.3" fill="#6B655B">
+  <rect x="48" y="278" width="392" height="136" fill="none" stroke="#13151A"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.3" fill="#697080">
     <text x="66" y="302">GENERATED SQL — SHOWN TO THE USER</text>
   </g>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#141416">
-    <text x="66" y="328"><tspan fill="#B4552B">SELECT</tspan> r.name, SUM(s.amount)</text>
-    <text x="66" y="348"><tspan fill="#B4552B">FROM</tspan> gold.fct_sales s</text>
-    <text x="66" y="368"><tspan fill="#B4552B">JOIN</tspan> gold.dim_region r <tspan fill="#B4552B">USING</tspan>(region_id)</text>
-    <text x="66" y="388"><tspan fill="#B4552B">WHERE</tspan> s.fiscal_q = <tspan fill="#6B655B">'2024Q4'</tspan></text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#13151A">
+    <text x="66" y="328"><tspan fill="#175E68">SELECT</tspan> r.name, SUM(s.amount)</text>
+    <text x="66" y="348"><tspan fill="#175E68">FROM</tspan> gold.fct_sales s</text>
+    <text x="66" y="368"><tspan fill="#175E68">JOIN</tspan> gold.dim_region r <tspan fill="#175E68">USING</tspan>(region_id)</text>
+    <text x="66" y="388"><tspan fill="#175E68">WHERE</tspan> s.fiscal_q = <tspan fill="#697080">'2024Q4'</tspan></text>
   </g>
 
   <!-- Result chart -->
-  <rect x="472" y="278" width="280" height="136" fill="none" stroke="#141416"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.3" fill="#6B655B">
+  <rect x="472" y="278" width="280" height="136" fill="none" stroke="#13151A"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.3" fill="#697080">
     <text x="490" y="302">RESULT</text>
   </g>
   <!-- target line -->
-  <line x1="490" y1="340" x2="734" y2="340" stroke="#B4552B" stroke-dasharray="4 3"/>
-  <g fill="#141416">
+  <line x1="490" y1="340" x2="734" y2="340" stroke="#175E68" stroke-dasharray="4 3"/>
+  <g fill="#13151A">
     <rect x="500" y="326" width="26" height="66"/>
     <rect x="540" y="348" width="26" height="44"/>
     <rect x="580" y="318" width="26" height="74"/>
@@ -55,8 +55,8 @@
     <rect x="660" y="332" width="26" height="60"/>
     <rect x="700" y="362" width="26" height="30"/>
   </g>
-  <line x1="490" y1="392" x2="734" y2="392" stroke="#C4BEB2"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" letter-spacing="1" fill="#B4552B">
+  <line x1="490" y1="392" x2="734" y2="392" stroke="#BFC5CF"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" letter-spacing="1" fill="#175E68">
     <text x="490" y="334">TARGET</text>
   </g>
 </svg>

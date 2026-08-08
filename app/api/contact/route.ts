@@ -105,12 +105,12 @@ async function sendEmail(fields: Record<FieldName, string>) {
   if (!apiKey) return { configured: false as const };
 
   const row = (label: string, value: string) =>
-    `<tr><td style="padding:6px 16px 6px 0;color:#6b655b;font:500 12px system-ui">${label}</td>` +
-    `<td style="padding:6px 0;color:#141416;font:14px system-ui">${escapeHtml(value || "—")}</td></tr>`;
+    `<tr><td style="padding:6px 16px 6px 0;color:#697080;font:500 12px system-ui">${label}</td>` +
+    `<td style="padding:6px 0;color:#13151A;font:14px system-ui">${escapeHtml(value || "—")}</td></tr>`;
 
   const html = `
-    <div style="font:14px system-ui;color:#141416;max-width:640px">
-      <p style="font:500 12px system-ui;letter-spacing:.14em;text-transform:uppercase;color:#b4552b">New enquiry</p>
+    <div style="font:14px system-ui;color:#13151A;max-width:640px">
+      <p style="font:500 12px system-ui;letter-spacing:.14em;text-transform:uppercase;color:#175e68">New enquiry</p>
       <h2 style="font:400 24px Georgia,serif;margin:8px 0 20px">${escapeHtml(fields.name)}${
         fields.company ? ` — ${escapeHtml(fields.company)}` : ""
       }</h2>
@@ -122,7 +122,7 @@ async function sendEmail(fields: Record<FieldName, string>) {
         ${row("Budget", fields.budget)}
         ${row("Timeline", fields.timeline)}
       </table>
-      <p style="font:500 12px system-ui;letter-spacing:.14em;text-transform:uppercase;color:#6b655b">Description</p>
+      <p style="font:500 12px system-ui;letter-spacing:.14em;text-transform:uppercase;color:#697080">Description</p>
       <p style="white-space:pre-wrap;line-height:1.6">${escapeHtml(fields.description)}</p>
     </div>
   `;

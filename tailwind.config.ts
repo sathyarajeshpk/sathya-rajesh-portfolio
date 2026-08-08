@@ -9,38 +9,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm neutral scale — the whole site is built on these.
+        // Cool neutral scale — the whole site is built on these.
         ink: {
-          DEFAULT: "#141416",
-          50: "#F7F6F3",
-          100: "#EFEDE8",
-          200: "#DFDBD3",
-          300: "#C4BEB2",
-          400: "#948D80",
-          500: "#6B655B",
-          600: "#4A453E",
-          700: "#33302B",
-          800: "#212024",
-          900: "#171719",
-          950: "#0E0E10",
+          DEFAULT: "#13151A",
+          50: "#F4F5F7",
+          100: "#E9EBEF",
+          200: "#D9DDE4",
+          300: "#BFC5CF",
+          400: "#8B93A1",
+          500: "#697080",
+          600: "#454B55",
+          700: "#2F343C",
+          800: "#1E2127",
+          900: "#14171C",
+          950: "#0D0F12",
         },
-        // Single accent. Used for rules, numerals, links, focus — never as a fill gradient.
-        copper: {
-          DEFAULT: "#B4552B",
-          50: "#FBF3EE",
-          100: "#F5E1D5",
-          200: "#E9C0A8",
-          300: "#D89972",
-          400: "#C67247",
-          500: "#B4552B",
-          600: "#984322",
-          700: "#78351C",
-          800: "#5A2815",
-          900: "#3D1C0F",
+        // Single accent — a deep petrol. Used for rules, numerals, links, focus;
+        // never as a fill gradient.
+        petrol: {
+          DEFAULT: "#175E68",
+          50: "#EFF6F7",
+          100: "#D6E9EB",
+          200: "#AACFD4",
+          300: "#7FB9C1",
+          400: "#3E8B96",
+          500: "#175E68",
+          600: "#125058",
+          700: "#0E3F46",
+          800: "#0A2E33",
+          900: "#071F23",
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        sans: [
+          '"Comic Sans MS"',
+          '"Comic Sans"',
+          "var(--font-sans)", // Comic Neue — webfont fallback for Linux/Android
+          '"Chalkboard SE"',
+          "cursive",
+        ],
         serif: ["var(--font-serif)", "Georgia", "serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },

@@ -15,7 +15,7 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#F7F6F3",
+          background: "#F4F5F7",
           padding: "72px 80px",
           fontFamily: "Georgia, serif",
         }}
@@ -28,20 +28,20 @@ export default function OpengraphImage() {
             fontSize: 20,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
-            color: "#6B655B",
+            color: "#697080",
             fontFamily: "monospace",
           }}
         >
-          <div style={{ width: 48, height: 2, background: "#B4552B" }} />
+          <div style={{ width: 48, height: 2, background: "#175E68" }} />
           Chennai, India
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 86, lineHeight: 1.02, color: "#141416", letterSpacing: "-0.03em" }}>
+          <div style={{ fontSize: 86, lineHeight: 1.02, color: "#13151A", letterSpacing: "-0.03em" }}>
             Data platforms that
           </div>
-          <div style={{ fontSize: 86, lineHeight: 1.02, color: "#141416", letterSpacing: "-0.03em" }}>
-            <span style={{ color: "#B4552B", fontStyle: "italic" }}>hold up</span> in production.
+          <div style={{ fontSize: 86, lineHeight: 1.02, color: "#13151A", letterSpacing: "-0.03em" }}>
+            <span style={{ color: "#175E68", fontStyle: "italic" }}>hold up</span> in production.
           </div>
         </div>
 
@@ -50,14 +50,14 @@ export default function OpengraphImage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderTop: "1px solid #DFDBD3",
+            borderTop: "1px solid #D9DDE4",
             paddingTop: 28,
             fontSize: 24,
-            color: "#4A453E",
+            color: "#454B55",
           }}
         >
           <div style={{ display: "flex" }}>Sathya Rajesh PK</div>
-          <div style={{ display: "flex", fontFamily: "monospace", fontSize: 20, color: "#6B655B" }}>
+          <div style={{ display: "flex", fontFamily: "monospace", fontSize: 20, color: "#697080" }}>
             Azure · Fabric · Power BI
           </div>
         </div>
