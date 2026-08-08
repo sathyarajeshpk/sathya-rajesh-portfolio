@@ -1,12 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Newsreader } from "next/font/google";
+import { Comic_Neue, JetBrains_Mono, Newsreader } from "next/font/google";
 import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const sans = Inter({
+// Comic Sans MS ships on Windows and macOS but not on most Linux or Android
+// devices. Comic Neue is loaded as a webfont so those visitors get the same
+// look instead of an arbitrary fallback; the system face still wins where present.
+const sans = Comic_Neue({
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "700"],
+  style: ["normal", "italic"],
   variable: "--font-sans",
 });
 
@@ -84,8 +89,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f6f3" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0e10" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f5f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0f12" },
   ],
 };
 
