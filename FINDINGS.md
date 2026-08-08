@@ -1,122 +1,135 @@
-# Repository Review — Findings
+# Repository Review — Findings & Resolution
 
-Reviewed at commit `e07f908` on `claude/repo-findings-dy8vn0`.
-Verified by reading every source file, running `npx tsc --noEmit`, `npm run build`, and `npm run lint`.
+Original review at `e07f908`. This file tracks what was found and what has since been fixed.
 
-**Baseline health:** `next build` succeeds cleanly (7 routes, 156 kB first-load JS on `/`), and TypeScript passes with `strict: true`. The issues below are correctness, delivery, and polish gaps — not build breakage.
-
----
-
-## 1. Critical — the contact form can silently discard enquiries
-
-`app/api/contact/route.ts` returns `{ success: true }` on three paths where nothing was actually persisted or sent:
-
-- Neither `NEXT_PUBLIC_SUPABASE_URL` nor `SUPABASE_SERVICE_ROLE_KEY` set → logs a `console.warn` and returns 200.
-- `RESEND_API_KEY` unset → email block skipped entirely, returns 200.
-- Resend request throws or returns a non-2xx status → caught, logged as "non-critical", returns 200. The `fetch` response status is never checked, so a rejected/quota-exceeded Resend call looks identical to a delivered email.
-
-The user sees "Message Sent! … I'll get back to you within 24 hours" in `components/sections/Contact.tsx` regardless. For a lead-generation site this is the highest-impact defect: a missing or rotated env var loses business enquiries with no visible signal anywhere.
-
-**Fix:** fail with a 5xx (or a distinct client message) when no sink is configured, and check `response.ok` on the Resend call. At minimum, treat "zero successful sinks" as an error.
-
-## 2. High — the attachment field is decorative
-
-`components/sections/Contact.tsx` renders a file input (`name="attachment"`) with the copy *"Upload RFP, architecture diagrams, or reference materials (Max 10MB)"*, but `handleSubmit` builds a plain JSON object from named text fields only — the file is never read, never uploaded, and the API hardcodes `attachment_url: null`. There is no 10MB check either. Prospects will attach an RFP and believe it was sent.
-
-**Fix:** either wire it to Supabase Storage (upload first, pass the URL) or remove the field and its copy.
-
-## 3. High — unescaped user input in the notification email
-
-The Resend HTML body interpolates `body.name`, `body.email`, `body.company`, `body.phone`, `body.service`, `body.budget`, `body.timeline`, and `body.description` directly into markup, and `body.service` / `body.name` into the subject line. A submitter can inject arbitrary HTML — links, tracking pixels, spoofed content — into an email delivered to the site owner's inbox.
-
-**Fix:** HTML-escape every interpolated value before building the template.
-
-## 4. High — no input validation, rate limiting, or size limits on a public endpoint
-
-The route checks presence only (`!body.name || !body.email || …`). There is:
-
-- No type check — a non-string `description` makes `body.description.replace(...)` throw, which the catch block converts into a 500 with the raw error message.
-- No email-format validation (`"x"` passes).
-- No length cap — arbitrarily large strings go straight into Postgres.
-- No rate limit, honeypot, or captcha on a publicly reachable POST endpoint.
-
-Also, Supabase's `error.message` is returned verbatim to the client, leaking schema/constraint details.
-
-**Fix:** validate with a schema (zod or hand-rolled), cap field lengths, return a generic message on DB errors, and add basic abuse protection.
-
-## 5. Medium — analytics placeholders are live in production
-
-`app/layout.tsx` ships real script tags with unreplaced placeholders: `G-XXXXXXXXXX` for GA4 and `YOUR_CLARITY_ID` for Clarity. Every page load fires a request to `googletagmanager.com` with an invalid measurement ID and injects the Clarity loader pointing at a literal placeholder — cost with no data. They are also raw `<script>` tags rather than `next/script`, so they aren't strategy-managed.
-
-**Fix:** move the IDs to env vars and render the blocks only when set, via `next/script` with `strategy="afterInteractive"`.
-
-## 6. Medium — form controls have no dark-mode styling
-
-`components/ui/input.tsx`, `textarea.tsx`, and `select.tsx` hardcode `bg-white border-slate-200 text-slate-900 ring-offset-white` with no `dark:` variants, while the enclosing form card is `dark:bg-slate-900`. In dark mode the entire contact form renders as white boxes on a near-black card — the one place on the site where the theme visibly breaks.
-
-## 7. Medium — accessibility gaps in the contact form and accordions
-
-- Zero `htmlFor`/`id` pairs in `Contact.tsx` — all ten `<label>` elements are unassociated, so screen readers announce unlabeled fields and label clicks don't focus inputs.
-- The FAQ accordion buttons (`FAQs.tsx`) lack `aria-expanded` and `aria-controls`.
-- The Blog modal (`Blog.tsx`) has no Escape handler, no focus trap, no `role="dialog"`/`aria-modal`, and doesn't lock body scroll.
-- The mobile nav drawer (`Navbar.tsx`) also doesn't lock body scroll or trap focus, and the hamburger has no `aria-label`/`aria-expanded`.
-
-## 8. Medium — theme flash on first paint
-
-`components/theme-provider.tsx` reads `localStorage` and applies the `dark` class inside `useEffect`, i.e. after hydration. Dark-mode users get a flash of the light theme on every load. The standard fix is a small blocking inline script in `<head>` that sets the class before first paint.
-
-## 9. Low — `h-18` is not a real Tailwind utility
-
-`components/sections/Navbar.tsx:44` uses `h-18` on the header row. Tailwind's default spacing scale jumps 16 → 20, and `tailwind.config.ts` doesn't extend it — confirmed absent from the compiled CSS. The class is a no-op, so the navbar height comes from `py-4` alone. Given the recent "Changed header" / "Fixed overlap" commits, this looks like the intended fix that never took effect. Use `h-20` or add `18: '4.5rem'` to `theme.extend.spacing`.
-
-## 10. Low — SEO/metadata gaps
-
-- No favicon or app icon anywhere (`app/icon.*`, `app/favicon.ico`, `public/favicon.ico` all absent) → browsers 404 and show a blank tab icon.
-- `twitter.card` is `summary_large_image` but no image is supplied, and `openGraph` has no `images` entry — social shares render bare.
-- No `metadataBase` in the `metadata` export, so any relative OG/Twitter image URL added later won't resolve.
-- Fonts load via `@import url("https://fonts.googleapis.com/…")` in `globals.css` — the slowest option (render-blocking, discovered only after CSS parse). `next/font/google` would self-host and eliminate the extra round trip plus the layout shift.
-
-## 11. Low — build artifact committed to git
-
-`tsconfig.tsbuildinfo` (91 KB) is tracked and is not in `.gitignore`. Running `npm run build` dirties the working tree immediately — confirmed during this review. Remove it from the index and add it to `.gitignore`.
-
-## 12. Low — `npm run lint` is unusable
-
-There is no ESLint config in the repo, so `next lint` drops into an interactive setup prompt ("How would you like to configure ESLint?") and hangs. It cannot run in CI or non-interactively. Add `.eslintrc.json` with `{ "extends": "next/core-web-vitals" }`.
-
-## 13. Low — no CI, no tests
-
-No `.github/` directory, no workflows, no test setup. A single workflow running `tsc --noEmit` and `next build` on push would have caught items 9 and 12 and protects the Vercel deploy.
-
-## 14. Low — `supabase/schema.sql` is not re-runnable
-
-The table uses `CREATE TABLE IF NOT EXISTS`, but `CREATE POLICY` and the two `CREATE INDEX` statements do not guard against existing objects, so re-running the script errors out. Use `CREATE INDEX IF NOT EXISTS` and `DROP POLICY IF EXISTS` first.
-
-Separately, the `"Allow public insert"` RLS policy is dead code as written: the API authenticates with the service-role key, which bypasses RLS entirely. Harmless, but it implies a client-side insert path that doesn't exist.
-
-## 15. Low — `next.config.js` disables image optimization unnecessarily
-
-`images: { unoptimized: true }` is the setting you need for a static export, but this project has a server-rendered API route (`ƒ /api/contact` in the build output) and the README explicitly recommends Vercel over static hosting. On Vercel this just forfeits automatic resizing/WebP for `hero-photo.png` and the project/blog images. The README's troubleshooting section still suggests adding `output: 'export'`, which would break the contact form outright — worth removing that advice.
-
-## 16. Documentation drift in `README.md`
-
-Several sections describe code that no longer exists:
-
-- *"Your contact form currently logs submissions to the console"* and *"In `app/api/contact/route.ts`, uncomment the Supabase code block"* — the Supabase path is live and env-gated, nothing is commented out.
-- The "Add a New Project" / "Add a New Blog Post" recipes list `icon` and `gradient` fields; the actual arrays now use `image`, `service`, `insight`, and `bullets`.
-- "Dark mode toggle | 1 hour | Add theme provider + toggle button" is in the *Future Enhancements* table, but dark mode already shipped.
-- Troubleshooting recommends `output: 'export'` (see item 15).
-
-## 17. Content risk — mocked testimonials and blog posts are presented as real
-
-`Testimonials.tsx` carries three anonymized quotes ("Head of Data Platforms, Regional Financial Services Group") each with a hardcoded 5-star rating, under the heading "What Clients Say". `Blog.tsx` carries three dated posts whose "Read Article" buttons open a modal preview rather than an article — there is no underlying post. The README correctly labels both as mocked, but the live site does not. For a consulting site trading on credibility, these are worth replacing with attributed testimonials and real articles (or removing) before promoting the domain.
+**Verification:** `npx tsc --noEmit` clean · `npm run lint` clean · `next build` succeeds
+(147 kB first-load JS on `/`, down from 156 kB) · automated layout audit passes across
+5 viewports × 2 themes.
 
 ---
 
-## Suggested order of work
+## Fixed
 
-1. Items 1–4 (contact pipeline: silent failure, attachment, escaping, validation) — these affect revenue and inbox safety.
-2. Item 5 (analytics placeholders) and item 6 (dark-mode form) — small diffs, immediately visible.
-3. Items 7–8 (accessibility, theme flash).
-4. Items 9–15 (hygiene: `h-18`, favicon/OG, `.gitignore`, ESLint, CI, SQL, image config).
-5. Items 16–17 (docs and content).
+### 1. The contact form silently discarded enquiries — **fixed**
+`app/api/contact/route.ts` returned `{ success: true }` on three paths where nothing was
+persisted: no Supabase env vars, no `RESEND_API_KEY`, and a Resend call that threw or
+returned a non-2xx (the response status was never checked). The visitor saw
+"Message Sent!" regardless.
+
+Now: the route tracks whether each sink was *configured* and whether it *succeeded*, and
+returns **502** unless at least one actually took the enquiry. `response.ok` is checked and
+the failure is logged with status and body. Verified by driving every path with curl —
+including a deliberately invalid Resend key, which now returns 502 instead of a false success.
+
+### 2. The attachment field did nothing — **fixed**
+The form promised "Upload RFP, architecture diagrams (Max 10MB)" but the file was never
+read and `attachment_url` was hardcoded to `null`. The input is gone; the description field
+now carries a hint asking people to email large files. The `attachment_url` column remains
+in the schema for whenever Supabase Storage gets wired up.
+
+### 3. Unescaped input in the notification email — **fixed**
+All eight fields interpolated raw into the Resend HTML body. Every value now passes through
+`escapeHtml()`, and `reply_to` is set to the sender so replies go to the right place.
+
+### 4. No validation, size limits, or type checking — **fixed**
+Per-field length caps, type coercion that rejects non-strings (a non-string `description`
+used to throw and surface as a 500), email-format validation, and generic messages on
+database errors instead of Supabase's `error.message` verbatim.
+
+**Still open:** no rate limiting, honeypot, or captcha on the endpoint. Worth adding before
+the domain gets any traffic.
+
+### 5. Analytics placeholders shipped live — **fixed**
+`G-XXXXXXXXXX` and `YOUR_CLARITY_ID` fired real requests on every page load. Both are now
+read from `NEXT_PUBLIC_GA_ID` / `NEXT_PUBLIC_CLARITY_ID` and the scripts are only rendered
+when set, via `next/script` with `strategy="afterInteractive"`.
+
+### 6. Form controls had no dark-mode styling — **fixed**
+`input/textarea/select` hardcoded `bg-white … text-slate-900` inside a `dark:bg-slate-900`
+card, so the whole form rendered as white boxes in dark mode. Controls now read CSS custom
+properties (`--fg`, `--rule-strong`, `--accent`), so both themes follow from one definition.
+
+### 7. Accessibility gaps — **fixed**
+Ten unassociated `<label>` elements now have `htmlFor`/`id` pairs via a `Field` wrapper.
+FAQ buttons carry `aria-expanded`/`aria-controls`; the blog modal has `role="dialog"`,
+`aria-modal`, Escape handling, focus management, and body-scroll lock; the mobile nav has
+`aria-expanded`/`aria-controls`, Escape, and scroll lock. A skip link was added, plus a
+global `prefers-reduced-motion` block and visible focus rings.
+
+### 8. Theme flash on first paint — **fixed**
+The theme was applied in `useEffect` after hydration. A blocking inline script in `<head>`
+now resolves it before first paint; the provider reads the already-applied class.
+
+### 9. `h-18` was not a real Tailwind class — **fixed**
+Confirmed absent from the compiled CSS, so the navbar height came from `py-4` alone. Header
+height is now a `--nav-h` custom property used by both the header and `scroll-margin-top`.
+
+### 10. SEO/metadata gaps — **fixed**
+Added `app/icon.svg`, a generated `app/opengraph-image.tsx` (1200×630), `metadataBase`, a
+canonical alternate, and `viewport.themeColor`. Fonts moved from a render-blocking
+`@import` to self-hosted `next/font/google`.
+
+### 11. `tsconfig.tsbuildinfo` committed — **fixed**
+Removed from the index; `*.tsbuildinfo` added to `.gitignore`.
+
+### 12. `npm run lint` was unusable — **fixed**
+No ESLint config meant `next lint` dropped into an interactive prompt and hung. Added
+`.eslintrc.json` (`next/core-web-vitals`) and the `eslint` / `eslint-config-next`
+devDependencies. Runs clean.
+
+### 14. `supabase/schema.sql` was not re-runnable — **fixed**
+`CREATE INDEX IF NOT EXISTS` and a `DROP POLICY IF EXISTS` guard. The unused public-insert
+policy is dropped: the API writes with the service-role key, which bypasses RLS, so no
+browser-reachable policy is needed.
+
+### 15. `next.config.js` disabled image optimization — **fixed**
+`images.unoptimized` and `trailingSlash` removed. This deploys as a server app (the contact
+form is an API route), so the Vercel optimizer is available.
+
+### 16. Documentation drift — **fixed**
+`README.md` rewritten against the current code. Added `.env.example` documenting every
+variable, which of them the contact form requires, and the 502 behaviour.
+
+---
+
+## Also fixed: the reported text overlap
+
+Section headings were rendering **through** the navbar. Two causes:
+
+1. The header was `bg-white/80` with `backdrop-blur-xl` — 80% opacity let dark heading text
+   read straight through it. Reproduced at three separate scroll positions.
+2. Clicking a nav link scrolled the target section under the fixed header, because no
+   `scroll-margin-top` accounted for its height.
+
+The header is now fully opaque once scrolled (transparent only over the hero, where nothing
+sits behind it), and every `section[id]` gets `scroll-margin-top: var(--nav-h)`.
+
+An automated audit (`prefers-reduced-motion`-independent, 5 viewports × light/dark) now
+asserts: no horizontal overflow, no section heading landing under the header after an
+anchor jump, an opaque scrolled header, and no pairwise text-element overlap. It passes.
+
+---
+
+## Open items — your call
+
+### 13. No CI, no tests
+Still no `.github/` directory. A workflow running `tsc --noEmit`, `next lint`, and
+`next build` on push would have caught items 9 and 12 and protects the Vercel deploy.
+
+### 17. Testimonial and blog content
+- `Testimonials.tsx` quotes are attributed by role and organisation type only, with no
+  names. If these are placeholders, replace them; if real, consider getting permission for
+  attributed versions, which are far more persuasive.
+- `Blog.tsx` items are summaries with a modal preview, not published articles. The button
+  now says "Read the summary" rather than "Read Article", which is accurate, but linking to
+  real posts would be better.
+
+### 18. Illustrative numbers in the project figures
+The five project SVGs were dark-navy/neon placeholder art left over from the old theme and
+clashed with the new palette, so they were redrawn as technical figures (star schema, log
+clustering, small multiples). The numbers inside them — 78% confidence, 2,410 applicants,
+8.2% attrition — are **illustrative**, chosen to make the diagrams read. Swap them for real
+figures or keep them generic, but know they are there.
+
+### Rate limiting
+See item 4. The contact endpoint is publicly reachable with no abuse protection.

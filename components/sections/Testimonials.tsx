@@ -1,93 +1,73 @@
-"use client";
-
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Quote, Star } from "lucide-react";
+import Reveal from "@/components/site/Reveal";
 
 const testimonials = [
   {
     quote:
       "We needed someone who could speak to architecture, delivery, and executive stakeholders in the same room. Sathya redesigned our reporting pipeline on Azure, reduced refresh delays from hours to minutes, and gave leadership a much clearer view of performance across regions.",
     author: "Head of Data Platforms",
-    role: "Regional Financial Services Group",
-    initials: "HD",
-    color: "bg-fabric-600 dark:bg-cyber-cyan",
+    org: "Regional financial services group",
   },
   {
     quote:
-      "Our teams had strong data, but access was bottlenecked through a small analytics function. Sathya helped us shape an NL2SQL experience that business users actually trusted, with clean prompts, governance guardrails, and outputs that analysts could validate quickly.",
+      "Our teams had strong data, but access was bottlenecked through a small analytics function. Sathya helped us shape an NL2SQL experience that business users actually trusted — clean prompts, governance guardrails, and outputs analysts could validate quickly.",
     author: "VP of Product",
-    role: "B2B SaaS Company",
-    initials: "VP",
-    color: "bg-emerald-600 dark:bg-cyber-green",
+    org: "B2B SaaS company",
   },
   {
     quote:
-      "Sathya brought calm, structure, and a high engineering bar to a program that was starting to drift. Beyond the technical fixes, he coached our developers, improved documentation habits, and left the team more confident than when he joined.",
+      "Sathya brought calm, structure, and a high engineering bar to a program that was starting to drift. Beyond the technical fixes, he coached our developers and improved documentation habits. He left the team more confident than when he joined.",
     author: "Engineering Manager",
-    role: "Global Capability Center",
-    initials: "EM",
-    color: "bg-sky-600 dark:bg-sky-500",
+    org: "Global capability centre",
   },
 ];
 
+/**
+ * The one inverted section on the page — a deliberate change of register
+ * between the work and the writing.
+ */
 export default function Testimonials() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="testimonials" className="relative overflow-hidden bg-slate-950 py-24 dark:bg-cyber-midnight lg:py-32">
-      <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-fabric-600/10 blur-[128px] dark:bg-cyber-cyan/5" />
-      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-fabric-400/5 blur-[128px] dark:bg-cyber-green/5" />
+    <section
+      id="testimonials"
+      className="py-20 lg:py-28"
+      style={{ background: "var(--fg)", color: "var(--bg)" }}
+    >
+      <div className="shell">
+        <header className="border-t pt-6" style={{ borderColor: "rgba(255,255,255,0.18)" }}>
+          <Reveal>
+            <span className="label" style={{ opacity: 0.6 }}>
+              06 — In their words
+            </span>
+          </Reveal>
+        </header>
 
-      <div className="container-custom relative">
-        <div className="mx-auto mb-16 max-w-3xl text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-block rounded-full glass px-4 py-1.5 text-sm font-semibold text-slate-300 dark:text-cyber-cyan"
-          >
-            Testimonials
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl"
-          >
-            What Clients <span className="text-gradient">Say</span>
-          </motion.h2>
-        </div>
-
-        <div ref={ref} className="grid gap-6 md:grid-cols-3">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.author}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="group relative rounded-2xl p-8 glass transition-all duration-300 hover:bg-white/15 dark:border-cyber-border dark:bg-cyber-graphite/60 dark:hover:bg-cyber-graphite/80"
-            >
-              <Quote className="mb-4 h-10 w-10 text-fabric-500/30 dark:text-cyber-cyan/20" />
-              <p className="mb-6 text-sm leading-relaxed text-slate-300">&ldquo;{testimonial.quote}&rdquo;</p>
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-full ${testimonial.color} text-sm font-bold text-white`}
-                >
-                  {testimonial.initials}
+        <div className="mt-12 grid gap-x-10 gap-y-12 lg:grid-cols-3">
+          {testimonials.map((testimonial, i) => (
+            <Reveal as="article" key={testimonial.author} delay={0.06 * i}>
+              <figure className="flex h-full flex-col">
+                <blockquote className="font-serif text-xl leading-[1.45] sm:text-[1.375rem]">
+                  <span aria-hidden="true" style={{ opacity: 0.45 }}>
+                    &ldquo;
+                  </span>
+                  {testimonial.quote}
+                  <span aria-hidden="true" style={{ opacity: 0.45 }}>
+                    &rdquo;
+                  </span>
+                </blockquote>
+                <div className="mt-auto pt-8">
+                  <div
+                    className="mb-4 h-px w-10"
+                    style={{ background: "rgba(255,255,255,0.35)" }}
+                  />
+                  <figcaption className="label" style={{ opacity: 0.85 }}>
+                    {testimonial.author}
+                    <span className="mt-1 block" style={{ opacity: 0.6 }}>
+                      {testimonial.org}
+                    </span>
+                  </figcaption>
                 </div>
-                <div>
-                  <div className="text-sm font-semibold text-white">{testimonial.author}</div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400">{testimonial.role}</div>
-                </div>
-              </div>
-              <div className="mt-4 flex gap-1">
-                {[...Array(5)].map((_, starIndex) => (
-                  <Star key={starIndex} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-            </motion.div>
+              </figure>
+            </Reveal>
           ))}
         </div>
       </div>
