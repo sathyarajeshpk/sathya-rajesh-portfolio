@@ -1,17 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Comic_Neue } from "next/font/google";
+import { Manrope } from "next/font/google";
 import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-// Comic Sans MS ships on Windows and macOS but not on most Linux or Android
-// devices. Comic Neue is loaded so those visitors get the same look instead of
-// an arbitrary fallback; the system face still wins where it is present.
-const sans = Comic_Neue({
+// One typeface for the whole site. Manrope is a variable font, so display
+// headings, body copy and the small uppercase labels are all the same family
+// at different weights — hierarchy comes from weight and scale, not from
+// mixing families.
+const sans = Manrope({
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-sans",
 });
 
@@ -19,16 +19,22 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sathyarajeshpk.com
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Sathya Rajesh PK - Azure data engineer and consultant",
+  title: {
+    default: "Sathya Rajesh PK — Azure Data Engineering & Analytics Consultant",
+    template: "%s — Sathya Rajesh PK",
+  },
   description:
-    "I build Azure data platforms, Microsoft Fabric implementations and Power BI reporting. Twelve years experience. Based in Chennai, India.",
+    "Twelve years building Azure data platforms, Microsoft Fabric implementations, and Power BI reporting for enterprises and startups. Based in Chennai, working globally.",
   keywords: [
     "Azure Data Engineer",
     "Power BI Consultant",
     "Microsoft Fabric",
     "Data Engineering",
+    "Business Intelligence",
     "Databricks",
+    "Technology Consultant",
     "Chennai",
+    "India",
   ],
   authors: [{ name: "Sathya Rajesh PK", url: SITE_URL }],
   creator: "Sathya Rajesh PK",
@@ -38,24 +44,34 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: SITE_URL,
     siteName: "Sathya Rajesh PK",
-    title: "Sathya Rajesh PK - Azure data engineer and consultant",
+    title: "Sathya Rajesh PK — Azure Data Engineering & Analytics Consultant",
     description:
-      "I build Azure data platforms, Microsoft Fabric implementations and Power BI reporting. Based in Chennai, India.",
+      "Twelve years building Azure data platforms, Microsoft Fabric implementations, and Power BI reporting for enterprises and startups.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sathya Rajesh PK" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sathya Rajesh PK - Azure data engineer and consultant",
-    description: "Azure data platforms, Microsoft Fabric and Power BI.",
+    title: "Sathya Rajesh PK — Azure Data Engineering & Analytics Consultant",
+    description: "Enterprise data platforms, Microsoft Fabric, and business intelligence.",
     images: ["/opengraph-image"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fdfdfc" },
-    { media: "(prefers-color-scheme: dark)", color: "#14161a" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f5f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0f12" },
   ],
 };
 
@@ -76,14 +92,18 @@ const themeScript = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} scroll-smooth`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${sans.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:bg-[var(--fg)] focus:px-3 focus:py-1.5 focus:text-[var(--bg)]"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-[var(--fg)] focus:px-4 focus:py-2 focus:text-sm focus:text-[var(--bg)]"
         >
           Skip to content
         </a>
@@ -91,7 +111,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {GA_ID ? (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
             <Script id="ga-init" strategy="afterInteractive">
               {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
             </Script>

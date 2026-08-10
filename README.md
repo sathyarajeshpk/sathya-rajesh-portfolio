@@ -1,6 +1,6 @@
 # Sathya Rajesh PK — consulting site
 
-Next.js 14 (App Router) · TypeScript · Tailwind · Supabase · Resend
+Next.js 14 (App Router) · TypeScript · Tailwind · Framer Motion · Supabase · Resend
 
 A single-page consulting site with a working enquiry pipeline. Deployed on Vercel as a
 server app — it is **not** a static export, because `/api/contact` needs a server.
@@ -81,6 +81,9 @@ app/
 
 components/
   sections/              One file per page section
+  site/
+    Reveal.tsx           The single scroll-reveal used site-wide
+    SectionHeader.tsx    The asymmetric section masthead
   ui/field.tsx           Form controls (Input, Textarea, Select, Field)
   theme-provider.tsx     Light/dark state
   theme-toggle.tsx
@@ -92,45 +95,45 @@ lib/
 supabase/schema.sql
 ```
 
-### Styling
+### Design system
 
-Deliberately plain: one column, ordinary headings, no scroll animations, no icon set.
-There is no component library and no design-system layer to learn — sections are just
-markup.
+Colour lives in **CSS custom properties** in `app/globals.css` (`--bg`, `--fg`, `--rule`,
+`--accent`, …), redefined once under `.dark`. Components reference the variables rather
+than carrying a parallel set of `dark:` classes — that is why the form controls theme
+correctly without duplicated styling.
 
-Colour lives in **CSS custom properties** in `app/globals.css` (`--bg`, `--fg`, `--border`,
-`--link`, `--shade`), redefined once under `.dark`. Components reference the variables
-rather than carrying a parallel set of `dark:` classes — that is why the form controls
-theme correctly without duplicated styling.
+- **Type**: Manrope, and nothing else. One variable family across display headings, body
+  copy, the small uppercase labels and the project figures. Hierarchy comes from weight
+  (400 body, 600 labels, 700–800 headings) and scale, not from mixing families. Please
+  keep it that way — mixing a display serif with a body sans and a mono is what made an
+  earlier version look unresolved. `font-serif` and `font-mono` are aliased to the same
+  family in `tailwind.config.ts` so a stray class cannot reintroduce a second face.
+- **Accent**: one petrol tone for rules, numerals, links and focus rings. Not a gradient.
+- **Motion**: one `Reveal` component. It degrades to a plain fade under
+  `prefers-reduced-motion`.
 
-**Type is Comic Sans throughout.** Comic Sans MS ships on Windows and macOS; Comic Neue is
-loaded via `next/font/google` so Linux and Android visitors see the same thing instead of
-an arbitrary fallback. There is no second typeface.
+Manrope has no true italic, so emphasis is carried by the accent colour rather than a
+synthesised oblique.
 
-One caveat worth knowing before you edit the project diagrams: SVGs referenced through
-`<img>` (which is what `next/image` produces) are isolated documents and **cannot use the
-page's webfont**. The figures therefore fall back to a system sans wherever Comic Sans MS
-is not installed locally. Inlining them as JSX would fix that, and would also let them
-follow dark mode, which they currently do not — they stay light plates in both themes.
-
-`framer-motion` and `lucide-react` were removed once nothing used them, which took
-first-load JS on `/` from 147 kB to 104 kB. Please don't reintroduce an animation library
-for a page this size.
+`color-scheme` is declared on `:root` and `.dark`, and `select option` gets an explicit
+background and colour. Both are load-bearing: without them the OS draws the native
+dropdown popup light while the option text inherits our light-on-dark colour, which made
+the service list unreadable in dark mode.
 
 ---
 
 ## Making changes
 
-**Text and content** live in arrays at the top of each section file — `groups` in
-`Services.tsx` and `Skills.tsx`, `projects` in `Projects.tsx`, `jobs` in `Experience.tsx`,
-`faqs` in `FAQs.tsx`. Add or edit an object and the layout follows.
+**Text and content** live in arrays at the top of each section file — `practices` in
+`Services.tsx`, `projects` in `Projects.tsx`, `experiences` in `Experience.tsx`, and so on.
+Add or edit an object and the layout follows.
 
-**Adding a service**: add the string to the relevant `groups[].items` array in
+**Adding a service**: add the string to the relevant `practices[].offerings` array in
 `Services.tsx` *and* to the `services` array in `Contact.tsx`, so the prefill matches an
 option in the form's dropdown.
 
-**Colours**: edit the CSS variables in `app/globals.css`. The Tailwind config only
-declares the font stack.
+**Colours**: edit the CSS variables in `app/globals.css`, not the Tailwind config. The
+config only exposes the raw palette; the variables are what components read.
 
 **Photo**: replace `public/images/hero-photo.png` (keep the filename).
 **Résumé**: replace `public/resume/SathyaRajesh_Resume.pdf`.
@@ -150,11 +153,9 @@ break the contact form.
 ## Known gaps
 
 - **Testimonials** in `Testimonials.tsx` are attributed by role and organisation type only.
-  Named, attributable quotes are far more persuasive if you can get permission for them.
-- **Numbers inside the project diagrams** are illustrative, chosen so the figures read.
-  Swap them for real ones or make them generic.
-- **Blog posts** in `Blog.tsx` are summaries, not published articles. If you write the full
-  versions, link out to them.
+  Replace with named, attributable quotes when you have permission to use them.
+- **Blog posts** in `Blog.tsx` are summaries with a modal preview, not full articles. If you
+  publish the real pieces, link out instead of opening the modal.
 - **Attachments**: the contact form asks people to email large files rather than uploading
   them. If you want real uploads, wire a Supabase Storage bucket and populate the
   `attachment_url` column, which already exists in the schema.
