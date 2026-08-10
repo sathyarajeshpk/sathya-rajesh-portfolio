@@ -10,10 +10,10 @@ const social = [
 
 const sitemap = [
   { name: "About", href: "#about" },
-  { name: "Practice", href: "#services" },
+  { name: "Services", href: "#services" },
   { name: "Work", href: "#projects" },
-  { name: "Track record", href: "#experience" },
-  { name: "Capabilities", href: "#skills" },
+  { name: "Experience", href: "#experience" },
+  { name: "Skills", href: "#skills" },
   { name: "Writing", href: "#blog" },
   { name: "Questions", href: "#faqs" },
   { name: "Contact", href: "#contact" },

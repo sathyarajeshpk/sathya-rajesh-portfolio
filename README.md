@@ -124,16 +124,22 @@ the service list unreadable in dark mode.
 
 ## Making changes
 
-**Text and content** live in arrays at the top of each section file — `practices` in
+**Text and content** live in arrays at the top of each section file — `services` in
 `Services.tsx`, `projects` in `Projects.tsx`, `experiences` in `Experience.tsx`, and so on.
 Add or edit an object and the layout follows.
 
-**Adding a service**: add the string to the relevant `practices[].offerings` array in
-`Services.tsx` *and* to the `services` array in `Contact.tsx`, so the prefill matches an
-option in the form's dropdown.
+**The services section is written for the buyer, not the implementer.** Each entry leads
+with the problem in the customer's own words and what they end up with; `tools` is the
+secondary line for whoever evaluates the technical side. Keep new entries in that order —
+leading with product names is what made the earlier version unreadable to non-technical
+visitors.
 
-**Colours**: edit the CSS variables in `app/globals.css`, not the Tailwind config. The
-config only exposes the raw palette; the variables are what components read.
+**Adding a service**: every string in a `services[].engagements` array must also exist in
+the `services` array in `Contact.tsx`. If it does not, the "Talk about this" button sets a
+value the dropdown has no option for and the prefill silently does nothing.
+
+**Colours**: edit the CSS variables in `app/globals.css`. The Tailwind config only holds
+the font stack and the display type scale.
 
 **Photo**: replace `public/images/hero-photo.png` (keep the filename).
 **Résumé**: replace `public/resume/SathyaRajesh_Resume.pdf`.
