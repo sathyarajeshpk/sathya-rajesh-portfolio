@@ -1,112 +1,41 @@
-"use client";
-
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useId, useState } from "react";
-import Reveal from "@/components/site/Reveal";
-import SectionHeader from "@/components/site/SectionHeader";
-
 const faqs = [
   {
-    question: "What is your typical engagement model?",
-    answer:
-      "Project-based consulting, retainers for ongoing support, or fractional data-lead roles. Every engagement opens with a free consultation to work out which of the three actually fits — sometimes the answer is that you need a hire, not a consultant.",
+    q: "How do you usually work?",
+    a: "Project based, on a retainer, or as a fractional data lead. We start with a call to work out which one fits. Sometimes the answer is that you need to hire someone rather than bring me in, and I will say so.",
   },
   {
-    question: "How long does a data migration take?",
-    answer:
-      "A standard Azure migration in the 10–50TB range runs 8–12 weeks including assessment, pipeline development, testing, and cutover. You get a milestone plan during discovery, before any commitment.",
+    q: "How long does a migration take?",
+    a: "For something in the 10 to 50TB range, usually 8 to 12 weeks including assessment, building the pipelines, testing and cutover. You get a plan with milestones during discovery, before committing to anything.",
   },
   {
-    question: "Do you work with international clients?",
-    answer:
-      "Yes. I am based in Chennai and have worked with teams across US, UK, and APAC time zones. Async by default, with scheduled overlap hours where the work needs them.",
+    q: "Do you work with clients outside India?",
+    a: "Yes. I am in Chennai and have worked with teams in the US, UK and across APAC. Mostly async, with a few hours of overlap scheduled where the work needs it.",
   },
   {
-    question: "What industries do you know well?",
-    answer:
-      "Financial services — credit bureaus and banking in particular — plus SaaS and enterprise technology. The underlying architecture principles travel across sectors; the domain modelling is where industry knowledge earns its keep.",
+    q: "Which industries do you know?",
+    a: "Financial services in the most depth, credit bureaus and banking especially. Also SaaS and enterprise tech. The architecture side carries across industries fine, but domain modelling is where knowing the sector actually helps.",
   },
   {
-    question: "Can you train our internal team?",
-    answer:
-      "Yes, and I would rather it be part of the scope than an afterthought. Hands-on training, documentation, and best-practice guides so your team can extend the platform once I am gone.",
+    q: "Can you train our team?",
+    a: "Yes, and I would rather it be part of the scope than something bolted on at the end. Hands on training, documentation, and notes on how things work so your team can extend the platform after I have gone.",
   },
   {
-    question: "What is your primary stack?",
-    answer:
-      "Microsoft Azure — Data Factory, Databricks, Synapse, Data Lake — with Power BI, Python/PySpark, and SQL. For AI work, the Claude API and custom models. For web and mobile, React, Next.js, and React Native.",
+    q: "What do you build on?",
+    a: "Azure mainly: Data Factory, Databricks, Synapse, Data Lake. Power BI for reporting. Python, PySpark and SQL. Claude API for the AI work. React and Next.js for web.",
   },
 ];
 
 export default function FAQs() {
-  const [open, setOpen] = useState<number | null>(0);
-  const reduced = useReducedMotion();
-  const baseId = useId();
-
   return (
-    <section id="faqs" className="bg-sunken py-20 lg:py-28">
-      <div className="shell">
-        <SectionHeader index="08" label="Questions" title="Asked often enough to write down." />
+    <section id="faqs" className="wrap border-t rule py-10">
+      <h2 className="mb-4">Questions I get asked</h2>
 
-        <div className="mt-14 grid gap-x-10 md:grid-cols-12">
-          <div className="md:col-span-12 lg:col-span-8 lg:col-start-3">
-            {faqs.map((faq, i) => {
-              const isOpen = open === i;
-              const panelId = `${baseId}-panel-${i}`;
-              const buttonId = `${baseId}-button-${i}`;
-              return (
-                <Reveal key={faq.question} delay={0.03 * i}>
-                  <div className="border-t border-rule last:border-b">
-                    <h3>
-                      <button
-                        id={buttonId}
-                        type="button"
-                        aria-expanded={isOpen}
-                        aria-controls={panelId}
-                        onClick={() => setOpen(isOpen ? null : i)}
-                        className="group flex w-full items-baseline gap-5 py-6 text-left"
-                      >
-                        <span className="label nums shrink-0 text-subtle">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <span className="flex-1 font-serif text-xl leading-snug transition-colors duration-200 group-hover:text-accent">
-                          {faq.question}
-                        </span>
-                        <span
-                          aria-hidden="true"
-                          className="shrink-0 text-xl leading-none text-subtle transition-transform duration-300 ease-editorial"
-                          style={{ transform: isOpen ? "rotate(45deg)" : "none" }}
-                        >
-                          +
-                        </span>
-                      </button>
-                    </h3>
-
-                    <AnimatePresence initial={false}>
-                      {isOpen ? (
-                        <motion.div
-                          id={panelId}
-                          role="region"
-                          aria-labelledby={buttonId}
-                          initial={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                          animate={reduced ? { opacity: 1 } : { height: "auto", opacity: 1 }}
-                          exit={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                          transition={{ duration: reduced ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
-                          className="overflow-hidden"
-                        >
-                          <p className="max-w-measure pb-7 pl-[3.25rem] leading-relaxed text-muted">
-                            {faq.answer}
-                          </p>
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
+      {faqs.map((faq) => (
+        <div key={faq.q} className="mb-5">
+          <h3 className="mb-1">{faq.q}</h3>
+          <p className="mb-0">{faq.a}</p>
         </div>
-      </div>
+      ))}
     </section>
   );
 }

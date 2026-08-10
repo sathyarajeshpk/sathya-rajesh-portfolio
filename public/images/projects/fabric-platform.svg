@@ -1,85 +1,85 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Medallion lakehouse architecture: bronze, silver and gold layers feeding reporting">
-  <rect width="800" height="450" fill="#E9EBEF"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="1.6" fill="#697080">
+  <rect width="800" height="450" fill="#F1F2F4"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#4C525A">
     <text x="48" y="46">ONELAKE — MEDALLION LAYERS</text>
   </g>
-  <line x1="48" y1="62" x2="752" y2="62" stroke="#BFC5CF" stroke-width="1"/>
+  <line x1="48" y1="62" x2="752" y2="62" stroke="#D8DBE0" stroke-width="1"/>
 
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.4">
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="10">
     <!-- Bronze -->
-    <rect x="48" y="96" width="176" height="86" fill="none" stroke="#13151A" stroke-width="1"/>
-    <text x="62" y="122" fill="#697080">BRONZE</text>
-    <text x="62" y="142" fill="#13151A" font-size="12" letter-spacing="0">Raw ingest</text>
-    <line x1="62" y1="156" x2="150" y2="156" stroke="#BFC5CF"/>
-    <line x1="62" y1="164" x2="128" y2="164" stroke="#BFC5CF"/>
+    <rect x="48" y="96" width="176" height="86" fill="none" stroke="#1A1C20" stroke-width="1"/>
+    <text x="62" y="122" fill="#4C525A">BRONZE</text>
+    <text x="62" y="142" fill="#1A1C20" font-size="12">Raw ingest</text>
+    <line x1="62" y1="156" x2="150" y2="156" stroke="#D8DBE0"/>
+    <line x1="62" y1="164" x2="128" y2="164" stroke="#D8DBE0"/>
 
     <!-- Silver -->
-    <rect x="264" y="96" width="176" height="86" fill="none" stroke="#13151A" stroke-width="1"/>
-    <text x="278" y="122" fill="#697080">SILVER</text>
-    <text x="278" y="142" fill="#13151A" font-size="12" letter-spacing="0">Conformed</text>
-    <line x1="278" y1="156" x2="366" y2="156" stroke="#BFC5CF"/>
-    <line x1="278" y1="164" x2="344" y2="164" stroke="#BFC5CF"/>
+    <rect x="264" y="96" width="176" height="86" fill="none" stroke="#1A1C20" stroke-width="1"/>
+    <text x="278" y="122" fill="#4C525A">SILVER</text>
+    <text x="278" y="142" fill="#1A1C20" font-size="12">Conformed</text>
+    <line x1="278" y1="156" x2="366" y2="156" stroke="#D8DBE0"/>
+    <line x1="278" y1="164" x2="344" y2="164" stroke="#D8DBE0"/>
 
     <!-- Gold -->
     <rect x="480" y="96" width="176" height="86" fill="none" stroke="#175E68" stroke-width="1.5"/>
     <text x="494" y="122" fill="#175E68">GOLD</text>
-    <text x="494" y="142" fill="#13151A" font-size="12" letter-spacing="0">Semantic model</text>
+    <text x="494" y="142" fill="#1A1C20" font-size="12">Semantic model</text>
     <line x1="494" y1="156" x2="582" y2="156" stroke="#7FB9C1"/>
     <line x1="494" y1="164" x2="560" y2="164" stroke="#7FB9C1"/>
   </g>
 
   <!-- Flow arrows -->
-  <g stroke="#13151A" stroke-width="1" fill="none">
+  <g stroke="#1A1C20" stroke-width="1" fill="none">
     <path d="M224 139 H256"/><path d="M250 134 l6 5 -6 5"/>
     <path d="M440 139 H472"/><path d="M466 134 l6 5 -6 5"/>
   </g>
 
   <!-- Merge / CDC detail -->
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.2" fill="#697080">
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="9" fill="#4C525A">
     <text x="264" y="206">MERGE ON KEY · CDC</text>
   </g>
-  <line x1="264" y1="214" x2="440" y2="214" stroke="#BFC5CF" stroke-dasharray="3 3"/>
+  <line x1="264" y1="214" x2="440" y2="214" stroke="#D8DBE0" stroke-dasharray="3 3"/>
 
   <!-- Reporting plate -->
-  <line x1="48" y1="262" x2="752" y2="262" stroke="#BFC5CF"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.4" fill="#697080">
+  <line x1="48" y1="262" x2="752" y2="262" stroke="#D8DBE0"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="10" fill="#4C525A">
     <text x="48" y="288">DIRECT LAKE REPORTING</text>
   </g>
 
   <!-- Bar figure -->
-  <g fill="none" stroke="#13151A" stroke-width="1">
+  <g fill="none" stroke="#1A1C20" stroke-width="1">
     <rect x="48" y="308" width="304" height="106"/>
   </g>
-  <g fill="#13151A">
+  <g fill="#1A1C20">
     <rect x="70" y="378" width="18" height="24"/>
     <rect x="100" y="358" width="18" height="44"/>
     <rect x="130" y="342" width="18" height="60"/>
     <rect x="160" y="366" width="18" height="36"/>
   </g>
   <rect x="190" y="330" width="18" height="72" fill="#175E68"/>
-  <g fill="#13151A">
+  <g fill="#1A1C20">
     <rect x="220" y="352" width="18" height="50"/>
     <rect x="250" y="370" width="18" height="32"/>
     <rect x="280" y="346" width="18" height="56"/>
   </g>
-  <line x1="70" y1="402" x2="330" y2="402" stroke="#BFC5CF"/>
+  <line x1="70" y1="402" x2="330" y2="402" stroke="#D8DBE0"/>
 
   <!-- KPI stack -->
-  <g fill="none" stroke="#13151A" stroke-width="1">
+  <g fill="none" stroke="#1A1C20" stroke-width="1">
     <rect x="392" y="308" width="360" height="106"/>
   </g>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.3" fill="#697080">
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="9" fill="#4C525A">
     <text x="414" y="334">REFRESH</text>
     <text x="530" y="334">LATENCY</text>
     <text x="646" y="334">SLA</text>
   </g>
-  <g font-family="Georgia, serif" font-size="26" fill="#13151A">
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="26" fill="#1A1C20">
     <text x="414" y="368">4×</text>
     <text x="530" y="368">2m</text>
     <text x="646" y="368" fill="#175E68">99.5</text>
   </g>
-  <line x1="414" y1="386" x2="730" y2="386" stroke="#BFC5CF"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.2" fill="#697080">
+  <line x1="414" y1="386" x2="730" y2="386" stroke="#D8DBE0"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="9" fill="#4C525A">
     <text x="414" y="403">DAILY</text>
     <text x="530" y="403">P95</text>
     <text x="646" y="403">PERCENT</text>
