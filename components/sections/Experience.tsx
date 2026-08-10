@@ -1,69 +1,119 @@
-const jobs = [
+import Reveal from "@/components/site/Reveal";
+import SectionHeader from "@/components/site/SectionHeader";
+
+const experiences = [
   {
-    company: "TransUnion Global Technology Center, Chennai",
+    company: "TransUnion Global Technology Center",
+    location: "Chennai",
     role: "Lead",
-    dates: "Nov 2019 to Nov 2025",
-    points: [
-      "Designed and ran more than ten production ETL and ELT pipelines on Azure Data Factory and Databricks, held at 99.5% uptime against SLA.",
-      "Led the migration of over 50TB of legacy data to Azure Data Lake Storage Gen2. Costs came down about 30% and queries got roughly 40% faster.",
-      "Moved us onto Delta Lake with incremental loads instead of full nightly reloads.",
-      "Built the Power BI reporting the executive team used, which cut manual reporting work by around 60%.",
-      "Mentored 20 or so data engineers, and set up monitoring on Azure Monitor and Log Analytics so we found out about failures before the business did.",
+    from: "Nov 2019",
+    to: "Nov 2025",
+    highlights: [
+      "Architected 10+ production ETL/ELT pipelines on Azure Data Factory and Databricks, held to 99.5% SLA uptime",
+      "Led migration of 50+ TB of legacy data to Azure Data Lake Storage Gen2 — 30% cost reduction, 40% faster queries",
+      "Implemented Delta Lake with incremental load strategies for high-performance OLAP analytics",
+      "Built the Power BI executive reporting suite, cutting manual reporting effort by roughly 60%",
+      "Mentored 20+ data engineers and established proactive monitoring on Azure Monitor and Log Analytics",
     ],
-    note: "Quarterly Best Performer in Feb 2024, Aug 2023 and Nov 2022.",
+    award: "Quarterly Best Performer — Feb 2024, Aug 2023, Nov 2022",
   },
   {
-    company: "Tata Consultancy Services, Chennai",
+    company: "Tata Consultancy Services",
+    location: "Chennai",
     role: "Senior Process Associate",
-    dates: "Jan 2018 to Nov 2019",
-    points: [
-      "Monitored batch ETL workflows and checked operational data for quality problems.",
-      "Tuned SQL queries and stored procedures, taking about 20% off execution time.",
-      "Investigated pipeline failures and wrote up the fixes so the next person did not start from scratch.",
+    from: "Jan 2018",
+    to: "Nov 2019",
+    highlights: [
+      "Monitored batch ETL workflows and validated operational data for quality and reliability",
+      "Optimised SQL queries and stored procedures, reducing execution time by 20%",
+      "Investigated production pipeline failures and standardised resolution documentation",
     ],
-    note: "Client Appreciation Award for technical delivery.",
+    award: "Client Appreciation Award for technical delivery",
   },
   {
-    company: "Sutherland Global Services, Chennai",
+    company: "Sutherland Global Services",
+    location: "Chennai",
     role: "Consultant",
-    dates: "Jan 2016 to Dec 2017",
-    points: [
-      "Analysed customer interaction data and turned it into something the service teams could act on.",
-      "Helped analytics teams get at the data they needed.",
+    from: "Jan 2016",
+    to: "Dec 2017",
+    highlights: [
+      "Analysed customer interaction data to generate service improvement insights",
+      "Supported analytics teams with data access, extraction, and insight delivery",
     ],
-    note: null,
+    award: null,
   },
   {
-    company: "Sitel India, Chennai",
+    company: "Sitel India",
+    location: "Chennai",
     role: "Senior Customer Service Representative",
-    dates: "May 2013 to Dec 2015",
-    points: [
-      "Held a 95% first contact resolution rate across 400 or so interactions a week.",
-      "Tracked and improved service performance metrics.",
+    from: "May 2013",
+    to: "Dec 2015",
+    highlights: [
+      "Maintained a 95% first-contact resolution rate across 400+ weekly interactions",
+      "Tracked and improved key service performance metrics",
     ],
-    note: "Wall of Fame three quarters running.",
+    award: "Wall of Fame — three consecutive quarters",
   },
 ];
 
 export default function Experience() {
   return (
-    <section id="experience" className="wrap border-t rule py-10">
-      <h2 className="mb-4">Where I have worked</h2>
+    <section id="experience" className="py-20 lg:py-28">
+      <div className="shell">
+        <SectionHeader
+          index="04"
+          label="Track record"
+          title="Where the twelve years went."
+        />
 
-      {jobs.map((job) => (
-        <div key={job.company} className="mb-8">
-          <h3 className="mb-0.5">{job.company}</h3>
-          <p className="muted mb-2 text-[0.95rem]">
-            {job.role}, {job.dates}
-          </p>
-          <ul className="list">
-            {job.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-          {job.note ? <p className="muted mb-0 text-[0.95rem]">{job.note}</p> : null}
+        <div className="mt-14">
+          {experiences.map((exp, i) => (
+            <Reveal key={exp.company} delay={0.04 * i}>
+              <article className="grid gap-x-10 gap-y-5 border-t border-rule py-10 md:grid-cols-12">
+                <div className="md:col-span-3 lg:col-span-2">
+                  <p className="label nums text-accent">
+                    {exp.from}
+                    <span className="text-subtle"> — </span>
+                    {exp.to}
+                  </p>
+                  <p className="label mt-2 text-subtle">{exp.location}</p>
+                </div>
+
+                <div className="md:col-span-9 lg:col-span-4">
+                  <h3 className="text-xl font-bold leading-snug sm:text-2xl">{exp.company}</h3>
+                  <p className="mt-1.5 text-[0.9375rem] text-muted">{exp.role}</p>
+                  {exp.award ? (
+                    <p className="label mt-4 flex items-start gap-2 text-subtle">
+                      <span aria-hidden="true" className="text-accent">
+                        ★
+                      </span>
+                      {exp.award}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="md:col-span-9 md:col-start-4 lg:col-span-6 lg:col-start-7">
+                  <ul className="space-y-3">
+                    {exp.highlights.map((highlight) => (
+                      <li
+                        key={highlight}
+                        className="flex gap-3 text-[0.9375rem] leading-relaxed text-muted"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-[0.6em] inline-block h-px w-3 shrink-0"
+                          style={{ background: "var(--rule-strong)" }}
+                        />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </Reveal>
+          ))}
         </div>
-      ))}
+      </div>
     </section>
   );
 }
