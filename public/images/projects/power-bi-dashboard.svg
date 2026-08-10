@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Star schema: a central fact table joined to four dimension tables">
-  <rect width="800" height="450" fill="#E9EBEF"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="1.6" fill="#697080">
+  <rect width="800" height="450" fill="#F1F2F4"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="11" fill="#4C525A">
     <text x="48" y="46">STAR SCHEMA — EXECUTIVE MODEL</text>
   </g>
-  <line x1="48" y1="62" x2="752" y2="62" stroke="#BFC5CF"/>
+  <line x1="48" y1="62" x2="752" y2="62" stroke="#D8DBE0"/>
 
   <!-- Relationship lines drawn first so boxes sit on top -->
-  <g stroke="#BFC5CF" stroke-width="1">
+  <g stroke="#D8DBE0" stroke-width="1">
     <path d="M232 148 L352 210" fill="none"/>
     <path d="M568 148 L448 210" fill="none"/>
     <path d="M232 352 L352 268" fill="none"/>
@@ -14,48 +14,48 @@
   </g>
 
   <!-- Dimension: Date -->
-  <rect x="130" y="106" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.3">
-    <text x="146" y="128" fill="#697080">DIM</text>
-    <text x="146" y="150" fill="#13151A" font-size="12" letter-spacing="0">dim_date</text>
+  <rect x="130" y="106" width="164" height="60" fill="#F1F2F4" stroke="#1A1C20"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="10">
+    <text x="146" y="128" fill="#4C525A">DIM</text>
+    <text x="146" y="150" fill="#1A1C20" font-size="12">dim_date</text>
   </g>
 
   <!-- Dimension: Region -->
-  <rect x="506" y="106" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.3">
-    <text x="522" y="128" fill="#697080">DIM</text>
-    <text x="522" y="150" fill="#13151A" font-size="12" letter-spacing="0">dim_region</text>
+  <rect x="506" y="106" width="164" height="60" fill="#F1F2F4" stroke="#1A1C20"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="10">
+    <text x="522" y="128" fill="#4C525A">DIM</text>
+    <text x="522" y="150" fill="#1A1C20" font-size="12">dim_region</text>
   </g>
 
   <!-- Dimension: Product -->
-  <rect x="130" y="334" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.3">
-    <text x="146" y="356" fill="#697080">DIM</text>
-    <text x="146" y="378" fill="#13151A" font-size="12" letter-spacing="0">dim_product</text>
+  <rect x="130" y="334" width="164" height="60" fill="#F1F2F4" stroke="#1A1C20"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="10">
+    <text x="146" y="356" fill="#4C525A">DIM</text>
+    <text x="146" y="378" fill="#1A1C20" font-size="12">dim_product</text>
   </g>
 
   <!-- Dimension: Customer -->
-  <rect x="506" y="334" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.3">
-    <text x="522" y="356" fill="#697080">DIM</text>
-    <text x="522" y="378" fill="#13151A" font-size="12" letter-spacing="0">dim_customer</text>
+  <rect x="506" y="334" width="164" height="60" fill="#F1F2F4" stroke="#1A1C20"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="10">
+    <text x="522" y="356" fill="#4C525A">DIM</text>
+    <text x="522" y="378" fill="#1A1C20" font-size="12">dim_customer</text>
   </g>
 
   <!-- Fact table -->
-  <rect x="316" y="196" width="168" height="86" fill="#E9EBEF" stroke="#175E68" stroke-width="1.5"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="1.3">
+  <rect x="316" y="196" width="168" height="86" fill="#F1F2F4" stroke="#175E68" stroke-width="1.5"/>
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="10">
     <text x="334" y="220" fill="#175E68">FACT</text>
   </g>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#13151A">
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="12" fill="#1A1C20">
     <text x="334" y="242">fct_sales</text>
   </g>
   <line x1="334" y1="252" x2="466" y2="252" stroke="#7FB9C1"/>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" letter-spacing="1.2" fill="#697080">
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="9" fill="#4C525A">
     <text x="334" y="270">28 DAX MEASURES</text>
   </g>
 
   <!-- Cardinality marks -->
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#697080">
+  <g font-family="'Comic Sans MS', 'Segoe UI', system-ui, sans-serif" font-size="9" fill="#4C525A">
     <text x="262" y="176">1</text><text x="330" y="196">∗</text>
     <text x="530" y="176">1</text><text x="466" y="196">∗</text>
     <text x="262" y="330">1</text><text x="330" y="290">∗</text>

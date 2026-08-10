@@ -1,99 +1,32 @@
-const social = [
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/sathyarajeshpk/" },
-  { name: "GitHub", href: "https://github.com/sathyarajeshpk" },
-  {
-    name: "Fiverr",
-    href: "https://www.fiverr.com/sathyarajesh638/build-azure-data-engineering-solutions-using-adf-databricks-and-pyspark",
-  },
-  { name: "WhatsApp", href: "https://wa.me/919597996996" },
-];
-
-const sitemap = [
-  { name: "About", href: "#about" },
-  { name: "Practice", href: "#services" },
-  { name: "Work", href: "#projects" },
-  { name: "Track record", href: "#experience" },
-  { name: "Capabilities", href: "#skills" },
-  { name: "Writing", href: "#blog" },
-  { name: "Questions", href: "#faqs" },
-  { name: "Contact", href: "#contact" },
-];
-
 export default function Footer() {
   return (
-    <footer className="bg-sunken pb-10 pt-20">
-      <div className="shell">
-        <div className="grid gap-x-10 gap-y-12 border-t border-rule pt-10 md:grid-cols-12">
-          <div className="md:col-span-6 lg:col-span-5">
-            <p className="font-serif text-2xl leading-tight">
-              Sathya Rajesh PK
-              <span className="mt-2 block text-lg text-subtle">
-                Lead data engineer &amp; technology consultant
-              </span>
-            </p>
-            <p className="mt-6 max-w-sm leading-relaxed text-muted">
-              Azure data platforms, Microsoft Fabric, and business intelligence for enterprises and
-              startups. Chennai, Tamil Nadu — working across US, UK, and APAC hours.
-            </p>
-          </div>
-
-          <nav aria-label="Footer" className="md:col-span-3 lg:col-span-3 lg:col-start-7">
-            <p className="label mb-4 text-subtle">Index</p>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 lg:grid-cols-1">
-              {sitemap.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="link-underline text-[0.9375rem] text-muted">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="md:col-span-3 lg:col-span-3">
-            <p className="label mb-4 text-subtle">Elsewhere</p>
-            <ul className="space-y-2">
-              {social.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="link-underline text-[0.9375rem] text-muted"
-                  >
-                    {link.name}
-                    <span aria-hidden="true" className="text-xs">
-                      ↗
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <p className="label mb-2 mt-8 text-subtle">Direct</p>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="mailto:sathyarajeshpk@gmail.com"
-                  className="link-underline text-[0.9375rem] text-muted"
-                >
-                  sathyarajeshpk@gmail.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+919597996996" className="link-underline nums text-[0.9375rem] text-muted">
-                  +91 95979 96996
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="label mt-16 flex flex-col gap-3 border-t border-rule pt-6 text-subtle sm:flex-row sm:items-center sm:justify-between">
-          <span className="nums">© {new Date().getFullYear()} Sathya Rajesh PK</span>
-          <span>Designed &amp; built in Chennai</span>
-        </div>
-      </div>
+    <footer className="wrap border-t rule py-8 text-[0.95rem]">
+      <p>
+        <a href="mailto:sathyarajeshpk@gmail.com">sathyarajeshpk@gmail.com</a> &middot;{" "}
+        <a href="tel:+919597996996">+91 95979 96996</a> &middot; Chennai, Tamil Nadu, India
+      </p>
+      <p>
+        <a href="https://www.linkedin.com/in/sathyarajeshpk/" target="_blank" rel="noopener noreferrer">
+          LinkedIn
+        </a>{" "}
+        &middot;{" "}
+        <a href="https://github.com/sathyarajeshpk" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>{" "}
+        &middot;{" "}
+        <a
+          href="https://www.fiverr.com/sathyarajesh638/build-azure-data-engineering-solutions-using-adf-databricks-and-pyspark"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Fiverr
+        </a>{" "}
+        &middot;{" "}
+        <a href="https://wa.me/919597996996" target="_blank" rel="noopener noreferrer">
+          WhatsApp
+        </a>
+      </p>
+      <p className="muted mb-0">&copy; {new Date().getFullYear()} Sathya Rajesh PK</p>
     </footer>
   );
 }

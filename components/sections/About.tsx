@@ -1,105 +1,45 @@
-import Reveal from "@/components/site/Reveal";
-import SectionHeader from "@/components/site/SectionHeader";
-
-const principles = [
-  {
-    title: "Architecture before code",
-    body: "Every engagement opens with the boring questions — data contracts, ownership, failure modes. The pipeline is the easy part once those are settled.",
-  },
-  {
-    title: "Built to be handed over",
-    body: "Runbooks, naming conventions, and a team that can extend the thing without me. I have inherited enough undocumented systems to know the cost.",
-  },
-  {
-    title: "Cost is a design constraint",
-    body: "Cloud spend is an architectural outcome, not a billing problem. Partitioning, file sizing, and cluster policy get decided early, not after the first invoice.",
-  },
-  {
-    title: "Reporting people trust",
-    body: "A dashboard nobody believes is worse than no dashboard. Lineage, reconciliation, and refresh transparency are part of the deliverable.",
-  },
-];
-
-const stack = [
-  "Azure Data Factory",
-  "Databricks",
-  "Microsoft Fabric",
-  "Delta Lake",
-  "Power BI",
-  "PySpark",
-  "Synapse",
-  "Python",
-  "SQL",
-];
-
 export default function About() {
   return (
-    <section id="about" className="py-20 lg:py-28">
-      <div className="shell">
-        <SectionHeader
-          index="01"
-          label="About"
-          title={
-            <>
-              Twelve years of making other people&rsquo;s data{" "}
-              <em className="italic text-accent">behave</em>.
-            </>
-          }
-        />
+    <section id="about" className="wrap border-t rule py-10">
+      <h2 className="mb-4">About me</h2>
 
-        <div className="mt-14 grid gap-x-10 gap-y-14 md:grid-cols-12">
-          <div className="md:col-span-9 md:col-start-4 lg:col-span-5 lg:col-start-3">
-            <Reveal>
-              <div className="space-y-5 text-lg leading-relaxed text-muted">
-                <p>
-                  I spent six years at TransUnion&rsquo;s global technology centre leading the
-                  design of production ETL and ELT pipelines — the kind that process millions of
-                  records overnight and get noticed only when they break. They largely didn&rsquo;t:
-                  we held 99.5% SLA uptime across the platform.
-                </p>
-                <p>
-                  The work before that was less glamorous and more useful than it sounds. Years of
-                  monitoring batch workflows and investigating production failures teach you which
-                  architectural decisions cause 3am pages. I design against that list now.
-                </p>
-                <p className="text-[var(--fg)]">
-                  Today I consult independently — Azure data platforms, Microsoft Fabric
-                  implementations, Power BI reporting, and the AI tooling that is finally becoming
-                  useful around all three.
-                </p>
-              </div>
-            </Reveal>
+      <p>
+        I worked at TransUnion&rsquo;s technology centre in Chennai from 2019 to 2025, leading the
+        design of ETL and ELT pipelines. They processed a few million records a night. We held them
+        at 99.5% uptime against SLA, which I am reasonably proud of.
+      </p>
 
-            <Reveal delay={0.1}>
-              <div className="mt-10 border-t border-rule pt-6">
-                <p className="label mb-4 text-subtle">Principal tools</p>
-                <ul className="flex flex-wrap gap-x-5 gap-y-2">
-                  {stack.map((item) => (
-                    <li key={item} className="label text-muted">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
+      <p>
+        Before that I spent years watching batch jobs fail at three in the morning and writing up
+        why. That looks less impressive on a CV, but it taught me more about architecture than any
+        of the design work did. I know which decisions cause pages at 3am because I was the one
+        getting paged.
+      </p>
 
-          <div className="md:col-span-9 md:col-start-4 lg:col-span-4 lg:col-start-9">
-            <ul>
-              {principles.map((principle, i) => (
-                <Reveal as="li" key={principle.title} delay={0.05 * i}>
-                  <div className="border-t border-rule py-6 first:border-t-0 first:pt-0">
-                    <h3 className="font-serif text-xl leading-snug">{principle.title}</h3>
-                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-subtle">
-                      {principle.body}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <p>
+        I now work independently. Most projects are Azure data platforms, Fabric implementations, or
+        Power BI reporting. Often all three, because they tend to arrive together.
+      </p>
+
+      <p>Some things I try to do on every project:</p>
+
+      <ul className="list">
+        <li>Work out the data contracts and who owns what before writing any pipelines.</li>
+        <li>Leave behind documentation and a team that can maintain the thing without me.</li>
+        <li>
+          Keep cloud costs down by getting partitioning and cluster sizing right early, rather than
+          trying to optimise after the first big invoice.
+        </li>
+        <li>
+          Make reporting people actually trust. In practice that means being able to show where any
+          number came from.
+        </li>
+      </ul>
+
+      <p>
+        Tools I use most: Azure Data Factory, Databricks, Microsoft Fabric, Delta Lake, Power BI,
+        PySpark, Synapse, Python and SQL.
+      </p>
     </section>
   );
 }

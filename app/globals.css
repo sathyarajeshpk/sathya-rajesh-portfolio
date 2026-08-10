@@ -4,65 +4,76 @@
 
 @layer base {
   :root {
-    --bg: #f4f5f7;
-    --bg-raised: #ffffff;
-    --bg-sunken: #e9ebef;
-    --fg: #13151a;
-    --fg-muted: #454b55;
-    --fg-subtle: #697080;
-    --rule: #d9dde4;
-    --rule-strong: #bfc5cf;
-    --accent: #175e68;
-    --accent-fg: #ffffff;
-    --nav-h: 4.5rem;
+    --bg: #fdfdfc;
+    --fg: #1a1c20;
+    --fg-muted: #4c525a;
+    --border: #d8dbe0;
+    --link: #175e68;
+    --shade: #f1f2f4;
+    --nav-h: 3.5rem;
   }
 
   .dark {
-    --bg: #0d0f12;
-    --bg-raised: #14171c;
-    --bg-sunken: #090a0c;
-    --fg: #eef0f4;
-    --fg-muted: #a8afbb;
-    --fg-subtle: #7c8492;
-    --rule: #262a31;
-    --rule-strong: #3a3f49;
-    --accent: #63b4be;
-    --accent-fg: #14171c;
+    --bg: #14161a;
+    --fg: #e6e8ec;
+    --fg-muted: #a2a8b2;
+    --border: #2c3037;
+    --link: #7cc4ce;
+    --shade: #1b1e23;
   }
 
   html {
     -webkit-text-size-adjust: 100%;
   }
 
-  /* Anchor targets clear the fixed header instead of sliding under it. */
   section[id],
-  [id="hero"] {
-    scroll-margin-top: var(--nav-h);
+  [id="top"] {
+    scroll-margin-top: calc(var(--nav-h) + 1rem);
   }
 
   body {
-    background-color: var(--bg);
+    background: var(--bg);
     color: var(--fg);
-    @apply font-sans antialiased;
-    font-feature-settings: "cv05" 1, "ss01" 1;
+    @apply font-sans;
+    font-size: 1.0625rem;
+    line-height: 1.7;
   }
 
   h1,
   h2,
   h3 {
-    @apply font-serif;
-    font-feature-settings: "liga" 1, "kern" 1;
+    font-weight: 700;
+    line-height: 1.25;
   }
 
-  ::selection {
-    background: var(--accent);
-    color: var(--accent-fg);
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  a {
+    color: var(--link);
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  p {
+    margin-bottom: 1rem;
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    border-radius: 2px;
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -70,7 +81,6 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
@@ -78,88 +88,31 @@
 }
 
 @layer components {
-  .shell {
-    @apply mx-auto w-full max-w-[84rem] px-5 sm:px-8 lg:px-12;
+  .wrap {
+    @apply mx-auto w-full max-w-[46rem] px-5;
   }
 
-  /* Uppercase mono label — the recurring typographic signature of the site. */
-  .label {
-    @apply font-mono text-[0.6875rem] uppercase tracking-label;
+  /* Plain bulleted list used through the page content. */
+  .list {
+    @apply mb-4 space-y-1.5 pl-5;
+    list-style: disc;
   }
 
-  .rule {
-    border-color: var(--rule);
-  }
-
-  .surface {
-    background-color: var(--bg-raised);
-  }
-
-  /* Understated link with an underline that draws in on hover. */
-  .link-underline {
-    @apply relative inline-flex items-center gap-2;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 1px;
-    transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .link-underline:hover {
-    background-size: 100% 1px;
+  .list li::marker {
+    color: var(--fg-muted);
   }
 }
 
 @layer utilities {
-  .text-muted {
+  .muted {
     color: var(--fg-muted);
   }
 
-  .text-subtle {
-    color: var(--fg-subtle);
+  .rule {
+    border-color: var(--border);
   }
 
-  .text-accent {
-    color: var(--accent);
+  .shade {
+    background: var(--shade);
   }
-
-  .bg-sunken {
-    background-color: var(--bg-sunken);
-  }
-
-  .bg-raised {
-    background-color: var(--bg-raised);
-  }
-
-  .border-rule {
-    border-color: var(--rule);
-  }
-
-  .border-rule-strong {
-    border-color: var(--rule-strong);
-  }
-
-  /* Tabular numerals so stat rows and dates align on a grid. */
-  .nums {
-    font-variant-numeric: tabular-nums;
-  }
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-sunken);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--rule-strong);
-  border: 3px solid var(--bg-sunken);
-  border-radius: 99px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
 }
