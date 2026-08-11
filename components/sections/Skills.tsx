@@ -48,12 +48,12 @@ export default function Skills() {
 
         <div className="mt-14 grid gap-x-10 gap-y-0 sm:grid-cols-2 lg:grid-cols-4">
           {groups.map((group, i) => (
-            <Reveal key={group.title} delay={0.03 * i}>
-              <div className="border-t border-rule py-7">
-                <h3 className="label mb-4 text-accent">{group.title}</h3>
+            <Reveal key={group.title} delay={0.05 * i}>
+              <div className="border-t border-rule py-7 transition-all duration-300 hover:translate-y-[-2px]">
+                <h3 className="label mb-4 text-accent transition-colors duration-300 hover:brightness-110">{group.title}</h3>
                 <ul className="space-y-1.5">
                   {group.items.map((item) => (
-                    <li key={item} className="text-[0.9375rem] leading-snug text-muted">
+                    <li key={item} className="text-[0.9375rem] leading-snug text-muted transition-colors duration-200 hover:text-[var(--fg)]">
                       {item}
                     </li>
                   ))}

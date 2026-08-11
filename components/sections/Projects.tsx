@@ -81,22 +81,22 @@ export default function Projects() {
             <Reveal
               as="article"
               key={project.title}
-              delay={0.04 * i}
+              delay={0.06 * i}
               className={project.featured ? "md:col-span-1" : "md:col-span-1"}
             >
-              <div className="group flex h-full flex-col border-t border-rule pt-6">
+              <div className="group flex h-full flex-col border-t border-rule pt-6 transition-all duration-500 hover:translate-y-[-4px]">
                 <div className="mb-5 flex items-baseline justify-between gap-4">
                   <span className="label text-subtle">{project.discipline}</span>
                   <span className="label nums text-subtle">{project.year}</span>
                 </div>
 
-                <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden border border-rule bg-sunken">
+                <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden border border-rule bg-sunken group">
                   <Image
                     src={project.image}
                     alt=""
                     fill
                     sizes="(max-width: 768px) 90vw, 44vw"
-                    className="object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.03]"
+                    className="object-cover transition-all duration-700 ease-editorial group-hover:scale-[1.05] group-hover:brightness-110"
                   />
                 </div>
 

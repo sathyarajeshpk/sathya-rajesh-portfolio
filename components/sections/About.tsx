@@ -89,9 +89,9 @@ export default function About() {
             <ul>
               {principles.map((principle, i) => (
                 <Reveal as="li" key={principle.title} delay={0.05 * i}>
-                  <div className="border-t border-rule py-6 first:border-t-0 first:pt-0">
-                    <h3 className="text-xl font-bold leading-snug">{principle.title}</h3>
-                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-subtle">
+                  <div className="border-t border-rule py-6 first:border-t-0 first:pt-0 transition-all duration-300 hover:border-accent">
+                    <h3 className="text-xl font-bold leading-snug transition-colors duration-300 hover:text-accent">{principle.title}</h3>
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-subtle transition-colors duration-300 hover:text-[var(--fg)]">
                       {principle.body}
                     </p>
                   </div>

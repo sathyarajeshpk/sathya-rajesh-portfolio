@@ -112,14 +112,14 @@ export default function Services() {
 
         <div className="mt-14">
           {services.map((service, i) => (
-            <Reveal key={service.title} delay={0.04 * i}>
-              <article className="grid gap-x-10 gap-y-6 border-t border-rule py-10 md:grid-cols-12">
+            <Reveal key={service.title} delay={0.06 * i}>
+              <article className="grid gap-x-10 gap-y-6 border-t border-rule py-10 md:grid-cols-12 transition-all duration-300 hover:border-accent/40">
                 <div className="md:col-span-3 lg:col-span-2">
-                  <span className="label nums text-accent">{service.index}</span>
+                  <span className="label nums text-accent transition-all duration-300 hover:brightness-125">{service.index}</span>
                 </div>
 
                 <div className="md:col-span-9 lg:col-span-5">
-                  <h3 className="text-2xl font-bold leading-tight sm:text-[1.75rem]">
+                  <h3 className="text-2xl font-bold leading-tight transition-colors duration-300 hover:text-accent sm:text-[1.75rem]">
                     {service.title}
                   </h3>
                   <p className="mt-4 max-w-measure leading-relaxed text-muted">{service.problem}</p>
