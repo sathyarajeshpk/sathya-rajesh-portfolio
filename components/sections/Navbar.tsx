@@ -126,7 +126,7 @@ export default function Navbar() {
               className="label hidden h-9 items-center rounded-full px-4 transition-opacity duration-200 hover:opacity-85 sm:inline-flex"
               style={{ background: "var(--fg)", color: "var(--bg)" }}
             >
-              Start a project
+              Get in touch
             </a>
 
             <button
@@ -187,7 +187,7 @@ export default function Navbar() {
                   className="label inline-flex h-11 flex-1 items-center justify-center rounded-full"
                   style={{ background: "var(--fg)", color: "var(--bg)" }}
                 >
-                  Start a project
+                  Get in touch
                 </a>
               </div>
             </div>

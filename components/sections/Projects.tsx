@@ -43,14 +43,15 @@ const projects = [
   },
   {
     year: "2023",
-    title: "Incident root-cause analyzer",
+    title: "AURA — AI Unified Root Cause Analyzer",
     discipline: "AI operations",
     description:
-      "Log analysis tooling that clusters failure signatures and proposes probable root causes to the on-call engineer before they finish reading the alert.",
-    outcome: "60% faster incident resolution",
-    tags: ["Log analysis", "Splunk", "Automation"],
+      "Log analysis and root-cause identification system. Ingests structured logs into ADLS Gen2, applies intelligent parsing and NL2SQL patterns to isolate failure signatures, uses Claude API to propose probable root causes with supporting evidence, and feeds validated resolutions back into a knowledge base for continuous learning.",
+    outcome: "60% faster incident resolution, reduced alert fatigue",
+    tags: ["Log analysis", "Splunk", "Claude API", "Automation"],
     image: "/images/projects/incident-analyzer.svg",
-    service: "Automation",
+    service: "AI Solution",
+    featured: true,
   },
   {
     year: "2022",
@@ -155,7 +156,7 @@ export default function Projects() {
                 className="label mt-8 inline-flex h-12 w-fit items-center rounded-full px-6 transition-opacity duration-200 hover:opacity-85"
                 style={{ background: "var(--fg)", color: "var(--bg)" }}
               >
-                Start a project
+                Get in touch
               </a>
             </div>
           </Reveal>

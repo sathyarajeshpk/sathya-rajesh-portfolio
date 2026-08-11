@@ -28,7 +28,7 @@ export default function Footer() {
             <p className="text-2xl font-bold leading-tight">
               Sathya Rajesh PK
               <span className="mt-2 block text-lg text-subtle">
-                Lead data engineer &amp; technology consultant
+                Lead Data Engineer &amp; Data Platform Architect
               </span>
             </p>
             <p className="mt-6 max-w-sm leading-relaxed text-muted">

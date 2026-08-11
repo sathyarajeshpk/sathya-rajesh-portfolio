@@ -41,8 +41,8 @@ export default function About() {
           label="About"
           title={
             <>
-              Twelve years of making other people&rsquo;s data{" "}
-              <em className="not-italic text-accent">behave</em>.
+              Six years architecting data platforms that{" "}
+              <em className="not-italic text-accent">scale</em>.
             </>
           }
         />
@@ -63,9 +63,10 @@ export default function About() {
                   architectural decisions cause 3am pages. I design against that list now.
                 </p>
                 <p className="text-[var(--fg)]">
-                  Today I consult independently — Azure data platforms, Microsoft Fabric
-                  implementations, Power BI reporting, and the AI tooling that is finally becoming
-                  useful around all three.
+                  My toolkit spans Azure Data Factory, Databricks, and Microsoft Fabric. I architect
+                  end-to-end analytics platforms — lakehouse design, medallion architectures, real-time
+                  ingestion, and semantic layers. I lead teams and mentor engineers in building systems
+                  that scale.
                 </p>
               </div>
             </Reveal>

@@ -3,21 +3,24 @@ import Reveal from "@/components/site/Reveal";
 const testimonials = [
   {
     quote:
-      "We needed someone who could speak to architecture, delivery, and executive stakeholders in the same room. Sathya redesigned our reporting pipeline on Azure, reduced refresh delays from hours to minutes, and gave leadership a much clearer view of performance across regions.",
-    author: "Head of Data Platforms",
-    org: "Regional financial services group",
+      "Quarterly Best Performer — Feb 2024, Aug 2023, Nov 2022. Awarded for technical leadership, architectural excellence, and mentorship of 20+ engineers across the data platform team.",
+    author: "TransUnion",
+    org: "Global Technology Center",
+    icon: "★",
   },
   {
     quote:
-      "Our teams had strong data, but access was bottlenecked through a small analytics function. Sathya helped us shape an NL2SQL experience that business users actually trusted — clean prompts, governance guardrails, and outputs analysts could validate quickly.",
-    author: "VP of Product",
-    org: "B2B SaaS company",
+      "Client Appreciation Award for technical delivery. Recognised for systematic investigations of production failures, optimisation work that reduced query execution time by 20%, and documentation that raised operational standards.",
+    author: "Tata Consultancy Services",
+    org: "Data Operations",
+    icon: "★",
   },
   {
     quote:
-      "Sathya brought calm, structure, and a high engineering bar to a program that was starting to drift. Beyond the technical fixes, he coached our developers and improved documentation habits. He left the team more confident than when he joined.",
-    author: "Engineering Manager",
-    org: "Global capability centre",
+      "Wall of Fame — three consecutive quarters. Maintained 95% first-contact resolution rate across 400+ weekly interactions, setting the standard for service excellence and customer problem-solving.",
+    author: "Sitel India",
+    org: "Customer Operations",
+    icon: "★",
   },
 ];
 

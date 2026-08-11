@@ -63,7 +63,7 @@ export default function Experience() {
         <SectionHeader
           index="04"
           label="Track record"
-          title="Where the twelve years went."
+          title="From support systems to data architecture."
         />
 
         <div className="mt-14">
