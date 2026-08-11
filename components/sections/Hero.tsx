@@ -77,7 +77,10 @@ export default function Hero() {
             className="md:col-span-8 md:col-start-3 lg:col-span-4 lg:col-start-9"
             ref={ref}
           >
-            <motion.div className="relative aspect-[4/5] w-full overflow-hidden border border-rule" style={!reduced ? { y: imageY } : {}}>
+            <motion.div
+              className="relative aspect-[4/5] w-full overflow-hidden border border-rule"
+              style={!reduced ? { y: imageY } : {}}
+            >
               <Image
                 src="/images/hero-photo.png"
                 alt="Sathya Rajesh PK"
@@ -86,6 +89,14 @@ export default function Hero() {
                 className="object-cover object-top"
                 priority
               />
+              {/* Subtle shadow/gradient blend for light theme */}
+              <div className="absolute inset-0 pointer-events-none shadow-2xl opacity-20" style={{
+                boxShadow: "inset 0 0 40px rgba(0, 0, 0, 0.3)"
+              }} />
+              {/* Gradient overlay for seamless blend */}
+              <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-10" style={{
+                background: "radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.2) 100%)"
+              }} />
             </motion.div>
             <figcaption className="label mt-3 flex items-center justify-between text-subtle">
               <span>Sathya Rajesh PK</span>
