@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import AnimatedCounter from "@/components/site/AnimatedCounter";
 
 const stats = [
   { value: "12", suffix: "+", label: "Years in IT engineering" },
@@ -12,6 +14,10 @@ const stats = [
 
 export default function Hero() {
   const reduced = useReducedMotion();
+  const ref = useRef(null);
+  const { scrollY } = useScroll();
+  const imageY = useTransform(scrollY, [0, 400], [0, 80], { clamp: true });
+
   const rise = (delay: number) => ({
     initial: reduced ? { opacity: 0 } : { opacity: 0, y: 18 },
     animate: { opacity: 1, y: 0 },
@@ -69,8 +75,9 @@ export default function Hero() {
           <motion.figure
             {...rise(0.18)}
             className="md:col-span-8 md:col-start-3 lg:col-span-4 lg:col-start-9"
+            ref={ref}
           >
-            <div className="relative aspect-[4/5] w-full overflow-hidden border border-rule">
+            <motion.div className="relative aspect-[4/5] w-full overflow-hidden border border-rule" style={!reduced ? { y: imageY } : {}}>
               <Image
                 src="/images/hero-photo.png"
                 alt="Sathya Rajesh PK"
@@ -79,7 +86,7 @@ export default function Hero() {
                 className="object-cover object-top"
                 priority
               />
-            </div>
+            </motion.div>
             <figcaption className="label mt-3 flex items-center justify-between text-subtle">
               <span>Sathya Rajesh PK</span>
               <span className="nums">Est. 2013</span>
@@ -100,7 +107,9 @@ export default function Hero() {
             >
               <dt className="sr-only">{stat.label}</dt>
               <dd>
-                <span className="nums text-4xl font-extrabold leading-none tracking-tight sm:text-5xl">{stat.value}</span>
+                <span className="nums text-4xl font-extrabold leading-none tracking-tight sm:text-5xl">
+                  <AnimatedCounter value={parseInt(stat.value)} duration={2.5} />
+                </span>
                 <span className="label ml-1.5 text-accent">{stat.suffix}</span>
                 <span className="mt-3 block text-sm leading-snug text-subtle">{stat.label}</span>
               </dd>
