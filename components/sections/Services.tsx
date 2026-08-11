@@ -86,15 +86,15 @@ const services = [
   },
   {
     index: "06",
-    title: "Get a second opinion, or train your team",
+    title: "Architecture review and team enablement",
     problem:
-      "You have people who can build, but you are unsure the plan is right — or you have inherited a system nobody fully understands.",
+      "You have people who can build, but you are unsure the plan is right — or you have inherited a platform nobody fully understands.",
     outcome: [
-      "An honest review of the architecture, and what I would change first",
-      "Hands-on training so your team can run and extend it themselves",
-      "Ongoing availability without a full-time hire",
+      "An honest review of your architecture and the highest-impact changes to make first",
+      "Hands-on mentorship so your team can run and extend the platform themselves",
+      "Clear documentation and runbooks your team can own",
     ],
-    tools: ["Architecture review", "Fractional data lead", "Training"],
+    tools: ["Architecture review", "Technical mentorship", "Platform enablement"],
     engagements: ["Consulting", "Training"],
   },
 ];

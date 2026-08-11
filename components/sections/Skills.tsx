@@ -7,36 +7,36 @@ import SectionHeader from "@/components/site/SectionHeader";
  */
 const groups = [
   {
-    title: "Data engineering",
-    items: ["Azure Data Factory", "Azure Databricks", "PySpark", "Spark SQL", "Delta Lake", "ETL/ELT design"],
+    title: "Core Data Engineering",
+    items: ["Azure Data Factory", "Azure Databricks", "Delta Lake", "PySpark", "Spark SQL", "ETL/ELT design"],
   },
   {
-    title: "Cloud platforms",
-    items: ["Data Lake Storage Gen2", "Synapse Analytics", "Azure SQL", "Azure Monitor", "Key Vault", "BigQuery"],
+    title: "Microsoft Fabric",
+    items: ["OneLake", "Fabric Analytics", "Data Warehousing", "Real-time analytics", "Fabric Pipelines"],
   },
   {
-    title: "Business intelligence",
-    items: ["Power BI", "DAX", "Power Query", "Apache Superset", "Tableau", "KPI reporting"],
+    title: "Data & Analytics",
+    items: ["Power BI", "DAX", "Dimensional modelling", "Star schema", "KPI reporting", "Apache Superset"],
   },
   {
-    title: "Programming",
-    items: ["Python", "SQL", "Pandas", "NumPy", "PySpark", "Bash"],
+    title: "Cloud & Infrastructure",
+    items: ["Azure SQL", "Synapse Analytics", "Data Lake Storage Gen2", "Azure Monitor", "Key Vault", "BigQuery"],
   },
   {
-    title: "AI & automation",
-    items: ["Claude API", "NL2SQL", "Power Automate", "Logic Apps", "RPA", "Predictive modelling"],
+    title: "AI & Automation",
+    items: ["Claude API", "NL2SQL", "LLM applications", "Power Automate", "Logic Apps", "Predictive modelling"],
   },
   {
-    title: "Architecture",
-    items: ["Dimensional modelling", "Schema design", "Data governance", "Warehousing", "Star schema", "OLAP"],
+    title: "Programming & Scripting",
+    items: ["Python", "SQL", "PySpark", "Pandas", "NumPy", "Bash"],
   },
   {
-    title: "Delivery",
+    title: "Engineering & DevOps",
     items: ["Git", "CI/CD", "Azure DevOps", "Docker", "Linux", "Autosys"],
   },
   {
-    title: "Governance",
-    items: ["Access control", "Data quality", "Lineage", "Compliance", "Auditability", "Documentation"],
+    title: "Data Governance",
+    items: ["Data lineage", "Access control", "Data quality", "Compliance", "Auditability", "Documentation"],
   },
 ];
 

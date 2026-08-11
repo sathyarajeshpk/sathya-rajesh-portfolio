@@ -20,19 +20,20 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sathyarajeshpk.com
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Sathya Rajesh PK — Azure Data Engineering & Analytics Consultant",
+    default: "Sathya Rajesh PK — Lead Data Engineer & Data Platform Architect",
     template: "%s — Sathya Rajesh PK",
   },
   description:
-    "Twelve years building Azure data platforms, Microsoft Fabric implementations, and Power BI reporting for enterprises and startups. Based in Chennai, working globally.",
+    "Lead Data Engineer & Data Platform Architect. Six years architecting Azure data platforms, Microsoft Fabric implementations, and analytics systems for enterprises. 12+ years in IT engineering. Based in Chennai, working globally.",
   keywords: [
+    "Data Platform Architect",
+    "Lead Data Engineer",
     "Azure Data Engineer",
-    "Power BI Consultant",
     "Microsoft Fabric",
     "Data Engineering",
-    "Business Intelligence",
     "Databricks",
-    "Technology Consultant",
+    "Power BI",
+    "Data Platforms",
     "Chennai",
     "India",
   ],
@@ -44,15 +45,15 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: SITE_URL,
     siteName: "Sathya Rajesh PK",
-    title: "Sathya Rajesh PK — Azure Data Engineering & Analytics Consultant",
+    title: "Sathya Rajesh PK — Lead Data Engineer & Data Platform Architect",
     description:
-      "Twelve years building Azure data platforms, Microsoft Fabric implementations, and Power BI reporting for enterprises and startups.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sathya Rajesh PK" }],
+      "Six years architecting data platforms at scale. Azure, Microsoft Fabric, Databricks, and analytics systems. 12+ years in IT.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Sathya Rajesh PK — Lead Data Engineer & Data Platform Architect" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sathya Rajesh PK — Azure Data Engineering & Analytics Consultant",
-    description: "Enterprise data platforms, Microsoft Fabric, and business intelligence.",
+    title: "Sathya Rajesh PK — Lead Data Engineer & Data Platform Architect",
+    description: "Data platforms, Microsoft Fabric, Databricks, and enterprise analytics.",
     images: ["/opengraph-image"],
   },
   robots: {

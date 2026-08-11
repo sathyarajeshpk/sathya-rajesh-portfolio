@@ -4,10 +4,10 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 const stats = [
-  { value: "12", suffix: "yrs", label: "Building data platforms" },
+  { value: "12", suffix: "+", label: "Years in IT engineering" },
+  { value: "6", suffix: "yrs", label: "Leading data platforms" },
   { value: "50", suffix: "TB", label: "Migrated to Azure" },
   { value: "99.5", suffix: "%", label: "Pipeline SLA uptime" },
-  { value: "20", suffix: "+", label: "Engineers mentored" },
 ];
 
 export default function Hero() {
@@ -39,9 +39,10 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p {...rise(0.16)} className="mt-8 max-w-measure text-lg leading-relaxed text-muted sm:text-xl">
-              I&rsquo;m Sathya Rajesh — a lead data engineer and consultant. For twelve years I have
-              designed the Azure pipelines, Fabric workspaces, and reporting layers that enterprises
-              run their mornings on. Pragmatic architecture, documented handover, no shelfware.
+              I&rsquo;m Sathya Rajesh — Lead Data Engineer and Data Platform Architect. Over six years
+              at scale, I&rsquo;ve designed Azure pipelines, Microsoft Fabric platforms, and analytics
+              systems that enterprises run critical decisions on. Pragmatic architecture, designed
+              for handover, built to last.
             </motion.p>
 
             <motion.div {...rise(0.24)} className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
@@ -50,7 +51,7 @@ export default function Hero() {
                 className="label inline-flex h-12 items-center rounded-full px-6 transition-opacity duration-200 hover:opacity-85"
                 style={{ background: "var(--fg)", color: "var(--bg)" }}
               >
-                Start a project
+                Get in touch
               </a>
               <a href="#services" className="label link-underline text-muted hover:text-[var(--fg)]">
                 See the practice
