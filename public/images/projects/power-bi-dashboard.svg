@@ -1,27 +1,64 @@
-<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="720" rx="36" fill="#0F172A"/>
-  <rect x="48" y="48" width="1104" height="624" rx="28" fill="url(#bg)"/>
-  <circle cx="932" cy="172" r="140" fill="#22D3EE" fill-opacity="0.16"/>
-  <circle cx="1020" cy="520" r="180" fill="#2563EB" fill-opacity="0.18"/>
-  <rect x="108" y="132" width="270" height="26" rx="13" fill="#67E8F9" fill-opacity="0.75"/>
-  <rect x="108" y="194" width="382" height="108" rx="24" fill="#0F172A" fill-opacity="0.76"/>
-  <rect x="108" y="350" width="456" height="214" rx="28" fill="#020617" fill-opacity="0.58" stroke="#22D3EE" stroke-opacity="0.2"/>
-  <rect x="628" y="204" width="444" height="316" rx="28" fill="#020617" fill-opacity="0.48" stroke="#BFDBFE" stroke-opacity="0.16"/>
-  <rect x="156" y="402" width="42" height="112" rx="12" fill="#38BDF8"/>
-  <rect x="226" y="438" width="42" height="76" rx="12" fill="#67E8F9"/>
-  <rect x="296" y="376" width="42" height="138" rx="12" fill="#A5F3FC"/>
-  <rect x="366" y="330" width="42" height="184" rx="12" fill="#0EA5E9"/>
-  <rect x="436" y="460" width="42" height="54" rx="12" fill="#BAE6FD"/>
-  <path d="M684 448C732 380 776 340 816 328C856 316 916 332 996 376" stroke="#E0F2FE" stroke-width="16" stroke-linecap="round"/>
-  <circle cx="684" cy="448" r="18" fill="#E0F2FE"/>
-  <circle cx="816" cy="328" r="18" fill="#67E8F9"/>
-  <circle cx="996" cy="376" r="18" fill="#38BDF8"/>
-  <text x="108" y="286" fill="white" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700">Executive Insight Dashboard</text>
-  <text x="108" y="604" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="22">Power BI  •  Data Modeling  •  Decision Support</text>
-  <defs>
-    <linearGradient id="bg" x1="92" y1="64" x2="1090" y2="656" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#082F49"/>
-      <stop offset="1" stop-color="#0F172A"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Star schema: a central fact table joined to four dimension tables">
+  <rect width="800" height="450" fill="#E9EBEF"/>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="11" letter-spacing="1.6" fill="#697080">
+    <text x="48" y="46">STAR SCHEMA — EXECUTIVE MODEL</text>
+  </g>
+  <line x1="48" y1="62" x2="752" y2="62" stroke="#BFC5CF"/>
+
+  <!-- Relationship lines drawn first so boxes sit on top -->
+  <g stroke="#BFC5CF" stroke-width="1">
+    <path d="M232 148 L352 210" fill="none"/>
+    <path d="M568 148 L448 210" fill="none"/>
+    <path d="M232 352 L352 268" fill="none"/>
+    <path d="M568 352 L448 268" fill="none"/>
+  </g>
+
+  <!-- Dimension: Date -->
+  <rect x="130" y="106" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="10" letter-spacing="1.3">
+    <text x="146" y="128" fill="#697080">DIM</text>
+    <text x="146" y="150" fill="#13151A" font-size="12" letter-spacing="0">dim_date</text>
+  </g>
+
+  <!-- Dimension: Region -->
+  <rect x="506" y="106" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="10" letter-spacing="1.3">
+    <text x="522" y="128" fill="#697080">DIM</text>
+    <text x="522" y="150" fill="#13151A" font-size="12" letter-spacing="0">dim_region</text>
+  </g>
+
+  <!-- Dimension: Product -->
+  <rect x="130" y="334" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="10" letter-spacing="1.3">
+    <text x="146" y="356" fill="#697080">DIM</text>
+    <text x="146" y="378" fill="#13151A" font-size="12" letter-spacing="0">dim_product</text>
+  </g>
+
+  <!-- Dimension: Customer -->
+  <rect x="506" y="334" width="164" height="60" fill="#E9EBEF" stroke="#13151A"/>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="10" letter-spacing="1.3">
+    <text x="522" y="356" fill="#697080">DIM</text>
+    <text x="522" y="378" fill="#13151A" font-size="12" letter-spacing="0">dim_customer</text>
+  </g>
+
+  <!-- Fact table -->
+  <rect x="316" y="196" width="168" height="86" fill="#E9EBEF" stroke="#175E68" stroke-width="1.5"/>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="10" letter-spacing="1.3">
+    <text x="334" y="220" fill="#175E68">FACT</text>
+  </g>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="12" fill="#13151A">
+    <text x="334" y="242">fct_sales</text>
+  </g>
+  <line x1="334" y1="252" x2="466" y2="252" stroke="#7FB9C1"/>
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="9" letter-spacing="1.2" fill="#697080">
+    <text x="334" y="270">28 DAX MEASURES</text>
+  </g>
+
+  <!-- Cardinality marks -->
+  <g font-family="Manrope, 'Segoe UI', system-ui, sans-serif" font-size="9" fill="#697080">
+    <text x="262" y="176">1</text><text x="330" y="196">∗</text>
+    <text x="530" y="176">1</text><text x="466" y="196">∗</text>
+    <text x="262" y="330">1</text><text x="330" y="290">∗</text>
+    <text x="530" y="330">1</text><text x="466" y="290">∗</text>
+  </g>
 </svg>

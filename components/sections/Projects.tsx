@@ -1,178 +1,177 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useRef } from "react";
-import { ExternalLink } from "lucide-react";
+import Reveal from "@/components/site/Reveal";
+import SectionHeader from "@/components/site/SectionHeader";
+import { prefillContact } from "@/lib/prefill";
 
 const projects = [
   {
-    title: "Power BI Executive Dashboard",
-    category: "Business Intelligence",
+    year: "2026",
+    title: "Skyline Industries — Security Hardening & Visual Enhancement",
+    discipline: "Full-stack development",
     description:
-      "Executive-level Power BI dashboard with star schema data model, DAX measures, and red/black executive theme for C-suite decision making.",
-    tags: ["Power BI", "DAX", "Data Modeling", "Executive Reporting"],
+      "Comprehensive security audit and design enhancement of a construction company website. Eliminated 3 critical vulnerabilities (hardcoded secrets, missing rate limiting, no input validation), fixed design overlaps, and added dynamic theme-aware visual effects with simulated building lighting and cloud animations.",
+    outcome: "3 security vulnerabilities eliminated, enhanced UX with zero performance impact",
+    tags: ["Next.js", "Security", "React", "TypeScript", "CSS3 Animations"],
+    image: "/images/projects/skyline-industries.png",
+    service: "Web Application",
+    featured: true,
+  },
+  {
+    year: "2024",
+    title: "Microsoft Fabric data platform",
+    discipline: "Data engineering",
+    description:
+      "End-to-end analytics platform on OneLake — medallion layers, real-time ingestion, and Power BI reporting reading directly from the lakehouse with no intermediate extract.",
+    outcome: "Single source of truth across four regional reporting teams",
+    tags: ["Microsoft Fabric", "OneLake", "Real-time analytics"],
+    image: "/images/projects/fabric-platform.svg",
+    service: "Microsoft Fabric",
+    featured: true,
+  },
+  {
+    year: "2024",
+    title: "Natural language to SQL",
+    discipline: "Applied AI",
+    description:
+      "A query interface that turns plain-English questions into SQL, PySpark, and charts — grounded in a curated semantic layer, with the generated query and its assumptions always shown back to the user.",
+    outcome: "Analyst queue bypassed for routine questions",
+    tags: ["Claude API", "NL2SQL", "Python"],
+    image: "/images/projects/nl2sql.svg",
+    service: "AI Solution",
+    featured: true,
+  },
+  {
+    year: "2023",
+    title: "Executive Power BI suite",
+    discipline: "Business intelligence",
+    description:
+      "Star-schema model and DAX measure library behind a C-suite dashboard set, replacing a monthly deck assembled by hand.",
+    outcome: "~60% less manual reporting effort",
+    tags: ["Power BI", "DAX", "Dimensional modelling"],
     image: "/images/projects/power-bi-dashboard.svg",
     service: "Power BI Dashboard",
   },
   {
-    title: "Microsoft Fabric Data Platform",
-    category: "Data Engineering",
+    year: "2023",
+    title: "AURA — AI Unified Root Cause Analyzer",
+    discipline: "AI operations",
     description:
-      "End-to-end analytics platform using Microsoft Fabric with OneLake, real-time analytics, and integrated Power BI reporting.",
-    tags: ["Microsoft Fabric", "OneLake", "Real-time Analytics"],
-    image: "/images/projects/fabric-platform.svg",
-    service: "Microsoft Fabric",
-  },
-  {
-    title: "AI NL2SQL Converter",
-    category: "Artificial Intelligence",
-    description:
-      "AI application that converts natural language questions into SQL, PySpark, and Python code with automated chart generation using Claude API.",
-    tags: ["Claude API", "NL2SQL", "Python", "Automation"],
-    image: "/images/projects/nl2sql.svg",
-    service: "AI Solution",
-  },
-  {
-    title: "Incident Root Cause Analyzer",
-    category: "AI Operations",
-    description:
-      "AI-assisted log analysis solution that automatically identifies root causes of operational failures, accelerating incident resolution by 60%.",
-    tags: ["AI/ML", "Log Analysis", "Splunk", "Automation"],
+      "Log analysis and root-cause identification system. Ingests structured logs into ADLS Gen2, applies intelligent parsing and NL2SQL patterns to isolate failure signatures, uses Claude API to propose probable root causes with supporting evidence, and feeds validated resolutions back into a knowledge base for continuous learning.",
+    outcome: "60% faster incident resolution, reduced alert fatigue",
+    tags: ["Log analysis", "Splunk", "Claude API", "Automation"],
     image: "/images/projects/incident-analyzer.svg",
-    service: "Automation",
+    service: "AI Solution",
+    featured: true,
   },
   {
-    title: "HR Analytics Dashboard",
-    category: "People Analytics",
+    year: "2022",
+    title: "HR analytics dashboard",
+    discipline: "People analytics",
     description:
-      "Comprehensive HR analytics dashboard analyzing employee attrition, hiring trends, and workforce performance metrics using Apache Superset.",
-    tags: ["Apache Superset", "HR Analytics", "Workforce Planning"],
+      "Attrition, hiring funnel, and workforce performance reporting built on Apache Superset for a team without a Power BI licence.",
+    outcome: "Attrition drivers identified by department",
+    tags: ["Apache Superset", "Workforce planning"],
     image: "/images/projects/hr-analytics.svg",
     service: "Analytics",
   },
 ];
 
 export default function Projects() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const handleDiscussProject = (service: string, title: string) => {
-    window.dispatchEvent(
-      new CustomEvent("portfolio:prefill-service", {
-        detail: {
-          service,
-          description: `I would like to discuss a project similar to "${title}".`,
-        },
-      })
-    );
-
-    window.location.hash = "contact";
-  };
-
   return (
-    <section id="projects" className="py-24 lg:py-32 bg-white dark:bg-cyber-midnight relative">
-      <div className="container-custom">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-fabric-100 dark:bg-cyber-cyan/10 text-fabric-700 dark:text-cyber-cyan text-sm font-semibold mb-6"
-          >
-            Projects
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6"
-          >
-            Featured Work & <span className="text-gradient">Case Studies</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-slate-600 dark:text-slate-400"
-          >
-            Real-world solutions delivering measurable business impact across data engineering, BI, and AI.
-          </motion.p>
-        </div>
+    <section id="projects" className="py-20 lg:py-28">
+      <div className="shell">
+        <SectionHeader
+          index="03"
+          label="Selected work"
+          title="Five projects, and what changed because of them."
+        />
 
-        <div ref={ref} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
+        <div className="mt-14 grid gap-x-10 gap-y-4 md:grid-cols-2">
+          {projects.map((project, i) => (
+            <Reveal
+              as="article"
               key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 transition-all duration-300 hover:border-cyber-cyan/30 hover:shadow-xl hover:shadow-cyber-cyan/5 dark:border-cyber-border dark:bg-cyber-graphite dark:hover:border-cyber-cyan/40 dark:hover:shadow-cyber-cyan/10"
+              delay={0.06 * i}
+              className={project.featured ? "md:col-span-1" : "md:col-span-1"}
             >
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <span className="rounded-full border border-white/20 bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-md dark:border-cyber-cyan/30 dark:bg-cyber-cyan/20 dark:text-cyber-cyan">
-                    {project.category}
-                  </span>
+              <div className="group flex h-full flex-col border-t border-rule pt-6 transition-all duration-500 hover:translate-y-[-4px]">
+                <div className="mb-5 flex items-baseline justify-between gap-4">
+                  <span className="label text-subtle">{project.discipline}</span>
+                  <span className="label nums text-subtle">{project.year}</span>
                 </div>
-              </div>
 
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-900 transition-colors group-hover:text-fabric-700 dark:text-white dark:group-hover:text-cyber-cyan">
-                  {project.title}
-                </h3>
-                <p className="mb-4 mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  {project.description}
-                </p>
-                <div className="mb-5 flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-lg border border-slate-100 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:border-cyber-border dark:bg-cyber-midnight dark:text-slate-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden border border-rule bg-sunken group">
+                  <Image
+                    src={project.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 90vw, 44vw"
+                    className="object-cover transition-all duration-700 ease-editorial group-hover:scale-[1.05] group-hover:brightness-110"
+                  />
                 </div>
+
+                <h3 className="text-2xl font-bold leading-tight">{project.title}</h3>
+                <p className="mt-3 leading-relaxed text-muted">{project.description}</p>
+
+                <p className="mt-4 flex items-baseline gap-2.5 text-[0.9375rem]">
+                  <span
+                    aria-hidden="true"
+                    className="mt-2 inline-block h-px w-4 shrink-0"
+                    style={{ background: "var(--accent)" }}
+                  />
+                  <span className="text-[var(--fg)]">{project.outcome}</span>
+                </p>
+
+                <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5">
+                  {project.tags.map((tag) => (
+                    <li key={tag} className="label text-subtle">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6 flex-1" />
+
                 <button
                   type="button"
-                  onClick={() => handleDiscussProject(project.service, project.title)}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-fabric-700 hover:text-fabric-800 dark:text-cyber-cyan dark:hover:text-cyber-green"
+                  onClick={() =>
+                    prefillContact({
+                      service: project.service,
+                      description: `I'd like to discuss a project along the lines of "${project.title}".`,
+                    })
+                  }
+                  className="label link-underline self-start pb-6 text-muted hover:text-[var(--fg)]"
                 >
-                  Discuss Similar Project
-                  <ExternalLink className="h-4 w-4" />
+                  Discuss something similar
+                  <span aria-hidden="true">&rarr;</span>
                 </button>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="flex min-h-[320px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 p-8 text-center transition-all duration-300 hover:border-cyber-cyan/50 hover:bg-cyber-cyan/5 dark:border-cyber-border dark:hover:border-cyber-cyan/50 dark:hover:bg-cyber-cyan/5"
-          >
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl glass-icon">
-              <span className="text-2xl text-fabric-700 dark:text-cyber-cyan">+</span>
+          <Reveal as="article" delay={0.24}>
+            <div className="flex h-full flex-col justify-between border-t border-rule pt-6">
+              <div>
+                <span className="label text-subtle">Next</span>
+                <h3 className="mt-5 text-2xl font-bold leading-tight">
+                  There is space here for whatever you are building.
+                </h3>
+                <p className="mt-3 max-w-measure leading-relaxed text-muted">
+                  If your reporting is drifting out of sync, your pipelines need an owner, or the
+                  platform decision has been deferred twice — that is the conversation I want.
+                </p>
+              </div>
+              <a
+                href="#contact"
+                className="label mt-8 inline-flex h-12 w-fit items-center rounded-full px-6 transition-opacity duration-200 hover:opacity-85"
+                style={{ background: "var(--fg)", color: "var(--bg)" }}
+              >
+                Get in touch
+              </a>
             </div>
-            <h3 className="text-lg font-semibold text-slate-700 dark:text-white">Your Project Here</h3>
-            <p className="mb-4 mt-2 text-sm text-slate-500 dark:text-slate-400">
-              Have a complex data challenge? Let&apos;s build something extraordinary together.
-            </p>
-            <a
-              href="#contact"
-              className="rounded-xl border border-transparent bg-fabric-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-fabric-800 dark:border-cyber-cyan/30 dark:bg-cyber-cyan/20 dark:text-cyber-cyan dark:hover:bg-cyber-cyan/30"
-            >
-              Start a Conversation
-            </a>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </section>

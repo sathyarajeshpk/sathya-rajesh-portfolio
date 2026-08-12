@@ -1,124 +1,65 @@
-"use client";
+import Reveal from "@/components/site/Reveal";
+import SectionHeader from "@/components/site/SectionHeader";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Database, Cloud, BarChart3, Code2, Brain, Server, Workflow, Shield } from "lucide-react";
-
-const skillCategories = [
+/**
+ * Competencies grouped, not scored. The previous version rated each area out of
+ * 100, which is precision nobody can substantiate.
+ */
+const groups = [
   {
-    icon: Database,
-    title: "Data Engineering",
-    skills: ["Azure Data Factory", "Azure Databricks", "PySpark", "Spark SQL", "Delta Lake", "ETL/ELT Design"],
-    level: 95,
+    title: "Core Data Engineering",
+    items: ["Azure Data Factory", "Azure Databricks", "Delta Lake", "PySpark", "Spark SQL", "ETL/ELT design"],
   },
   {
-    icon: Cloud,
-    title: "Cloud Platforms",
-    skills: ["Azure Data Lake Gen2", "Synapse Analytics", "Azure SQL", "Azure Monitor", "Key Vault", "GCP BigQuery"],
-    level: 90,
+    title: "Microsoft Fabric",
+    items: ["OneLake", "Fabric Analytics", "Data Warehousing", "Real-time analytics", "Fabric Pipelines"],
   },
   {
-    icon: BarChart3,
-    title: "Business Intelligence",
-    skills: ["Power BI", "DAX", "Power Query", "Apache Superset", "Tableau", "KPI Reporting"],
-    level: 92,
+    title: "Data & Analytics",
+    items: ["Power BI", "DAX", "Dimensional modelling", "Star schema", "KPI reporting", "Apache Superset"],
   },
   {
-    icon: Code2,
-    title: "Programming",
-    skills: ["Python", "Pandas", "NumPy", "SQL", "PySpark", "Bash Scripting"],
-    level: 88,
+    title: "Cloud & Infrastructure",
+    items: ["Azure SQL", "Synapse Analytics", "Data Lake Storage Gen2", "Azure Monitor", "Key Vault", "BigQuery"],
   },
   {
-    icon: Brain,
     title: "AI & Automation",
-    skills: ["Claude API", "NL2SQL", "Power Automate", "Azure Logic Apps", "RPA", "Predictive Modeling"],
-    level: 85,
+    items: ["Claude API", "NL2SQL", "LLM applications", "Power Automate", "Logic Apps", "Predictive modelling"],
   },
   {
-    icon: Server,
-    title: "Data Architecture",
-    skills: ["Data Modeling", "Schema Design", "Data Governance", "Data Warehousing", "Star Schema", "OLAP"],
-    level: 90,
+    title: "Programming & Scripting",
+    items: ["Python", "SQL", "PySpark", "Pandas", "NumPy", "Bash"],
   },
   {
-    icon: Workflow,
-    title: "DevOps & Tools",
-    skills: ["Git", "CI/CD", "Azure DevOps", "Docker", "Linux Admin", "Autosys"],
-    level: 82,
+    title: "Engineering & DevOps",
+    items: ["Git", "CI/CD", "Azure DevOps", "Docker", "Linux", "Autosys"],
   },
   {
-    icon: Shield,
     title: "Data Governance",
-    skills: ["Data Quality", "Compliance", "Access Control", "Encryption", "Lineage Tracking", "Cataloging"],
-    level: 87,
+    items: ["Data lineage", "Access control", "Data quality", "Compliance", "Auditability", "Documentation"],
   },
 ];
 
 export default function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="skills" className="py-24 lg:py-32 bg-white dark:bg-cyber-midnight relative">
-      <div className="container-custom">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-fabric-100 dark:bg-cyber-cyan/10 text-fabric-700 dark:text-cyber-cyan text-sm font-semibold mb-6"
-          >
-            Skills
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6"
-          >
-            Technical <span className="text-gradient">Expertise</span>
-          </motion.h2>
-        </div>
+    <section id="skills" className="bg-sunken py-20 lg:py-28">
+      <div className="shell">
+        <SectionHeader index="05" label="Capabilities" title="The working toolkit." />
 
-        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="group relative bg-slate-50 dark:bg-cyber-graphite rounded-2xl p-6 border border-slate-100 dark:border-cyber-border hover:border-cyber-cyan/30 dark:hover:border-cyber-cyan/40 hover:shadow-xl hover:shadow-cyber-cyan/5 dark:hover:shadow-cyber-cyan/10 transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-200 dark:bg-cyber-border">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={isInView ? { width: `${category.level}%` } : {}}
-                  transition={{ duration: 1, delay: 0.5 + index * 0.1, ease: "easeOut" }}
-                  className="h-full bg-gradient-to-r from-fabric-600 to-fabric-400 dark:from-cyber-cyan dark:to-cyber-green"
-                />
+        <div className="mt-14 grid gap-x-10 gap-y-0 sm:grid-cols-2 lg:grid-cols-4">
+          {groups.map((group, i) => (
+            <Reveal key={group.title} delay={0.05 * i}>
+              <div className="border-t border-rule py-7 transition-all duration-300 hover:translate-y-[-2px]">
+                <h3 className="label mb-4 text-accent transition-colors duration-300 hover:brightness-110">{group.title}</h3>
+                <ul className="space-y-1.5">
+                  {group.items.map((item) => (
+                    <li key={item} className="text-[0.9375rem] leading-snug text-muted transition-colors duration-200 hover:text-[var(--fg)]">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-
-              <div className="w-14 h-14 rounded-2xl glass-icon flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 animate-pulse-glow">
-                <category.icon className="w-7 h-7 text-fabric-700 dark:text-cyber-cyan" />
-              </div>
-
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">{category.title}</h3>
-
-              <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill) => (
-                  <span key={skill} className="px-2.5 py-1 rounded-lg bg-white dark:bg-cyber-midnight text-slate-600 dark:text-slate-300 text-xs font-medium border border-slate-100 dark:border-cyber-border">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Proficiency</span>
-                <span className="text-sm font-bold text-slate-700 dark:text-cyber-cyan">{category.level}%</span>
-              </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,209 +1,186 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import {
-  Globe, Building2, ShoppingCart, LayoutDashboard, Smartphone, Brain,
-  Database, BarChart3, Cloud, Workflow, Server, Warehouse, PieChart,
-  LineChart, Bot, GraduationCap, MessageSquare, ArrowRight,
-} from "lucide-react";
+import Reveal from "@/components/site/Reveal";
+import SectionHeader from "@/components/site/SectionHeader";
+import { prefillContact } from "@/lib/prefill";
 
-const servicesList = [
+/**
+ * Written for the person deciding, not the person implementing. Each service
+ * leads with the problem in the buyer's own words and what they end up with;
+ * the tool names sit underneath for whoever evaluates the technical side.
+ * `engagements` are the strings the contact form's dropdown accepts.
+ */
+const services = [
   {
-    icon: Globe,
-    title: "Business Websites",
-    description: "Professional, responsive websites that establish credibility and convert visitors into customers.",
-    benefits: ["SEO-optimized architecture", "Mobile-first responsive design", "Fast loading (< 2 seconds)", "Analytics integration"],
+    index: "01",
+    title: "Get all your data into one place",
+    problem:
+      "Your numbers live in different systems — one in the accounting software, one in the CRM, one in a spreadsheet someone maintains. Nobody can say which is right, and pulling a company-wide view takes days.",
+    outcome: [
+      "One place where all your data lands, automatically, every day",
+      "Agreed definitions, so revenue means the same thing in every report",
+      "It keeps running without anyone remembering to press a button",
+    ],
+    tools: ["Azure Data Factory", "Microsoft Fabric", "Databricks", "Data warehousing"],
+    engagements: ["Azure Data Engineering", "Microsoft Fabric", "Data Warehousing"],
   },
   {
-    icon: Building2,
-    title: "Corporate Websites",
-    description: "Enterprise-grade web presence with multi-language support, CMS integration, and scalable infrastructure.",
-    benefits: ["Multi-region deployment", "Content management system", "Role-based access control", "Enterprise security standards"],
+    index: "02",
+    title: "Stop building the same report every week",
+    problem:
+      "Someone on your team spends Monday morning exporting to Excel and rebuilding the same summary. It is slow, it goes stale immediately, and when they are on leave it does not happen at all.",
+    outcome: [
+      "Dashboards that refresh on their own and are current when you open them",
+      "The people who need numbers can get them without asking anyone",
+      "Controls so each person sees only the data they are meant to",
+    ],
+    tools: ["Power BI", "Apache Superset", "Semantic models"],
+    engagements: ["Power BI Dashboard", "Business Intelligence", "Analytics"],
   },
   {
-    icon: LayoutDashboard,
-    title: "Landing Pages",
-    description: "High-converting landing pages optimized for lead generation and campaign performance.",
-    benefits: ["A/B testing ready", "Form integration", "Conversion tracking", "Fast deployment"],
+    index: "03",
+    title: "Let your team ask questions in plain English",
+    problem:
+      "Every question about the business goes through one or two analysts. Simple queries sit in a queue for days, so people either guess or stop asking.",
+    outcome: [
+      "Ask a question in ordinary language and get an answer with a chart",
+      "It shows the query it ran, so an analyst can check it before anyone acts on it",
+      "Limits on what it can reach, so it cannot expose data people should not see",
+    ],
+    tools: ["Claude API", "NL2SQL", "Python"],
+    engagements: ["AI Solution"],
   },
   {
-    icon: ShoppingCart,
-    title: "E-Commerce Websites",
-    description: "Full-featured online stores with payment gateways, inventory management, and analytics.",
-    benefits: ["Secure payment processing", "Inventory synchronization", "Order management dashboard", "Customer analytics"],
+    index: "04",
+    title: "Automate the work nobody should be doing by hand",
+    problem:
+      "A process runs every week that involves downloading a file, reformatting it, checking it and emailing it on. It breaks quietly and someone finds out too late.",
+    outcome: [
+      "The routine work runs on a schedule without a person in the loop",
+      "You get told when something fails, instead of discovering it later",
+      "Written down properly, so it is not knowledge locked in one person's head",
+    ],
+    tools: ["Power Automate", "Azure Logic Apps", "Python"],
+    engagements: ["Automation"],
   },
   {
-    icon: Globe,
-    title: "Web Applications",
-    description: "Scalable SaaS platforms and internal tools built with React, Next.js, and modern cloud architecture.",
-    benefits: ["Real-time data sync", "Authentication & authorization", "API-first design", "CI/CD pipeline"],
+    index: "05",
+    title: "Build the website or internal tool you need",
+    problem:
+      "You need a site that brings in enquiries, or an internal tool your team currently runs on a shared spreadsheet.",
+    outcome: [
+      "A fast, mobile-friendly site that shows up in search",
+      "Internal tools with proper logins and permissions",
+      "Handed over so you are not tied to me to make changes",
+    ],
+    tools: ["Next.js", "React", "React Native"],
+    engagements: [
+      "Business Website",
+      "Corporate Website",
+      "Landing Page",
+      "E-Commerce",
+      "Web Application",
+      "Android App",
+      "iOS App",
+    ],
   },
   {
-    icon: Smartphone,
-    title: "Android Apps",
-    description: "Native and cross-platform Android applications with offline support and push notifications.",
-    benefits: ["React Native / Kotlin", "Offline-first architecture", "Push notifications", "Play Store deployment"],
-  },
-  {
-    icon: Smartphone,
-    title: "iOS Apps",
-    description: "Premium iOS applications with native performance, App Store optimization, and seamless UX.",
-    benefits: ["Swift / React Native", "Apple design guidelines", "App Store optimization", "In-app purchases"],
-  },
-  {
-    icon: Brain,
-    title: "AI Solutions",
-    description: "Custom AI applications including NL2SQL, chatbots, predictive analytics, and automated decision systems.",
-    benefits: ["Natural language processing", "Predictive modeling", "Automated reporting", "Integration with existing systems"],
-  },
-  {
-    icon: Database,
-    title: "Microsoft Fabric",
-    description: "End-to-end analytics platform implementation with OneLake, data engineering, and real-time analytics.",
-    benefits: ["Unified data foundation", "Real-time analytics", "Data engineering pipelines", "Power BI integration"],
-  },
-  {
-    icon: BarChart3,
-    title: "Power BI",
-    description: "Executive dashboards and self-service analytics with DAX, Power Query, and enterprise governance.",
-    benefits: ["Executive dashboards", "Self-service analytics", "Row-level security", "Automated refresh"],
-  },
-  {
-    icon: Cloud,
-    title: "Azure Data Engineering",
-    description: "Scalable data pipelines, lakehouse architecture, and cloud-native data platforms on Azure.",
-    benefits: ["ETL/ELT pipeline design", "Data lake architecture", "Cost optimization", "Disaster recovery"],
-  },
-  {
-    icon: Workflow,
-    title: "Azure Data Factory",
-    description: "Orchestration of complex data workflows with monitoring, alerting, and CI/CD integration.",
-    benefits: ["Visual pipeline designer", "Monitoring & alerting", "SSIS migration", "Hybrid data integration"],
-  },
-  {
-    icon: Server,
-    title: "Azure Databricks",
-    description: "Big data processing with PySpark, Delta Lake, and MLflow for advanced analytics and machine learning.",
-    benefits: ["PySpark processing", "Delta Lake tables", "MLflow integration", "Auto-scaling clusters"],
-  },
-  {
-    icon: Warehouse,
-    title: "Data Warehousing",
-    description: "Modern data warehouse design with star schema, dimensional modeling, and optimized query performance.",
-    benefits: ["Dimensional modeling", "Query optimization", "Incremental loading", "Data governance"],
-  },
-  {
-    icon: PieChart,
-    title: "Business Intelligence",
-    description: "Transform raw data into actionable insights with KPI tracking, executive reporting, and data storytelling.",
-    benefits: ["KPI framework design", "Executive reporting", "Data storytelling", "Decision support systems"],
-  },
-  {
-    icon: LineChart,
-    title: "Analytics",
-    description: "Advanced analytics including trend analysis, cohort analysis, and predictive modeling.",
-    benefits: ["Trend analysis", "Cohort analysis", "Predictive modeling", "A/B test analysis"],
-  },
-  {
-    icon: Bot,
-    title: "Automation",
-    description: "Intelligent process automation using Power Automate, Azure Logic Apps, and custom scripts.",
-    benefits: ["Workflow automation", "RPA integration", "Email automation", "Report distribution"],
-  },
-  {
-    icon: GraduationCap,
-    title: "Training",
-    description: "Hands-on training programs for teams on Azure, Power BI, Databricks, and data engineering best practices.",
-    benefits: ["Custom curriculum", "Hands-on labs", "Certification prep", "Knowledge transfer"],
-  },
-  {
-    icon: MessageSquare,
-    title: "Consulting",
-    description: "Strategic technology consulting for data architecture, cloud migration, and digital transformation roadmaps.",
-    benefits: ["Architecture review", "Migration strategy", "Technology assessment", "Roadmap planning"],
+    index: "06",
+    title: "Architecture review and team enablement",
+    problem:
+      "You have people who can build, but you are unsure the plan is right — or you have inherited a platform nobody fully understands.",
+    outcome: [
+      "An honest review of your architecture and the highest-impact changes to make first",
+      "Hands-on mentorship so your team can run and extend the platform themselves",
+      "Clear documentation and runbooks your team can own",
+    ],
+    tools: ["Architecture review", "Technical mentorship", "Platform enablement"],
+    engagements: ["Consulting", "Training"],
   },
 ];
 
 export default function Services() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="services" className="py-24 lg:py-32 bg-slate-50 dark:bg-cyber-midnight relative">
-      <div className="container-custom">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-fabric-100 dark:bg-cyber-cyan/10 text-fabric-700 dark:text-cyber-cyan text-sm font-semibold mb-6"
-          >
-            Services
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6"
-          >
-            Enterprise-Grade Solutions{" "}
-            <span className="text-gradient">Tailored to Your Needs</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-slate-600 dark:text-slate-400"
-          >
-            From data engineering to AI-powered applications, I deliver solutions
-            that drive measurable business outcomes.
-          </motion.p>
-        </div>
+    <section id="services" className="bg-sunken py-20 lg:py-28">
+      <div className="shell">
+        <SectionHeader
+          index="02"
+          label="Services"
+          title="What I can do for you."
+          intro="In plain terms, without the jargon. If you recognise the problem, the fix is probably one of these. Not sure which? Describe the situation and I'll tell you."
+        />
 
-        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {servicesList.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="group bg-white dark:bg-cyber-graphite rounded-2xl p-6 border border-slate-100 dark:border-cyber-border hover:border-cyber-cyan/30 dark:hover:border-cyber-cyan/40 hover:shadow-xl hover:shadow-cyber-cyan/5 dark:hover:shadow-cyber-cyan/10 transition-all duration-300 flex flex-col"
-            >
-              <div className="w-14 h-14 rounded-2xl glass-icon flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 animate-pulse-glow">
-                <service.icon className="w-7 h-7 text-fabric-700 dark:text-cyber-cyan" />
-              </div>
+        <div className="mt-14">
+          {services.map((service, i) => (
+            <Reveal key={service.title} delay={0.06 * i}>
+              <article className="grid gap-x-10 gap-y-6 border-t border-rule py-10 md:grid-cols-12 transition-all duration-300 hover:border-accent/40">
+                <div className="md:col-span-3 lg:col-span-2">
+                  <span className="label nums text-accent transition-all duration-300 hover:brightness-125">{service.index}</span>
+                </div>
 
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-                {service.title}
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
-                {service.description}
-              </p>
+                <div className="md:col-span-9 lg:col-span-5">
+                  <h3 className="text-2xl font-bold leading-tight transition-colors duration-300 hover:text-accent sm:text-[1.75rem]">
+                    {service.title}
+                  </h3>
+                  <p className="mt-4 max-w-measure leading-relaxed text-muted">{service.problem}</p>
 
-              <div className="space-y-2 mb-5">
-                {service.benefits.map((benefit) => (
-                  <div
-                    key={benefit}
-                    className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400"
+                  <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5">
+                    {service.tools.map((tool) => (
+                      <li key={tool} className="label text-subtle">
+                        {tool}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="md:col-span-9 md:col-start-4 lg:col-span-4 lg:col-start-9">
+                  <p className="label mb-4 text-subtle">What you end up with</p>
+                  <ul className="space-y-3">
+                    {service.outcome.map((point) => (
+                      <li
+                        key={point}
+                        className="flex gap-3 text-[0.9375rem] leading-relaxed text-muted"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-[0.6em] inline-block h-px w-3 shrink-0"
+                          style={{ background: "var(--accent)" }}
+                        />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      prefillContact({
+                        service: service.engagements[0],
+                        description: `I'm interested in help with: ${service.title.toLowerCase()}.`,
+                      })
+                    }
+                    className="label link-underline mt-6 text-muted hover:text-[var(--fg)]"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-fabric-400 dark:bg-cyber-cyan flex-shrink-0" />
-                    {benefit}
-                  </div>
-                ))}
-              </div>
-
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-fabric-700 dark:text-cyber-cyan hover:text-fabric-800 dark:hover:text-cyber-green group/link"
-              >
-                Discuss This Service
-                <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-              </a>
-            </motion.div>
+                    Talk about this <span aria-hidden="true">&rarr;</span>
+                  </button>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
+
+        <Reveal>
+          <div className="border-t border-rule pt-10">
+            <p className="max-w-measure text-lg leading-relaxed text-muted">
+              Most engagements start in one of these and pull in a second. If none of them quite
+              describes your situation,{" "}
+              <a href="#contact" className="link-underline text-[var(--fg)]">
+                tell me what is going wrong
+              </a>{" "}
+              and I&rsquo;ll tell you straight whether I&rsquo;m the right person for it.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

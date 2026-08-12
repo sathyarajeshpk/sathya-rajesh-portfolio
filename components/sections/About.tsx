@@ -1,148 +1,103 @@
-"use client";
+import Reveal from "@/components/site/Reveal";
+import SectionHeader from "@/components/site/SectionHeader";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Target, TrendingUp, Users, Shield, Zap, BarChart3 } from "lucide-react";
-
-const valueProps = [
+const principles = [
   {
-    icon: Target,
-    title: "Strategic Alignment",
-    description: "Every solution is architected to align with your business objectives — not just technical requirements.",
+    title: "Architecture before code",
+    body: "Every engagement opens with the boring questions — data contracts, ownership, failure modes. The pipeline is the easy part once those are settled.",
   },
   {
-    icon: TrendingUp,
-    title: "Scalable Architecture",
-    description: "Build once, scale forever. Cloud-native designs that grow with your data and user demands.",
+    title: "Built to be handed over",
+    body: "Runbooks, naming conventions, and a team that can extend the thing without me. I have inherited enough undocumented systems to know the cost.",
   },
   {
-    icon: Shield,
-    title: "Enterprise Security",
-    description: "Governed, compliant, and secure data pipelines with industry-standard encryption and access controls.",
+    title: "Cost is a design constraint",
+    body: "Cloud spend is an architectural outcome, not a billing problem. Partitioning, file sizing, and cluster policy get decided early, not after the first invoice.",
   },
   {
-    icon: Zap,
-    title: "AI-Powered Automation",
-    description: "Leverage cutting-edge AI to automate data workflows, reduce manual effort, and accelerate insights.",
-  },
-  {
-    icon: Users,
-    title: "Team Enablement",
-    description: "Not just delivery — I upskill your teams with best practices, documentation, and knowledge transfer.",
-  },
-  {
-    icon: BarChart3,
-    title: "Measurable ROI",
-    description: "Clear KPIs and dashboards to track the business impact of every initiative from day one.",
+    title: "Reporting people trust",
+    body: "A dashboard nobody believes is worse than no dashboard. Lineage, reconciliation, and refresh transparency are part of the deliverable.",
   },
 ];
 
+const stack = [
+  "Azure Data Factory",
+  "Databricks",
+  "Microsoft Fabric",
+  "Delta Lake",
+  "Power BI",
+  "PySpark",
+  "Synapse",
+  "Python",
+  "SQL",
+];
+
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="about" className="py-24 lg:py-32 bg-white dark:bg-cyber-midnight relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-fabric-50/50 dark:from-cyber-cyan/5 to-transparent" />
+    <section id="about" className="py-20 lg:py-28">
+      <div className="shell">
+        <SectionHeader
+          index="01"
+          label="About"
+          title={
+            <>
+              Six years architecting data platforms that{" "}
+              <em className="not-italic text-accent">scale</em>.
+            </>
+          }
+        />
 
-      <div className="container-custom relative">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          <div ref={ref}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="inline-block px-4 py-1.5 rounded-full bg-fabric-50 dark:bg-cyber-cyan/10 text-fabric-700 dark:text-cyber-cyan text-sm font-semibold mb-6">
-                About Me
-              </span>
-            </motion.div>
+        <div className="mt-14 grid gap-x-10 gap-y-14 md:grid-cols-12">
+          <div className="md:col-span-9 md:col-start-4 lg:col-span-5 lg:col-start-3">
+            <Reveal>
+              <div className="space-y-5 text-lg leading-relaxed text-muted">
+                <p>
+                  I spent six years at TransUnion&rsquo;s global technology centre leading the
+                  design of production ETL and ELT pipelines — the kind that process millions of
+                  records overnight and get noticed only when they break. They largely didn&rsquo;t:
+                  we held 99.5% SLA uptime across the platform.
+                </p>
+                <p>
+                  The work before that was less glamorous and more useful than it sounds. Years of
+                  monitoring batch workflows and investigating production failures teach you which
+                  architectural decisions cause 3am pages. I design against that list now.
+                </p>
+                <p className="text-[var(--fg)]">
+                  My toolkit spans Azure Data Factory, Databricks, and Microsoft Fabric. I architect
+                  end-to-end analytics platforms — lakehouse design, medallion architectures, real-time
+                  ingestion, and semantic layers. I lead teams and mentor engineers in building systems
+                  that scale.
+                </p>
+              </div>
+            </Reveal>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-6"
-            >
-              Turning Complex Data Challenges Into{" "}
-              <span className="text-gradient">Competitive Advantages</span>
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-6"
-            >
-              I am Sathya Rajesh PK, a Lead Data Engineer with over 12 years of
-              experience architecting enterprise-grade data solutions. My work
-              spans from migrating 50+ TB of legacy data to modern cloud
-              platforms to building AI-powered analytics tools that transform
-              how businesses make decisions.
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8"
-            >
-              At TransUnion, I led the design and deployment of production-grade
-              ETL/ELT pipelines processing millions of records daily with 99.5%
-              SLA uptime. I do not just write code — I design systems that reduce
-              costs, accelerate insights, and scale with your ambitions.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap gap-3"
-            >
-              {[
-                "Azure Data Factory",
-                "Databricks",
-                "Power BI",
-                "Microsoft Fabric",
-                "PySpark",
-                "Delta Lake",
-                "LangChain",
-                "Claude",
-                "OpenAI",
-                "Python",
-                "SQL",
-              ].map((skill) => (
-                <span
-                  key={skill}
-                  className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-cyber-graphite text-slate-700 dark:text-slate-300 text-sm font-medium border border-slate-100 dark:border-cyber-border"
-                >
-                  {skill}
-                </span>
-              ))}
-            </motion.div>
+            <Reveal delay={0.1}>
+              <div className="mt-10 border-t border-rule pt-6">
+                <p className="label mb-4 text-subtle">Principal tools</p>
+                <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                  {stack.map((item) => (
+                    <li key={item} className="label text-muted">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            {valueProps.map((prop, index) => (
-              <motion.div
-                key={prop.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                className="group p-6 rounded-2xl bg-slate-50 dark:bg-cyber-graphite hover:bg-white dark:hover:bg-cyber-graphite hover:shadow-xl hover:shadow-cyber-cyan/5 dark:hover:shadow-cyber-cyan/10 border border-transparent dark:border-cyber-border hover:border-cyber-cyan/20 transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-xl glass-icon flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <prop.icon className="w-6 h-6 text-fabric-700 dark:text-cyber-cyan" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  {prop.title}
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  {prop.description}
-                </p>
-              </motion.div>
-            ))}
+          <div className="md:col-span-9 md:col-start-4 lg:col-span-4 lg:col-start-9">
+            <ul>
+              {principles.map((principle, i) => (
+                <Reveal as="li" key={principle.title} delay={0.05 * i}>
+                  <div className="border-t border-rule py-6 first:border-t-0 first:pt-0 transition-all duration-300 hover:border-accent">
+                    <h3 className="text-xl font-bold leading-snug transition-colors duration-300 hover:text-accent">{principle.title}</h3>
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-subtle transition-colors duration-300 hover:text-[var(--fg)]">
+                      {principle.body}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

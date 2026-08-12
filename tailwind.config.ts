@@ -3,109 +3,65 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        fabric: {
-          50: "#f0f9ff",
-          100: "#e0f2fe",
-          200: "#bae6fd",
-          300: "#7dd3fc",
-          400: "#38bdf8",
-          500: "#0ea5e9",
-          600: "#0284c7",
-          700: "#0078D4",
-          800: "#075985",
-          900: "#0c4a6e",
-          950: "#082f49",
+        // Cool neutral scale — the whole site is built on these.
+        ink: {
+          DEFAULT: "#13151A",
+          50: "#F4F5F7",
+          100: "#E9EBEF",
+          200: "#D9DDE4",
+          300: "#BFC5CF",
+          400: "#8B93A1",
+          500: "#697080",
+          600: "#454B55",
+          700: "#2F343C",
+          800: "#1E2127",
+          900: "#14171C",
+          950: "#0D0F12",
         },
-        cyber: {
-          midnight: "#0D1117",
-          graphite: "#161B22",
-          cyan: "#00F2FE",
-          green: "#39FF14",
-          border: "#30363D",
+        // Single accent — a deep petrol. Used for rules, numerals, links, focus;
+        // never as a fill gradient.
+        petrol: {
+          DEFAULT: "#175E68",
+          50: "#EFF6F7",
+          100: "#D6E9EB",
+          200: "#AACFD4",
+          300: "#7FB9C1",
+          400: "#3E8B96",
+          500: "#175E68",
+          600: "#125058",
+          700: "#0E3F46",
+          800: "#0A2E33",
+          900: "#071F23",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        serif: ["Playfair Display", "Georgia", "serif"],
+        // One family everywhere. `serif` and `mono` are aliased to it so any
+        // stray font-serif/font-mono class stays on the same typeface.
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
-      animation: {
-        "fade-in": "fadeIn 0.5s ease-out forwards",
-        "slide-up": "slideUp 0.5s ease-out forwards",
-        "slide-down": "slideDown 0.3s ease-out forwards",
-        "scale-in": "scaleIn 0.3s ease-out forwards",
-        "float": "float 6s ease-in-out infinite",
-        "pulse-glow": "pulseGlow 3s ease-in-out infinite",
+      fontSize: {
+        // Display sizes. Tracking tightens as the size grows, which is what
+        // keeps a single sans looking deliberate at headline scale.
+        "display-sm": ["clamp(1.75rem, 1.3rem + 1.9vw, 2.5rem)", { lineHeight: "1.12", letterSpacing: "-0.025em" }],
+        "display": ["clamp(2.2rem, 1.5rem + 3.1vw, 3.6rem)", { lineHeight: "1.06", letterSpacing: "-0.032em" }],
+        "display-lg": ["clamp(2.6rem, 1.5rem + 4.8vw, 5rem)", { lineHeight: "1.02", letterSpacing: "-0.04em" }],
       },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        slideUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        slideDown: {
-          "0%": { opacity: "0", transform: "translateY(-10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        scaleIn: {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-20px)" },
-        },
-        pulseGlow: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(0, 242, 254, 0.1)" },
-          "50%": { boxShadow: "0 0 30px rgba(0, 242, 254, 0.3)" },
-        },
+      letterSpacing: {
+        label: "0.14em",
+      },
+      maxWidth: {
+        measure: "62ch",
+      },
+      transitionTimingFunction: {
+        editorial: "cubic-bezier(0.22, 1, 0.36, 1)",
       },
     },
   },
