@@ -14,7 +14,7 @@ const projects = [
       "Comprehensive security audit and design enhancement of a construction company website. Eliminated 3 critical vulnerabilities (hardcoded secrets, missing rate limiting, no input validation), fixed design overlaps, and added dynamic theme-aware visual effects with simulated building lighting and cloud animations.",
     outcome: "3 security vulnerabilities eliminated, enhanced UX with zero performance impact",
     tags: ["Next.js", "Security", "React", "TypeScript", "CSS3 Animations"],
-    image: "/images/projects/skyline-industries.png",
+    image: "/images/projects/skyline-industries-light.png",
     service: "Web Application",
     featured: true,
   },
