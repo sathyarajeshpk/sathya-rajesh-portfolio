@@ -3,6 +3,13 @@ import Reveal from "@/components/site/Reveal";
 const testimonials = [
   {
     quote:
+      "We are very happy with the website created for Skyline Industries. The design is modern, professional and gives our company a much stronger digital presence. We especially appreciated the way our requirements were understood and converted into a clean and attractive website. Thank you for your dedication, creativity and support throughout the project. We would definitely recommend your work to others looking for a professional website.",
+    author: "Skyline Industries",
+    org: "Construction & Project Management",
+    icon: "★",
+  },
+  {
+    quote:
       "Quarterly Best Performer — Feb 2024, Aug 2023, Nov 2022. Awarded for technical leadership, architectural excellence, and mentorship of 20+ engineers across the data platform team.",
     author: "TransUnion",
     org: "Global Technology Center",

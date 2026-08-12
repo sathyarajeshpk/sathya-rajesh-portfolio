@@ -7,6 +7,18 @@ import { prefillContact } from "@/lib/prefill";
 
 const projects = [
   {
+    year: "2026",
+    title: "Skyline Industries — Security Hardening & Visual Enhancement",
+    discipline: "Full-stack development",
+    description:
+      "Comprehensive security audit and design enhancement of a construction company website. Eliminated 3 critical vulnerabilities (hardcoded secrets, missing rate limiting, no input validation), fixed design overlaps, and added dynamic theme-aware visual effects with simulated building lighting and cloud animations.",
+    outcome: "3 security vulnerabilities eliminated, enhanced UX with zero performance impact",
+    tags: ["Next.js", "Security", "React", "TypeScript", "CSS3 Animations"],
+    image: "/images/projects/skyline-industries.png",
+    service: "Web Application",
+    featured: true,
+  },
+  {
     year: "2024",
     title: "Microsoft Fabric data platform",
     discipline: "Data engineering",
