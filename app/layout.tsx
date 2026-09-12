@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Instrument_Serif, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Manrope, Instrument_Serif, DM_Sans, JetBrains_Mono, Roboto_Slab } from "next/font/google";
 import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
@@ -36,6 +36,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
   weight: ["400", "500"],
   variable: "--font-mono",
+});
+
+// Kinetic theme display font — bold slab serif for big impact headlines.
+const robotoSlab = Roboto_Slab({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["700", "900"],
+  variable: "--font-slab",
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sathyarajeshpk.com";
@@ -118,7 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      className={`${sans.variable} ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${robotoSlab.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <head>

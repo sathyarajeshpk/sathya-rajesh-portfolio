@@ -205,6 +205,23 @@
 [data-draw]     { transform-origin: top center; animation: sr-drawY linear both;
                   animation-timeline: view(); animation-range: cover 0% cover 72%; }
 [data-parallax] { animation: sr-par linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
+
+/* An element carrying both data-reveal and data-parallax needs two
+   animations running at once on `transform` — plain CSS animations don't
+   compose (whichever rule is last in the cascade replaces `transform`
+   outright), which left the base [data-reveal] rule's opacity:0 in place
+   forever with no sr-rise animation left to resolve it. Drive both offsets
+   through one registered custom property instead so they combine. */
+@property --sr-py { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@keyframes sr-fadeIn { to { opacity: 1; } }
+@keyframes sr-parY   { from { --sr-py: 40px; } to { --sr-py: -40px; } }
+[data-reveal][data-parallax] {
+  opacity: 0; --sr-py: 40px; transform: translateY(var(--sr-py));
+  animation: sr-fadeIn .95s cubic-bezier(.22,1,.36,1) both, sr-parY linear both;
+  animation-timeline: view(), view();
+  animation-range: entry 0% cover 28%, entry 0% exit 100%;
+}
+
 [data-portrait] { animation: sr-portrait linear both; animation-timeline: view(); animation-range: entry 15% exit 70%; }
 [data-progress] { transform-origin: left center; animation: sr-growX linear both; animation-timeline: scroll(root); }
 [data-totop]    { opacity: 0; visibility: hidden; animation: sr-totop linear both;
@@ -214,12 +231,37 @@
 [data-pulse]    { animation: sr-pulse 2.4s ease-in-out infinite; }
 
 @supports not (animation-timeline: view()) {
-  [data-reveal], [data-reveal-r] { opacity: 1; animation: none; }
+  [data-reveal], [data-reveal-r], [data-reveal][data-parallax] { opacity: 1; animation: none; transform: none; }
   [data-draw], [data-parallax], [data-portrait], [data-progress] { animation: none; }
   [data-totop] { opacity: 1; visibility: visible; animation: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal], [data-reveal-r], [data-word], [data-totop] { opacity: 1 !important; visibility: visible !important; }
+  [data-reveal][data-parallax] { opacity: 1 !important; transform: none !important; }
   [data-marquee], [data-pulse] { animation: none !important; }
+}
+
+/* ============================================================
+   KINETIC THEME — extra motion primitives (signature stroke-draw,
+   pinned zoom-in statement, toast slide-in). Additive to the block
+   above; shares its reduced-motion / no-animation-timeline fallbacks.
+   ============================================================ */
+
+@keyframes kt-stroke  { to { stroke-dashoffset: 0; } }
+@keyframes kt-zoomIn  { from { transform: scale(.86); opacity: .5; } to { transform: scale(1); opacity: 1; } }
+@keyframes kt-toastIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+
+[data-stroke]  { stroke-dasharray: 1; stroke-dashoffset: 1; animation: kt-stroke 1.6s cubic-bezier(.22,1,.36,1) both;
+                 animation-timeline: view(); animation-range: entry 0% cover 55%; }
+[data-zoom-in] { animation: kt-zoomIn linear both; animation-timeline: view(); animation-range: entry 10% cover 55%; }
+[data-toast]   { animation: kt-toastIn .5s cubic-bezier(.22,1,.36,1) both; }
+
+@supports not (animation-timeline: view()) {
+  [data-stroke]  { stroke-dashoffset: 0; animation: none; }
+  [data-zoom-in] { opacity: 1; transform: none; animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-stroke], [data-zoom-in] { opacity: 1 !important; transform: none !important; animation: none !important; stroke-dashoffset: 0 !important; }
 }
