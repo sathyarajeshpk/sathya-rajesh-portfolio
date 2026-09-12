@@ -1,5 +1,6 @@
 import Reveal from "@/components/site/Reveal";
 import SectionHeader from "@/components/site/SectionHeader";
+import { MedallionDiagram } from "@/components/site/MedallionDiagram";
 
 const principles = [
   {
@@ -68,6 +69,19 @@ export default function About() {
                   ingestion, and semantic layers. I lead teams and mentor engineers in building systems
                   that scale.
                 </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <div className="mt-10 border-t border-rule pt-6">
+                <MedallionDiagram
+                  accent="var(--accent)"
+                  ink="var(--fg)"
+                  muted="var(--fg-muted)"
+                  rule="var(--rule)"
+                  panel="var(--bg-raised)"
+                  mono="'JetBrains Mono', monospace"
+                />
               </div>
             </Reveal>
 

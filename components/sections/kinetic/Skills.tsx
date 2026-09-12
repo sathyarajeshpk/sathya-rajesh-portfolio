@@ -1,4 +1,5 @@
 import { K, MONO, SLAB, autoGrid } from "@/components/site/kineticStyles";
+import { GitHubActivity } from "@/components/site/GitHubActivity";
 
 const groups = [
   { title: "Core data engineering", items: ["Azure Databricks", "PySpark · Spark SQL", "Delta Lake", "Azure Data Factory", "ETL / ELT design"] },
@@ -29,6 +30,9 @@ export default function Skills() {
               </ul>
             </div>
           ))}
+          <div data-reveal="1" style={{ borderTop: `1px solid ${K.rule}`, padding: "24px 0" }}>
+            <GitHubActivity accent={K.accentDeep} ink={K.ink} muted={K.soft} rule={K.rule} mono={MONO} />
+          </div>
         </div>
       </div>
     </section>

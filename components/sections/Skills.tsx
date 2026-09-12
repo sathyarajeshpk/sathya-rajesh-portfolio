@@ -1,5 +1,6 @@
 import Reveal from "@/components/site/Reveal";
 import SectionHeader from "@/components/site/SectionHeader";
+import { GitHubActivity } from "@/components/site/GitHubActivity";
 
 /**
  * Competencies grouped, not scored. The previous version rated each area out of
@@ -61,6 +62,11 @@ export default function Skills() {
               </div>
             </Reveal>
           ))}
+          <Reveal delay={0.05 * groups.length}>
+            <div className="border-t border-rule py-7">
+              <GitHubActivity accent="var(--accent)" ink="var(--fg)" muted="var(--fg-muted)" rule="var(--rule)" mono="'JetBrains Mono', monospace" />
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 import ProfileSectionHeader from "@/components/site/ProfileSectionHeader";
 import { C, MONO, autoGrid, display } from "@/components/site/profileStyles";
+import { GitHubActivity } from "@/components/site/GitHubActivity";
 
 const groups = [
   { title: "Core data engineering", items: ["Azure Databricks", "PySpark · Spark SQL", "Delta Lake", "Azure Data Factory", "ETL / ELT design"] },
@@ -25,6 +26,9 @@ export default function Skills() {
               </ul>
             </div>
           ))}
+          <div data-reveal="1" style={{ borderTop: `1px solid ${C.rule}`, padding: "24px 0" }}>
+            <GitHubActivity accent={C.accent} ink={C.fg} muted={C.subtle} rule={C.rule} mono={MONO} />
+          </div>
         </div>
       </div>
     </section>

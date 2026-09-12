@@ -1,82 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import SectionHeader from "@/components/site/SectionHeader";
 import { prefillContact } from "@/lib/prefill";
-
-const projects = [
-  {
-    year: "2026",
-    title: "Skyline Industries — Security Hardening & Visual Enhancement",
-    discipline: "Full-stack development",
-    description:
-      "Comprehensive security audit and design enhancement of a construction company website. Eliminated 3 critical vulnerabilities (hardcoded secrets, missing rate limiting, no input validation), fixed design overlaps, and added dynamic theme-aware visual effects with simulated building lighting and cloud animations.",
-    outcome: "3 security vulnerabilities eliminated, enhanced UX with zero performance impact",
-    tags: ["Next.js", "Security", "React", "TypeScript", "CSS3 Animations"],
-    image: "/images/projects/skyline-industries-light.png",
-    service: "Web Application",
-    featured: true,
-  },
-  {
-    year: "2024",
-    title: "Microsoft Fabric data platform",
-    discipline: "Data engineering",
-    description:
-      "End-to-end analytics platform on OneLake — medallion layers, real-time ingestion, and Power BI reporting reading directly from the lakehouse with no intermediate extract.",
-    outcome: "Single source of truth across four regional reporting teams",
-    tags: ["Microsoft Fabric", "OneLake", "Real-time analytics"],
-    image: "/images/projects/fabric-platform.svg",
-    service: "Microsoft Fabric",
-    featured: true,
-  },
-  {
-    year: "2024",
-    title: "Natural language to SQL",
-    discipline: "Applied AI",
-    description:
-      "A query interface that turns plain-English questions into SQL, PySpark, and charts — grounded in a curated semantic layer, with the generated query and its assumptions always shown back to the user.",
-    outcome: "Analyst queue bypassed for routine questions",
-    tags: ["Claude API", "NL2SQL", "Python"],
-    image: "/images/projects/nl2sql.svg",
-    service: "AI Solution",
-    featured: true,
-  },
-  {
-    year: "2023",
-    title: "Executive Power BI suite",
-    discipline: "Business intelligence",
-    description:
-      "Star-schema model and DAX measure library behind a C-suite dashboard set, replacing a monthly deck assembled by hand.",
-    outcome: "~60% less manual reporting effort",
-    tags: ["Power BI", "DAX", "Dimensional modelling"],
-    image: "/images/projects/power-bi-dashboard.svg",
-    service: "Power BI Dashboard",
-  },
-  {
-    year: "2023",
-    title: "AURA — AI Unified Root Cause Analyzer",
-    discipline: "AI operations",
-    description:
-      "Log analysis and root-cause identification system. Ingests structured logs into ADLS Gen2, applies intelligent parsing and NL2SQL patterns to isolate failure signatures, uses Claude API to propose probable root causes with supporting evidence, and feeds validated resolutions back into a knowledge base for continuous learning.",
-    outcome: "60% faster incident resolution, reduced alert fatigue",
-    tags: ["Log analysis", "Splunk", "Claude API", "Automation"],
-    image: "/images/projects/incident-analyzer.svg",
-    service: "AI Solution",
-    featured: true,
-  },
-  {
-    year: "2022",
-    title: "HR analytics dashboard",
-    discipline: "People analytics",
-    description:
-      "Attrition, hiring funnel, and workforce performance reporting built on Apache Superset for a team without a Power BI licence.",
-    outcome: "Attrition drivers identified by department",
-    tags: ["Apache Superset", "Workforce planning"],
-    image: "/images/projects/hr-analytics.svg",
-    service: "Analytics",
-  },
-];
+import { PROJECTS as projects } from "@/lib/projects";
 
 export default function Projects() {
   return (
@@ -85,17 +14,12 @@ export default function Projects() {
         <SectionHeader
           index="03"
           label="Selected work"
-          title="Five projects, and what changed because of them."
+          title="Six projects, and what changed because of them."
         />
 
         <div className="mt-14 grid gap-x-10 gap-y-4 md:grid-cols-2">
           {projects.map((project, i) => (
-            <Reveal
-              as="article"
-              key={project.title}
-              delay={0.06 * i}
-              className={project.featured ? "md:col-span-1" : "md:col-span-1"}
-            >
+            <Reveal as="article" key={project.title} delay={0.06 * i}>
               <div className="group flex h-full flex-col border-t border-rule pt-6 transition-all duration-500 hover:translate-y-[-4px]">
                 <div className="mb-5 flex items-baseline justify-between gap-4">
                   <span className="label text-subtle">{project.discipline}</span>
@@ -113,7 +37,7 @@ export default function Projects() {
                 </div>
 
                 <h3 className="text-2xl font-bold leading-tight">{project.title}</h3>
-                <p className="mt-3 leading-relaxed text-muted">{project.description}</p>
+                <p className="mt-3 leading-relaxed text-muted">{project.summary}</p>
 
                 <p className="mt-4 flex items-baseline gap-2.5 text-[0.9375rem]">
                   <span
@@ -134,19 +58,28 @@ export default function Projects() {
 
                 <div className="mt-6 flex-1" />
 
-                <button
-                  type="button"
-                  onClick={() =>
-                    prefillContact({
-                      service: project.service,
-                      description: `I'd like to discuss a project along the lines of "${project.title}".`,
-                    })
-                  }
-                  className="label link-underline self-start pb-6 text-muted hover:text-[var(--fg)]"
-                >
-                  Discuss something similar
-                  <span aria-hidden="true">&rarr;</span>
-                </button>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pb-6">
+                  <Link
+                    href={`/work/${project.slug}`}
+                    className="label link-underline self-start text-[var(--fg)] hover:text-[var(--accent)]"
+                  >
+                    Case study
+                    <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      prefillContact({
+                        service: project.service,
+                        description: `I'd like to discuss a project along the lines of "${project.title}".`,
+                      })
+                    }
+                    className="label link-underline self-start text-muted hover:text-[var(--fg)]"
+                  >
+                    Discuss something similar
+                    <span aria-hidden="true">&rarr;</span>
+                  </button>
+                </div>
               </div>
             </Reveal>
           ))}

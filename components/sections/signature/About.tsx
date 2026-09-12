@@ -1,4 +1,5 @@
 import { S, MONO, ACCENT_SERIF, autoGrid, shell, Scribble } from "@/components/site/signatureStyles";
+import { MedallionDiagram } from "@/components/site/MedallionDiagram";
 
 const principles = [
   { title: "Architecture before code", body: "Every engagement opens with the boring questions — data contracts, ownership, failure modes. The pipeline is the easy part once those are settled." },
@@ -35,6 +36,10 @@ export default function About() {
           </p>
           <Scribble style={{ marginTop: 10 }} viewBox="0 0 220 30" d="M6 20 C 40 4, 70 30, 108 12 S 170 6, 214 18" />
         </div>
+      </div>
+
+      <div data-gs-reveal="1" style={{ margin: "0 0 clamp(36px,5vw,56px)", padding: "24px clamp(16px,3vw,28px)", border: `1px solid ${S.rule}`, background: S.bgAlt, borderRadius: 6 }}>
+        <MedallionDiagram accent={S.accentDeep} ink={S.ink} muted={S.muted} rule={S.rule} panel={S.bg} mono={MONO} strokeAttr="data-gs-stroke" />
       </div>
 
       <div style={{ marginTop: "clamp(36px,5vw,64px)", ...autoGrid(320), gap: "clamp(28px,4vw,64px)" }}>

@@ -1,27 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import ProfileSectionHeader from "@/components/site/ProfileSectionHeader";
 import { C, MONO, SERIF, autoGrid, display, shell } from "@/components/site/profileStyles";
-
-const projects = [
-  { year: "2026", discipline: "Data engineering", title: "Pharma omnichannel lakehouse", image: "/images/projects/fabric-platform.svg",
-    body: "100+ datasets across eight marketing and commercial domains, ingested from REST APIs and SFTP into a Landing → Bronze → Silver → Data Cloud medallion on Databricks and ADLS Gen2, with Key Vault-backed secret scopes throughout.",
-    outcome: "New sources onboarded by configuration, not code", tags: ["Databricks", "ADLS Gen2", "Key Vault"] },
-  { year: "2025", discipline: "AI operations", title: "AURA — root cause analyzer", image: "/images/projects/incident-analyzer.svg",
-    body: "Pipeline logs land in ADLS Gen2, get parsed into failure signatures, and an LLM proposes probable root causes with supporting evidence. Validated resolutions feed back into a knowledge base.",
-    outcome: "60% faster incident triage, less alert fatigue", tags: ["RAG", "LangChain", "Log analysis"] },
-  { year: "2024", discipline: "Applied AI", title: "Natural language to SQL", image: "/images/projects/nl2sql.svg",
-    body: "Plain-English questions become SQL, PySpark, and charts — grounded in a curated semantic layer, with the generated query and its assumptions always shown back to the user.",
-    outcome: "Analyst queue bypassed for routine questions", tags: ["NL2SQL", "Python", "Semantic layer"] },
-  { year: "2023", discipline: "Business intelligence", title: "Executive Power BI suite", image: "/images/projects/power-bi-dashboard.svg",
-    body: "Star-schema model and a DAX measure library behind a C-suite dashboard set, replacing a monthly deck assembled by hand.",
-    outcome: "~60% less manual reporting effort", tags: ["Power BI", "DAX", "Dimensional modelling"] },
-  { year: "2026", discipline: "Full-stack", title: "Skyline Industries — hardening", image: "/images/projects/skyline-industries-light.png",
-    body: "Security audit and visual rebuild of a construction company's site: hardcoded secrets removed, rate limiting and input validation added, layout defects fixed.",
-    outcome: "Three critical vulnerabilities eliminated", tags: ["Next.js", "TypeScript", "Security"] },
-  { year: "2022", discipline: "People analytics", title: "Workforce analytics", image: "/images/projects/hr-analytics.svg",
-    body: "Attrition, hiring funnel, and performance reporting built on Apache Superset for a team without a Power BI licence.",
-    outcome: "Attrition drivers identified by department", tags: ["Superset", "SQL", "Workforce planning"] },
-];
+import { PROJECTS as projects } from "@/lib/projects";
 
 export default function Projects() {
   return (
@@ -48,7 +29,7 @@ export default function Projects() {
             </div>
 
             <h3 style={{ position: "relative", margin: 0, fontFamily: SERIF, fontWeight: 400, fontSize: "1.62rem", lineHeight: 1.16 }}>{p.title}</h3>
-            <p style={{ position: "relative", margin: "12px 0 0", fontSize: ".95rem", lineHeight: 1.65, color: C.soft }}>{p.body}</p>
+            <p style={{ position: "relative", margin: "12px 0 0", fontSize: ".95rem", lineHeight: 1.65, color: C.soft }}>{p.summary}</p>
             <p style={{ position: "relative", display: "flex", gap: 12, alignItems: "baseline", margin: "18px 0 0", fontSize: ".95rem", color: C.fg }}>
               <span style={{ width: 18, height: 1, background: C.accent, flex: "none", transform: "translateY(-4px)" }} />
               <span>{p.outcome}</span>
@@ -56,6 +37,10 @@ export default function Projects() {
             <ul style={{ position: "relative", listStyle: "none", display: "flex", flexWrap: "wrap", gap: "8px 16px", margin: "18px 0 0", padding: 0, fontFamily: MONO, fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: C.subtle }}>
               {p.tags.map((t) => <li key={t}>{t}</li>)}
             </ul>
+            <Link href={`/work/${p.slug}`} data-magnetic="1"
+                  style={{ position: "relative", display: "inline-flex", alignItems: "center", gap: 8, margin: "20px 0 0", fontFamily: MONO, fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", color: C.accent, borderBottom: "1px solid rgba(99,180,190,.35)", paddingBottom: 3, width: "fit-content" }}>
+              Case study <span aria-hidden>→</span>
+            </Link>
           </article>
         ))}
       </div>

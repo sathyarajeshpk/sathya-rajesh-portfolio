@@ -1,4 +1,5 @@
 import { S, MONO, SLAB, autoGrid } from "@/components/site/signatureStyles";
+import { GitHubActivity } from "@/components/site/GitHubActivity";
 
 const groups = [
   { title: "Core data engineering", items: ["Azure Databricks", "PySpark · Spark SQL", "Delta Lake", "Azure Data Factory", "ETL / ELT design"] },
@@ -29,6 +30,9 @@ export default function Skills() {
               </ul>
             </div>
           ))}
+          <div data-gs-reveal="1" style={{ borderTop: `1px solid ${S.rule}`, padding: "24px 0" }}>
+            <GitHubActivity accent={S.accentDeep} ink={S.ink} muted={S.muted} rule={S.rule} mono={MONO} />
+          </div>
         </div>
       </div>
     </section>

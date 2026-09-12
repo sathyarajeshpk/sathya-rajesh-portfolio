@@ -1,4 +1,5 @@
 import { K, MONO, ACCENT_SERIF, autoGrid, shell, Scribble } from "@/components/site/kineticStyles";
+import { MedallionDiagram } from "@/components/site/MedallionDiagram";
 
 const principles = [
   { title: "Architecture before code", body: "Every engagement opens with the boring questions — data contracts, ownership, failure modes. The pipeline is the easy part once those are settled." },
@@ -33,6 +34,10 @@ export default function About() {
         viewBox="0 0 220 30"
         d="M6 20 C 40 4, 70 30, 108 12 S 170 6, 214 18"
       />
+
+      <div data-reveal="1" style={{ margin: "clamp(36px,5vw,56px) 0 0", padding: "24px clamp(16px,3vw,28px)", border: `1px solid ${K.rule}`, background: K.bgSoft, borderRadius: 6 }}>
+        <MedallionDiagram accent={K.accentDeep} ink={K.ink} muted={K.soft} rule={K.rule} panel={K.cream} mono={MONO} />
+      </div>
 
       <div style={{ marginTop: "clamp(36px,5vw,64px)", ...autoGrid(320), gap: "clamp(28px,4vw,64px)" }}>
         <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 20 }}>

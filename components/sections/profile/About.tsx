@@ -1,5 +1,6 @@
 import ProfileSectionHeader from "@/components/site/ProfileSectionHeader";
 import { C, MONO, SERIF, autoGrid, display, shell } from "@/components/site/profileStyles";
+import { MedallionDiagram } from "@/components/site/MedallionDiagram";
 
 const principles = [
   { title: "Architecture before code", body: "Every engagement opens with the boring questions — data contracts, ownership, failure modes. The pipeline is the easy part once those are settled." },
@@ -21,6 +22,10 @@ export default function About() {
       <h2 data-reveal="1" style={{ ...display, margin: "clamp(26px,4vw,44px) 0 0", maxWidth: "20ch", textWrap: "balance" } as React.CSSProperties}>
         Thirteen years in IT. Six of them turning reporting chaos into <em style={{ color: C.accent }}>platforms</em>.
       </h2>
+
+      <div data-reveal="1" style={{ margin: "clamp(36px,5vw,56px) 0 0", padding: "24px clamp(16px,3vw,28px)", border: `1px solid ${C.rule}`, background: "rgba(16,18,22,.5)" }}>
+        <MedallionDiagram accent={C.accent} ink={C.fg} muted={C.subtle} rule={C.rule} panel={C.sunken} mono={MONO} />
+      </div>
 
       <div style={{ marginTop: "clamp(36px,5vw,64px)", ...autoGrid(320), gap: "clamp(28px,4vw,64px)" }}>
         <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 20 }}>

@@ -1,26 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { S, MONO, SLAB, autoGrid, shell } from "@/components/site/signatureStyles";
-
-const projects = [
-  { year: "2026", discipline: "Data engineering", title: "Pharma omnichannel lakehouse", image: "/images/projects/fabric-platform.svg",
-    body: "100+ datasets across eight marketing and commercial domains, ingested from REST APIs and SFTP into a Landing → Bronze → Silver → Data Cloud medallion on Databricks and ADLS Gen2, with Key Vault-backed secret scopes throughout.",
-    outcome: "New sources onboarded by configuration, not code", tags: ["Databricks", "ADLS Gen2", "Key Vault"] },
-  { year: "2025", discipline: "AI operations", title: "AURA — root cause analyzer", image: "/images/projects/incident-analyzer.svg",
-    body: "Pipeline logs land in ADLS Gen2, get parsed into failure signatures, and an LLM proposes probable root causes with supporting evidence. Validated resolutions feed back into a knowledge base.",
-    outcome: "60% faster incident triage, less alert fatigue", tags: ["RAG", "LangChain", "Log analysis"] },
-  { year: "2024", discipline: "Applied AI", title: "Natural language to SQL", image: "/images/projects/nl2sql.svg",
-    body: "Plain-English questions become SQL, PySpark, and charts — grounded in a curated semantic layer, with the generated query and its assumptions always shown back to the user.",
-    outcome: "Analyst queue bypassed for routine questions", tags: ["NL2SQL", "Python", "Semantic layer"] },
-  { year: "2023", discipline: "Business intelligence", title: "Executive Power BI suite", image: "/images/projects/power-bi-dashboard.svg",
-    body: "Star-schema model and a DAX measure library behind a C-suite dashboard set, replacing a monthly deck assembled by hand.",
-    outcome: "~60% less manual reporting effort", tags: ["Power BI", "DAX", "Dimensional modelling"] },
-  { year: "2026", discipline: "Full-stack", title: "Skyline Industries — hardening", image: "/images/projects/skyline-industries-light.png",
-    body: "Security audit and visual rebuild of a construction company's site: hardcoded secrets removed, rate limiting and input validation added, layout defects fixed.",
-    outcome: "Three critical vulnerabilities eliminated", tags: ["Next.js", "TypeScript", "Security"] },
-  { year: "2022", discipline: "People analytics", title: "Workforce analytics", image: "/images/projects/hr-analytics.svg",
-    body: "Attrition, hiring funnel, and performance reporting built on Apache Superset for a team without a Power BI licence.",
-    outcome: "Attrition drivers identified by department", tags: ["Superset", "SQL", "Workforce planning"] },
-];
+import { PROJECTS as projects } from "@/lib/projects";
 
 export default function Projects() {
   return (
@@ -46,7 +27,7 @@ export default function Projects() {
             </div>
 
             <h3 style={{ margin: 0, fontFamily: SLAB, fontWeight: 700, fontSize: "1.32rem", lineHeight: 1.18, color: S.ink }}>{p.title}</h3>
-            <p style={{ margin: "12px 0 0", fontSize: ".95rem", lineHeight: 1.65, color: S.muted }}>{p.body}</p>
+            <p style={{ margin: "12px 0 0", fontSize: ".95rem", lineHeight: 1.65, color: S.muted }}>{p.summary}</p>
             <p style={{ display: "flex", gap: 12, alignItems: "baseline", margin: "18px 0 0", fontSize: ".95rem", color: S.ink }}>
               <span style={{ width: 18, height: 1, background: S.accentDeep, flex: "none", transform: "translateY(-4px)" }} />
               <span>{p.outcome}</span>
@@ -56,6 +37,10 @@ export default function Projects() {
                 <li key={t} style={{ border: `1px solid ${S.rule}`, borderRadius: 99, padding: "4px 10px" }}>{t}</li>
               ))}
             </ul>
+            <Link href={`/work/${p.slug}`} data-gs-magnetic="1"
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, margin: "18px 0 0", fontFamily: MONO, fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: S.accentDeep, borderBottom: `1px solid ${S.rule}`, paddingBottom: 3, width: "fit-content" }}>
+              Case study <span aria-hidden>→</span>
+            </Link>
           </article>
         ))}
       </div>
