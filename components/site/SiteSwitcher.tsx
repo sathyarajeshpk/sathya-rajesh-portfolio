@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { THEMES, DEFAULT_THEME, type ThemeKey } from "@/components/site/themes";
+import WhatsAppButton from "@/components/site/WhatsAppButton";
 
 const STORAGE_KEY = "site-design";
 
@@ -36,6 +37,7 @@ export default function SiteSwitcher() {
   return (
     <>
       <Active />
+      <WhatsAppButton />
       <div
         style={{
           position: "fixed",
