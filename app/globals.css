@@ -178,3 +178,48 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
 }
+
+/* ============================================================
+   PROFILE PAGE — motion layer. Append to app/globals.css.
+   Scroll-driven animations (Chrome/Edge 115+, Safari 26+).
+   Everything degrades to "visible, no motion" without support.
+   ============================================================ */
+
+@keyframes sr-rise      { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+@keyframes sr-riseR     { from { opacity: 0; transform: translateX(34px); } to { opacity: 1; transform: none; } }
+@keyframes sr-wordUp    { from { opacity: 0; transform: translateY(1.05em) rotate(3deg); } to { opacity: 1; transform: none; } }
+@keyframes sr-drawY     { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes sr-growX     { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sr-par       { from { transform: translateY(40px); } to { transform: translateY(-40px); } }
+@keyframes sr-portrait  { from { transform: scale(1.16) translateY(14px); filter: grayscale(1) brightness(.62) contrast(1.12); }
+                          to   { transform: scale(1) translateY(-14px);   filter: grayscale(0) brightness(1) contrast(1); } }
+@keyframes sr-marquee   { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes sr-pulse     { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.7); } }
+@keyframes sr-totop     { 0% { opacity: 0; visibility: hidden; transform: translateY(14px); }
+                          100% { opacity: 1; visibility: visible; transform: translateY(0); } }
+
+[data-reveal]   { opacity: 0; animation: sr-rise .95s cubic-bezier(.22,1,.36,1) both;
+                  animation-timeline: view(); animation-range: entry 0% cover 28%; }
+[data-reveal-r] { opacity: 0; animation: sr-riseR 1s cubic-bezier(.22,1,.36,1) both;
+                  animation-timeline: view(); animation-range: entry 0% cover 32%; }
+[data-draw]     { transform-origin: top center; animation: sr-drawY linear both;
+                  animation-timeline: view(); animation-range: cover 0% cover 72%; }
+[data-parallax] { animation: sr-par linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
+[data-portrait] { animation: sr-portrait linear both; animation-timeline: view(); animation-range: entry 15% exit 70%; }
+[data-progress] { transform-origin: left center; animation: sr-growX linear both; animation-timeline: scroll(root); }
+[data-totop]    { opacity: 0; visibility: hidden; animation: sr-totop linear both;
+                  animation-timeline: scroll(root); animation-range: 560px 820px; }
+[data-marquee]  { animation: sr-marquee 46s linear infinite; }
+[data-word]     { display: inline-block; animation: sr-wordUp 1.05s cubic-bezier(.22,1,.36,1) both; }
+[data-pulse]    { animation: sr-pulse 2.4s ease-in-out infinite; }
+
+@supports not (animation-timeline: view()) {
+  [data-reveal], [data-reveal-r] { opacity: 1; animation: none; }
+  [data-draw], [data-parallax], [data-portrait], [data-progress] { animation: none; }
+  [data-totop] { opacity: 1; visibility: visible; animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal-r], [data-word], [data-totop] { opacity: 1 !important; visibility: visible !important; }
+  [data-marquee], [data-pulse] { animation: none !important; }
+}
