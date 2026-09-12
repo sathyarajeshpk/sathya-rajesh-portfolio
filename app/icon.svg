@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="12" fill="#13151A"/>
-  <path d="M15 46V18h6.2l10.4 18.3L42 18h6.2v28h-5.6V28.4L33.9 44h-4.6L20.6 28.4V46z" fill="#F4F5F7"/>
+  <text x="32" y="41" text-anchor="middle" font-family="ui-monospace, 'JetBrains Mono', monospace" font-weight="700" font-size="25" letter-spacing="-1" fill="#F4F5F7">SR</text>
   <rect x="15" y="50" width="34" height="3" fill="#175E68"/>
 </svg>
