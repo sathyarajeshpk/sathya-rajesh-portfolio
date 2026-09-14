@@ -9,7 +9,7 @@ import { OPEN_TERMINAL_EVENT } from "@/components/site/terminalEvents";
 
 type Line = { text: string; kind: "input" | "output" };
 
-const HELP = [
+const getHelp = () => [
   "Available commands:",
   "  help              show this list",
   "  whoami            who is this site about",
@@ -20,7 +20,7 @@ const HELP = [
   "  contact           phone / email / links",
   "  resume            open the resume PDF",
   "  open <site>       github | linkedin | whatsapp",
-  "  theme <name>      new | kinetic | signature | classic",
+  `  theme <name>      ${THEMES.map((t) => t.key).join(" | ")}`,
   "  date              current date and time",
   "  clear             clear the screen",
   "  exit              close this terminal",
@@ -82,7 +82,7 @@ export default function Terminal({ theme, onThemeChange }: { theme: ThemeKey; on
     const [name, ...args] = cmd.split(/\s+/);
     switch (name.toLowerCase()) {
       case "help":
-        HELP.forEach(print);
+        getHelp().forEach(print);
         break;
       case "whoami":
         print("Sathya Rajesh PK — Senior Data Engineer, Chennai, India. 13 years in IT, 6 turning reporting chaos into platforms.");

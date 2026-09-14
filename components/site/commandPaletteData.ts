@@ -26,6 +26,7 @@ export const SECTION_IDS: Record<ThemeKey, Partial<Record<SectionKey, string>>> 
   new: { top: "top", about: "about", work: "work", experience: "experience", skills: "skills", impact: "impact", testimonials: "testimonials", writing: "writing", contact: "contact" },
   kinetic: { top: "kt-top", about: "kt-about", work: "kt-work", experience: "kt-track", skills: "kt-skills", impact: "kt-impact", testimonials: "kt-testimonials", writing: "kt-writing", contact: "kt-contact" },
   signature: { top: "sg-top", about: "sg-about", work: "sg-work", experience: "sg-track", skills: "sg-skills", impact: "sg-impact", testimonials: "sg-testimonials", writing: "sg-writing", contact: "sg-contact" },
+  ember: { top: "em-top", work: "em-work", experience: "em-experience", contact: "em-contact" },
   classic: { top: "hero", about: "about", work: "projects", experience: "experience", skills: "skills", testimonials: "testimonials", writing: "blog", contact: "contact", services: "services", faqs: "faqs" },
 };
 

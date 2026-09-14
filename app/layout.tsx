@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Instrument_Serif, DM_Sans, JetBrains_Mono, Roboto_Slab } from "next/font/google";
+import { Manrope, Instrument_Serif, DM_Sans, JetBrains_Mono, Roboto_Slab, Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -56,6 +56,14 @@ const monaSans = localFont({
   display: "swap",
   weight: "200 900",
   variable: "--font-mona",
+});
+
+// Ember theme display font — bold geometric sans for the wordmark and headings.
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["500", "700"],
+  variable: "--font-grotesk",
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sathyarajeshpk.com";
@@ -138,7 +146,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${robotoSlab.variable} ${monaSans.variable} scroll-smooth`}
+      className={`${sans.variable} ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${robotoSlab.variable} ${monaSans.variable} ${spaceGrotesk.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <head>

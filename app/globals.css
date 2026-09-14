@@ -265,3 +265,34 @@
 @media (prefers-reduced-motion: reduce) {
   [data-stroke], [data-zoom-in] { opacity: 1 !important; transform: none !important; animation: none !important; stroke-dashoffset: 0 !important; }
 }
+
+/* ============================================================
+   EMBER THEME — hero glow drift + pinned title/body crossfade.
+   Reveals/marquee/count-up reuse the generic [data-reveal] etc.
+   block above; this is just what's unique to Ember.
+   ============================================================ */
+
+@keyframes ember-drift1 { 0%,100% { transform: translate(-54%,-58%) scale(1); opacity: .85; } 50% { transform: translate(-46%,-42%) scale(1.18); opacity: 1; } }
+@keyframes ember-drift2 { 0%,100% { transform: translate(-46%,-44%) scale(1.05); opacity: .7; } 50% { transform: translate(-54%,-56%) scale(.88); opacity: .95; } }
+[data-ember-drift="1"] { animation: ember-drift1 9s ease-in-out infinite; }
+[data-ember-drift="2"] { animation: ember-drift2 7s ease-in-out infinite; }
+
+/* Named view-timeline on the tall outer wrapper so the sticky inner content
+   (which never itself "enters/exits" while pinned) can still crossfade off
+   the wrapper's full scroll transit. */
+.ember-pin-scope { view-timeline-name: --ember-pin; view-timeline-axis: block; }
+@keyframes ember-title-out { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(.92); } }
+@keyframes ember-body-in   { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+[data-ember-title] { animation: ember-title-out linear both; animation-timeline: --ember-pin; animation-range: entry 20% cover 55%; }
+[data-ember-body]  { opacity: 0; animation: ember-body-in linear both; animation-timeline: --ember-pin; animation-range: cover 45% cover 85%; }
+
+@supports not (animation-timeline: view()) {
+  [data-ember-drift] { animation: none; }
+  [data-ember-title] { opacity: 1; transform: none; animation: none; }
+  [data-ember-body]  { opacity: 1; transform: none; animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ember-drift] { animation: none !important; }
+  [data-ember-title], [data-ember-body] { opacity: 1 !important; transform: none !important; animation: none !important; }
+}
