@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Instrument_Serif, DM_Sans, JetBrains_Mono, Roboto_Slab, Space_Grotesk } from "next/font/google";
+import { Manrope, Instrument_Serif, DM_Sans, JetBrains_Mono, Roboto_Slab, Space_Grotesk, Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -64,6 +64,15 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
   weight: ["500", "700"],
   variable: "--font-grotesk",
+});
+
+// Atelier theme display font — high-contrast elegant serif for the quiet-luxury theme.
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sathyarajeshpk.com";
@@ -146,7 +155,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${robotoSlab.variable} ${monaSans.variable} ${spaceGrotesk.variable} scroll-smooth`}
+      className={`${sans.variable} ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${robotoSlab.variable} ${monaSans.variable} ${spaceGrotesk.variable} ${cormorant.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <head>
